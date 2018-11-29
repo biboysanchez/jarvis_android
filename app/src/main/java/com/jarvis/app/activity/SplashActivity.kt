@@ -1,10 +1,11 @@
-package com.jarvis.app
+package com.jarvis.app.activity
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
+import com.jarvis.app.R
 
 class SplashActivity : AppCompatActivity() {
 
@@ -12,9 +13,11 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         hideStatusBar()
-        Handler().postDelayed({startActivity(Intent(this@SplashActivity, MainActivity::class.java))},2000)
+        Handler().postDelayed({
+            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            finish()
+        },2000)
     }
-
     private fun hideStatusBar() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
