@@ -29,9 +29,9 @@ class PieChart {
     }
 
     fun data(){
-        chart?.setUsePercentValues(true)
+        chart?.setUsePercentValues(false)
         chart?.description?.isEnabled = false
-        chart?.setExtraOffsets(5f, 10f, 5f, 5f)
+     //   chart?.setExtraOffsets(5f, 10f, 5f, 5f)
 
         chart?.dragDecelerationFrictionCoef = 0.95f
 
@@ -44,39 +44,39 @@ class PieChart {
         chart?.setTransparentCircleColor(Color.WHITE)
         chart?.setTransparentCircleAlpha(110)
 
-        chart?.holeRadius = 58f
+        chart?.holeRadius = 72f
         chart?.transparentCircleRadius = 61f
-
         chart?.setDrawCenterText(true)
 
         chart?.rotationAngle = 0f
-        chart?.isRotationEnabled = true
+        chart?.isRotationEnabled = false
         chart?.isHighlightPerTapEnabled = true
         chart!!.animateY(1400, Easing.EaseInOutQuad)
         //chart?.spin(2000, 0, 360);
 
         val l = chart?.legend
-        l?.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        l?.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
         l?.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         l?.orientation = Legend.LegendOrientation.VERTICAL
         l?.setDrawInside(false)
-        l?.xEntrySpace = 7f
-        l?.yEntrySpace = 0f
+        l?.textSize = 14f
         l?.yOffset = 0f
+        l?.xOffset = 25f
 
         // entry label styling
-        chart?.setEntryLabelColor(Color.WHITE)
-       // chart?.setEntryLabelTypeface(tfRegular)
+       // chart?.setEntryLabelColor(Color.WHITE)
+        chart?.setDrawEntryLabels(false)
+        // chart?.setEntryLabelTypeface(tfRegular)
         //chart?.setEntryLabelTextSize(12f)
 
-        setData(122, 343F)
+       setData(4, 4F)
     }
 
     val parties = arrayOf(
-        "Party A",
-        "Party B",
-        "Party C",
-        "Party D",
+        "Cash",
+        "Equity",
+        "Fixed Income",
+        "Mutual Fund",
         "Party E",
         "Party F",
         "Party G",
@@ -116,11 +116,10 @@ class PieChart {
             )
         }
 
-        val dataSet = PieDataSet(entries, "Election Results")
+        val dataSet = PieDataSet(entries, "")
+       // dataSet.setDrawIcons(false)
 
-        dataSet.setDrawIcons(false)
-
-        dataSet.sliceSpace = 3f
+        dataSet.sliceSpace = 0f
         dataSet.iconsOffset = MPPointF(0f, 40f)
         dataSet.selectionShift = 5f
 
@@ -144,31 +143,35 @@ class PieChart {
             colors.add(c)
 
         colors.add(ColorTemplate.getHoloBlue())
-
         dataSet.colors = colors
-        //dataSet.setSelectionShift(0f);
-
         val data = PieData(dataSet)
-       // data.setValueFormatter(PercentFormatter(chart))
-        data.setValueTextSize(11f)
-        data.setValueTextColor(Color.WHITE)
-       // data.setValueTypeface(tfLight)
+        data.setDrawValues(false)
         chart?.data = data
 
         // undo all highlights
         chart?.highlightValues(null)
-
         chart?.invalidate()
     }
 
     private fun generateCenterSpannableText(): SpannableString {
-        val s = SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda")
-        s.setSpan(RelativeSizeSpan(1.7f), 0, 14, 0)
-        s.setSpan(StyleSpan(Typeface.NORMAL), 14, s.length - 15, 0)
-        s.setSpan(ForegroundColorSpan(Color.GRAY), 14, s.length - 15, 0)
-        s.setSpan(RelativeSizeSpan(.8f), 14, s.length - 15, 0)
-        s.setSpan(StyleSpan(Typeface.ITALIC), s.length - 14, s.length, 0)
-        s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - 14, s.length, 0)
+        //val s = SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda")
+//        s.setSpan(RelativeSizeSpan(1.7f), 0, 14, 0)
+//        s.setSpan(StyleSpan(Typeface.NORMAL), 14, s.length - 15, 0)
+//        s.setSpan(ForegroundColorSpan(Color.GRAY), 14, s.length - 15, 0)
+//        s.setSpan(RelativeSizeSpan(.8f), 14, s.length - 15, 0)
+//        s.setSpan(StyleSpan(Typeface.ITALIC), s.length - 14, s.length, 0)
+//        s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - 14, s.length, 0)
+
+        val title = "Total Assets"
+        var price = "Rp 34,08 B"
+
+        val s = SpannableString("$title\n$price")
+        s.setSpan(RelativeSizeSpan(.8f), 0, title.length, 0)
+        s.setSpan(StyleSpan(Typeface.NORMAL), title.length, s.length, 0)
+        s.setSpan(ForegroundColorSpan(Color.GRAY), title.length, s.length, 0)
+        s.setSpan(RelativeSizeSpan(1.3f), 12, s.length, 0)
+        //s.setSpan(StyleSpan(Typeface.ITALIC), s.length - title.length, s.length, 0)
+        //s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - title.length, s.length, 0)
         return s
     }
 }
