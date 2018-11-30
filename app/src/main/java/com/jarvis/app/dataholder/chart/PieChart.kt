@@ -3,6 +3,7 @@ package com.jarvis.app.dataholder.chart
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Build.VERSION_CODES.P
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
@@ -52,7 +53,6 @@ class PieChart {
         chart?.isRotationEnabled = false
         chart?.isHighlightPerTapEnabled = true
         chart!!.animateY(1400, Easing.EaseInOutQuad)
-        //chart?.spin(2000, 0, 360);
 
         val l = chart?.legend
         l?.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
@@ -61,7 +61,7 @@ class PieChart {
         l?.setDrawInside(false)
         l?.textSize = 14f
         l?.yOffset = 0f
-        l?.xOffset = 25f
+        l?.xOffset = 20f
 
         // entry label styling
        // chart?.setEntryLabelColor(Color.WHITE)
@@ -73,48 +73,30 @@ class PieChart {
     }
 
     val parties = arrayOf(
-        "Cash",
-        "Equity",
-        "Fixed Income",
-        "Mutual Fund",
-        "Party E",
-        "Party F",
-        "Party G",
-        "Party H",
-        "Party I",
-        "Party J",
-        "Party K",
-        "Party L",
-        "Party M",
-        "Party N",
-        "Party O",
-        "Party P",
-        "Party Q",
-        "Party R",
-        "Party S",
-        "Party T",
-        "Party U",
-        "Party V",
-        "Party W",
-        "Party X",
-        "Party Y",
-        "Party Z"
+        "${25}% - Cash",
+        "${14}% - Equity",
+        "${30}% - Fixed Income",
+        "${60}% - Mutual Fund"
     )
 
     private fun setData(count: Int, range: Float) {
         val entries = ArrayList<PieEntry>()
+        entries.add(PieEntry(25F, parties[0]))
+        entries.add(PieEntry(14F, parties[1]))
+        entries.add(PieEntry(30F, parties[2]))
+        entries.add(PieEntry(60F, parties[3]))
 
-        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
-        // the chart.
-        for (i in 0 until count) {
-            entries.add(
-                PieEntry(
-                    (Math.random() * range + range / 5).toFloat(),
-                    parties[i % parties.size]
-                    //getResources().getDrawable(R.drawable.star)
-                )
-            )
-        }
+//        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
+//        // the chart.
+//        for (i in 0 until count) {
+//            entries.add(
+//                PieEntry(
+//                    (Math.random() * range + range / 5).toFloat(),
+//                    parties[i % parties.size]
+//                    //getResources().getDrawable(R.drawable.star)
+//                )
+//            )
+//        }
 
         val dataSet = PieDataSet(entries, "")
        // dataSet.setDrawIcons(false)
@@ -126,21 +108,10 @@ class PieChart {
         // add a lot of colors
 
         val colors = ArrayList<Int>()
-
-        for (c in ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c)
-
-        for (c in ColorTemplate.JOYFUL_COLORS)
-            colors.add(c)
-
-        for (c in ColorTemplate.COLORFUL_COLORS)
-            colors.add(c)
-
-        for (c in ColorTemplate.LIBERTY_COLORS)
-            colors.add(c)
-
-        for (c in ColorTemplate.PASTEL_COLORS)
-            colors.add(c)
+        colors.add(Color.parseColor("#18E4D1"))
+        colors.add(Color.parseColor("#21C6B7"))
+        colors.add(Color.parseColor("#239D92"))
+        colors.add(Color.parseColor("#2C7B74"))
 
         colors.add(ColorTemplate.getHoloBlue())
         dataSet.colors = colors
