@@ -20,16 +20,13 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true">
         <LinearLayout
-                android:background="@color/nav_header_body"
+                android:background="@color/gray_section_header"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <include layout="@layout/nav_header_main"/>
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_700"/>
-            <ListView
+
+            <ExpandableListView
                     android:dividerHeight="0dp"
                     android:divider="@null"
                     android:id="@+id/listNavView"
@@ -44,7 +41,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:background="?attr/selectableItemBackground"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray_section_text"
                     android:text="@string/log_out"
                     android:paddingStart="24dp"
                     android:paddingEnd="0dp"

@@ -11,11 +11,15 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.AdapterView
 import com.jarvis.app.R
 import com.jarvis.app.adapter.NavigationSideMenuListAdapter
+import com.jarvis.app.adapter.SideMenuExpandableAdapter
 import com.jarvis.app.dataholder.StaticData
 import com.jarvis.app.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import android.R.attr.keySet
+
+
 class MainActivity : AppCompatActivity() {
     private var toggle:ActionBarDrawerToggle? = null
     private var selectedNavIndex = 0
@@ -41,17 +45,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNavigationList(){
-        val adapter = NavigationSideMenuListAdapter(this@MainActivity, R.layout.row_nav_list, StaticData.titleAray())
-        nav_view?.listNavView?.adapter = adapter
-        nav_view?.listNavView?.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, view, position, id ->
-                    selectedNavIndex = position
-                    if (selectedNavIndex == position){
-                        view.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_800))
-                        adapter.notifyDataSetChanged()
-                    }
-                    drawer_layout.closeDrawer(GravityCompat.START)
-                }
+        val expandableListDetail: HashMap<String, ArrayList<String>> = StaticData.getData()
+        val expandableListTitle: ArrayList<String> = ArrayList(expandableListDetail.keys)
+        val adapter = SideMenuExpandableAdapter(this, expandableListTitle, expandableListDetail)
+        nav_view?.listNavView?.setAdapter(adapter)
+
+//        val adapter = NavigationSideMenuListAdapter(this@MainActivity, R.layout.row_nav_list, StaticData.titleAray())
+//        nav_view?.listNavView?.adapter = adapter
+//        nav_view?.listNavView?.onItemClickListener =
+//                AdapterView.OnItemClickListener { parent, view, position, id ->
+//                    selectedNavIndex = position
+//                    if (selectedNavIndex == position){
+//                        view.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_800))
+//                        adapter.notifyDataSetChanged()
+//                    }
+//                    drawer_layout.closeDrawer(GravityCompat.START)
+//                }
     }
 
     fun addFragment(fragment:Fragment, tag:String){
