@@ -8,4 +8,10 @@
     <string name="action_settings">Settings</string>
     <string name="log_out">Log Out</string>
     <string name="investment_portfolio">Investment Portfolio</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="log_in">Log In</string>
+    <string name="have_no_account">Have no account?</string>
+    <string name="create_one">Create one</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>
