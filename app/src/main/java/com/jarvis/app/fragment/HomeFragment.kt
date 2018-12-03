@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.jarvis.app.R
 import com.jarvis.app.dataholder.chart.PieChart
+import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
@@ -37,5 +38,8 @@ class HomeFragment : Fragment() {
 
         spinnerCompanyType?.adapter = ArrayAdapter<String>(context!!,
             R.layout.support_simple_spinner_dropdown_item, Arrays.asList("Company Type"))
+
+        Util.changeTextColor(spinnerAssetClass)
+        Util.changeTextColor(spinnerCompanyType)
     }
 }

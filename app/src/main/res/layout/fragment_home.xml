@@ -54,7 +54,7 @@
                     android:id="@+id/pieChartHome"
                     android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"/>
+                    android:layout_height="240dp"/>
 
             <FrameLayout
                     android:layout_marginStart="16dp"
