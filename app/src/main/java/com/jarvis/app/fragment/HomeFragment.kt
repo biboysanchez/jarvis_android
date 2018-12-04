@@ -2,17 +2,23 @@ package com.jarvis.app.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.jarvis.app.R
+import com.jarvis.app.adapter.PieLegendAdapter
+import com.jarvis.app.dataholder.StaticData
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
 class HomeFragment : Fragment() {
+    private var layoutManager: GridLayoutManager? = null
+
     companion object {
         val TAG = "HomeFragment"
     }
@@ -23,8 +29,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        layoutManager = GridLayoutManager(context,  2)
+
         setPieChart()
         setSpinners()
+        setRecyclerView()
     }
 
     private fun setPieChart(){
@@ -41,5 +51,10 @@ class HomeFragment : Fragment() {
 
         Util.changeTextColor(spinnerAssetClass)
         Util.changeTextColor(spinnerCompanyType)
+    }
+
+    private fun setRecyclerView(){
+        rvPieLegend?.layoutManager = layoutManager
+        rvPieLegend?.adapter = PieLegendAdapter(context, StaticData.pieData())
     }
 }
