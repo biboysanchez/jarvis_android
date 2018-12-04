@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_white"
+        android:orientation="vertical"
+        android:layout_marginBottom="12dp">
+
+    <TextView
+            style="@style/TextHeader"
+            android:text="Performance Summary"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp" android:id="@+id/textView8"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="0.8dp"
+          android:background="@color/home_bg" app:layout_constraintTop_toBottomOf="@+id/textView8"
+          android:layout_marginTop="16dp" app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent" android:id="@+id/view"/>
+
+    <FrameLayout
+            android:background="@drawable/card_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/view" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/imgMenuSummary"
+            android:layout_marginEnd="8dp" android:id="@+id/frameLayout">
+        <Spinner
+                android:id="@+id/spinnerSummary"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="0dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"/>
+    </FrameLayout>
+    <ImageView
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@null"
+            android:padding="8dp"
+            android:src="@drawable/ic_sort"
+            android:background="@drawable/rec_hallow_primary"
+            android:layout_width="38dp"
+            android:layout_height="38dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" android:id="@+id/imgMenuSummary"
+            app:layout_constraintTop_toTopOf="@+id/frameLayout"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout"/>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/frameLayout" app:layout_constraintEnd_toEndOf="@+id/imgMenuSummary"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/imgMenuSummary"
+            android:id="@+id/rvPerformance"/>
+    <TextView
+            android:gravity="center"
+            android:padding="12dp"
+            android:background="@drawable/rec_hallow_primary"
+            android:text="Show All"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvShowAll"
+            app:layout_constraintStart_toStartOf="@+id/rvPerformance"
+            app:layout_constraintEnd_toEndOf="@+id/rvPerformance"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/rvPerformance" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"/>
+
+
+</android.support.constraint.ConstraintLayout>

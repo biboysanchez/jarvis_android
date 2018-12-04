@@ -23,16 +23,20 @@ import com.github.mikephil.charting.utils.MPPointF
 import com.jarvis.app.R
 import java.util.ArrayList
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-
+import com.jarvis.app.extension.toast
+import com.jarvis.app.model.Pie
+import com.jarvis.app.utils.Util
 
 
 class PieChart {
     private var context: Context? = null
     private var chart: PieChart? = null
+    private var data:List<Pie>? = ArrayList()
 
-    constructor(context: Context?, chart: PieChart?) {
+    constructor(context: Context?, chart: PieChart?, data: List<Pie>) {
         this.context = context
         this.chart = chart
+        this.data = data
     }
 
     fun data(){
@@ -76,55 +80,32 @@ class PieChart {
         //chart?.setEntryLabelTextSize(12f)
         chart?.setOnChartValueSelectedListener(object :OnChartValueSelectedListener{
             override fun onNothingSelected() {
-
             }
 
             override fun onValueSelected(e: Entry?, h: Highlight?) {
-                val x = e?.x
-                val y = e?.y
-                Log.i("TAG", "x: $x y: $y")
+                val index = h?.x
+                val d = data?.get(index!!.toInt())
+                val label = "${d?.name} [${d?.percent}]% ${Util.priceFormat(d?.amount!!.toFloat()).replace(".00","")} B"
+                context?.toast(label)
             }
 
         })
-
-       setData(4, 4F)
+       setData()
     }
 
-    private val parties = arrayOf("27%", "5%", "18%", "4%", "16%", "4%", "14%", "3%", "8%", "2%")
-
-    private fun setData(count: Int, range: Float) {
+    private fun setData() {
         val entries = ArrayList<PieEntry>()
-        entries.add(PieEntry(27F, parties[0]))
-        entries.add(PieEntry(5F, parties[1]))
-        entries.add(PieEntry(18F, parties[2]))
-        entries.add(PieEntry(4F, parties[3]))
-        entries.add(PieEntry(16F, parties[3]))
-        entries.add(PieEntry(4F, parties[3]))
-        entries.add(PieEntry(14F, parties[3]))
-        entries.add(PieEntry(3F, parties[3]))
-        entries.add(PieEntry(8F, parties[3]))
-        entries.add(PieEntry(2F, parties[3]))
-
         val dataSet = PieDataSet(entries, "")
-       // dataSet.setDrawIcons(false)
 
         dataSet.sliceSpace = 0f
         dataSet.iconsOffset = MPPointF(0f, 40f)
         dataSet.selectionShift = 5f
 
-        // add a lot of colors
-
         val colors = ArrayList<Int>()
-        colors.add(Color.parseColor("#18E4D1"))
-        colors.add(Color.parseColor("#239D92"))
-        colors.add(Color.parseColor("#22ACC7"))
-        colors.add(Color.parseColor("#2C7A53"))
-        colors.add(Color.parseColor("#239E60"))
-        colors.add(Color.parseColor("#19C1E3"))
-        colors.add(Color.parseColor("#19E37E"))
-        colors.add(Color.parseColor("#21C6B7"))
-        colors.add(Color.parseColor("#2C7B74"))
-        colors.add(Color.parseColor("#22C774"))
+        for (col:Pie in data!!){
+            colors.add(col.color)
+            entries.add(PieEntry(col.percent.toFloat(), col.name))
+        }
 
         colors.add(ColorTemplate.getHoloBlue())
         dataSet.colors = colors

@@ -52,4 +52,20 @@ object StaticData {
         )
     }
 
+    fun pieData2() : List<Pie>{
+        val pie0 = Pie(27,Color.parseColor("#E3197C"), "Party Fund", 3198855)
+        val pie1 = Pie(5,Color.parseColor("#9E2360"), "SM Group", 798855)
+        val pie2 = Pie(18,Color.parseColor("#22C767"), "Party Fund", 2198855)
+        val pie3 = Pie(4,Color.parseColor("#2C607A"), "Cash", 698855)
+        val pie4 = Pie(16,Color.parseColor("#23759E"), "Cash", 1198855)
+        val pie5 = Pie(4,Color.parseColor("#19E36E"), "3rd Party Fund", 598855)
+        val pie6 = Pie(14,Color.parseColor("#199FE3"), "Government", 998855)
+        val pie7 = Pie(3,Color.parseColor("#C72274"), "Mutual Fund", 498855)
+        val pie8 = Pie(8,Color.parseColor("#7A2C53"), "Private", 898855)
+        val pie9 = Pie(2,Color.parseColor("#2290C7"), "Mutual Fund", 398855)
+        return Arrays.asList(
+            pie0, pie1, pie2, pie3, pie4, pie5, pie6, pie7, pie8, pie9
+        )
+    }
+
 }

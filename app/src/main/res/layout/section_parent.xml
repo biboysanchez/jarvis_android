@@ -8,20 +8,22 @@
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+    <ImageView
+            android:id="@+id/imgDrawable"
+            android:layout_width="36dp"
+               android:layout_height="36dp"/>
 
     <TextView
-            android:layout_marginStart="24dp"
+            android:textSize="14sp"
+            android:layout_marginStart="16dp"
             android:text="Text"
             android:id="@+id/rowParentText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:gravity="center_vertical"
-            android:textColor="@color/gray_section_text"
-            android:background="?android:attr/activatedBackgroundIndicator"
-            android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+            android:textColor="@color/gray_section_text"/>
 </LinearLayout>
 
 

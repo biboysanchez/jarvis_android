@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import com.jarvis.app.R
 
 class SideMenuExpandableAdapter: BaseExpandableListAdapter {
-    private val TAG = "SideMenuExpandableAdapter"
     private var mContext:Context? = null
     private var titleList: ArrayList<String>? = ArrayList()
     private var dataList:HashMap<String, ArrayList<String>>? = HashMap()
@@ -67,8 +67,33 @@ class SideMenuExpandableAdapter: BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.section_parent, null)
         }
         val listTitleTextView = convertView!!.findViewById<TextView>(R.id.rowParentText)
-        listTitleTextView.setTypeface(null, Typeface.BOLD)
+        val imgDraw           = convertView.findViewById<ImageView>(R.id.imgDrawable)
         listTitleTextView.text = listTitle
+
+        when (listPosition) {
+            0 -> {
+                imgDraw.setImageResource(R.drawable.ic_overview)
+            }
+            1 -> {
+                imgDraw.setImageResource(R.drawable.ic_asset)
+            }
+            2 -> {
+                imgDraw.setImageResource(R.drawable.ic_research)
+            }
+            3 -> {
+                imgDraw.setImageResource(R.drawable.ic_performance)
+            }
+            4 -> {
+                imgDraw.setImageResource(R.drawable.ic_portfolio)
+            }
+            5 -> {
+                imgDraw.setImageResource(R.drawable.ic_strategic)
+            }
+
+            6 -> {
+                imgDraw.setImageResource(R.drawable.ic_stress)
+            }
+        }
         return convertView
     }
 
