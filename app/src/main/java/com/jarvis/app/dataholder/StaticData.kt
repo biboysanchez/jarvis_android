@@ -1,31 +1,47 @@
 package com.jarvis.app.dataholder
 
 import android.graphics.Color
+import android.view.Menu
 import com.github.mikephil.charting.data.PieData
+import com.jarvis.app.R
 import com.jarvis.app.model.Pie
+import com.jarvis.app.model.SideMenu
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 object StaticData {
     fun getData(): HashMap<String, ArrayList<String>> {
-        val expandableListDetail = HashMap<String, ArrayList<String>>()
+        val expandableListDetail:HashMap<String, ArrayList<String>> = HashMap()
 
-        val portOverview = ArrayList<String>()
-
+        val portOverview   = ArrayList<String>()
         val assetLiability = ArrayList<String>()
         assetLiability.add("Cash Position")
         assetLiability.add("Duration Match")
 
         val research = ArrayList<String>()
-
         val performanceMeasurement = ArrayList<String>()
         performanceMeasurement.add("Time Series")
         performanceMeasurement.add("Detail View")
 
         val portfolioConstruction = ArrayList<String>()
-        val stratAssetAlloc = ArrayList<String>()
-        val stressTest = ArrayList<String>()
+        val stratAssetAlloc       = ArrayList<String>()
+        val stressTest            = ArrayList<String>()
 
+//        val side0 = SideMenu("Portfolio Overview", R.drawable.ic_overview)
+//        val side1 = SideMenu("Asset Liability", R.drawable.ic_asset)
+//        val side2 = SideMenu("Research", R.drawable.ic_research)
+//        val side3 = SideMenu("Performance Measurement", R.drawable.ic_performance)
+//        val side4 = SideMenu("Portfolio Construction", R.drawable.ic_portfolio)
+//        val side5 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic)
+//        val side6 = SideMenu("Stress Tess", R.drawable.ic_stress)
+//        expandableListDetail[side0] = portOverview
+//        expandableListDetail[side1] = assetLiability
+//        expandableListDetail[side2] = research
+//        expandableListDetail[side3] = performanceMeasurement
+//        expandableListDetail[side4] = portfolioConstruction
+//        expandableListDetail[side5] = stratAssetAlloc
+//        expandableListDetail[side6] = stressTest
         expandableListDetail["Portfolio Overview"]          = portOverview
         expandableListDetail["Asset Liability"]             = assetLiability
         expandableListDetail["Research"]                    = research

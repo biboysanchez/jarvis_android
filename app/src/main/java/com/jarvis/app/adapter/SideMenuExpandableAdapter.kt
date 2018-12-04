@@ -62,6 +62,7 @@ class SideMenuExpandableAdapter: BaseExpandableListAdapter {
     override fun getGroupView(listPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         val listTitle = getGroup(listPosition) as String
+
         if (convertView == null) {
             val layoutInflater = mContext?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = layoutInflater.inflate(R.layout.section_parent, null)
@@ -70,27 +71,27 @@ class SideMenuExpandableAdapter: BaseExpandableListAdapter {
         val imgDraw           = convertView.findViewById<ImageView>(R.id.imgDrawable)
         listTitleTextView.text = listTitle
 
-        when (listPosition) {
-            0 -> {
+        when (listTitle) {
+            "Portfolio Overview" -> {
                 imgDraw.setImageResource(R.drawable.ic_overview)
             }
-            1 -> {
+            "Asset Liability" -> {
                 imgDraw.setImageResource(R.drawable.ic_asset)
             }
-            2 -> {
+            "Research" -> {
                 imgDraw.setImageResource(R.drawable.ic_research)
             }
-            3 -> {
+            "Performance Measurement" -> {
                 imgDraw.setImageResource(R.drawable.ic_performance)
             }
-            4 -> {
+            "Portfolio Construction" -> {
                 imgDraw.setImageResource(R.drawable.ic_portfolio)
             }
-            5 -> {
+            "Strategic Asset Allocation" -> {
                 imgDraw.setImageResource(R.drawable.ic_strategic)
             }
 
-            6 -> {
+            "Stress Tess" -> {
                 imgDraw.setImageResource(R.drawable.ic_stress)
             }
         }

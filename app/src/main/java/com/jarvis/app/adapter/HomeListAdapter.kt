@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
-import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.row_home_list.view.*
 
 class HomeListAdapter : RecyclerView.Adapter<HomeListAdapter.ViewHolder> {

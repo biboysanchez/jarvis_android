@@ -16,7 +16,10 @@ import com.jarvis.app.dataholder.StaticData
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.layout_invesment_selection.*
+import kotlinx.android.synthetic.main.layout_investment_decision.*
 import kotlinx.android.synthetic.main.layout_performance_summary.*
+import kotlinx.android.synthetic.main.layout_top_10.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,7 +39,11 @@ class HomeFragment : Fragment() {
             setPieChart()
             setSpinners()
             setPieRecyclerView()
+
             setPerformanceSummary()
+            setInvestmentDecision()
+            setInvestmentSelection()
+            setTop10Position()
         },300)
     }
 
@@ -77,7 +84,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setPerformanceSummary(){
-        spinnerSummary?.adapter = ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item,
+        spinnerSummary?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
             Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
         Util.changeTextColor(spinnerSummary)
 
@@ -85,5 +92,27 @@ class HomeFragment : Fragment() {
         rvPerformance?.adapter = HomeListAdapter(context, ArrayList())
     }
 
+    private fun setInvestmentDecision(){
+        spinnerDecision?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
+            Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
+        Util.changeTextColor(spinnerDecision)
+        rvDecision?.layoutManager = LinearLayoutManager(context)
+        rvDecision?.adapter = HomeListAdapter(context, ArrayList())
+    }
 
+    private fun setInvestmentSelection(){
+        spinnerSelection?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
+            Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
+        Util.changeTextColor(spinnerSelection)
+        rvSelection?.layoutManager = LinearLayoutManager(context)
+        rvSelection?.adapter = HomeListAdapter(context, ArrayList())
+    }
+
+    private fun setTop10Position(){
+        spinnerPosition?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
+            Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
+        Util.changeTextColor(spinnerPosition)
+        rvPosition?.layoutManager = LinearLayoutManager(context)
+        rvPosition?.adapter = HomeListAdapter(context, ArrayList())
+    }
 }

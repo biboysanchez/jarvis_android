@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.R.attr.keySet
+import com.jarvis.app.utils.Util
+import com.jarvis.app.utils.Util.GetDipsFromPixel
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,10 +48,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setNavigationList(){
         val expandableListDetail: HashMap<String, ArrayList<String>> = StaticData.getData()
-        val expandableListTitle: ArrayList<String> = ArrayList(expandableListDetail.keys)
+        val expandableListTitle: ArrayList<String> = ArrayList(StaticData.getData().keys)
         val adapter = SideMenuExpandableAdapter(this, expandableListTitle, expandableListDetail)
+        nav_view?.listNavView?.setIndicatorBounds(Util.getWidth(this) - Util.GetDipsFromPixel(this, 50F),
+            Util.getWidth(this) - GetDipsFromPixel(this, 10F))
         nav_view?.listNavView?.setAdapter(adapter)
-
 //        val adapter = NavigationSideMenuListAdapter(this@MainActivity, R.layout.row_nav_list, StaticData.titleAray())
 //        nav_view?.listNavView?.adapter = adapter
 //        nav_view?.listNavView?.onItemClickListener =
