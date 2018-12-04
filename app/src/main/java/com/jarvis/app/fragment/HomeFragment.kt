@@ -44,10 +44,10 @@ class HomeFragment : Fragment() {
 
     private fun setSpinners(){
         spinnerAssetClass?.adapter = ArrayAdapter<String>(context!!,
-            R.layout.support_simple_spinner_dropdown_item, Arrays.asList("Asset Class"))
+            R.layout.support_simple_spinner_dropdown_item, Arrays.asList("Asset Class", "Sectors"))
 
         spinnerCompanyType?.adapter = ArrayAdapter<String>(context!!,
-            R.layout.support_simple_spinner_dropdown_item, Arrays.asList("Company Type"))
+            R.layout.support_simple_spinner_dropdown_item, Arrays.asList("Company Type", "Rating", "Duration"))
 
         Util.changeTextColor(spinnerAssetClass)
         Util.changeTextColor(spinnerCompanyType)

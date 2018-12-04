@@ -13,8 +13,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.graphics.Typeface
 import android.text.style.StyleSpan
-
-
+import com.jarvis.app.utils.Util
 
 
 class PieLegendAdapter : RecyclerView.Adapter<PieLegendAdapter.ViewHolder> {
@@ -42,7 +41,7 @@ class PieLegendAdapter : RecyclerView.Adapter<PieLegendAdapter.ViewHolder> {
     inner class ViewHolder(itemView:View): RecyclerView.ViewHolder(itemView){
         fun bindItem(i:Int){
             val pie = data?.get(i)
-            val label = "${pie?.name}\n[${pie?.percent}]% ${pie?.amount} B"
+            val label = "${pie?.name}\n[${pie?.percent}]% ${Util.priceFormat(pie?.amount!!.toFloat()).replace(".00","")} B"
 
             val ssBuilder = SpannableStringBuilder(label)
             val boldSpan  = StyleSpan(Typeface.BOLD)
