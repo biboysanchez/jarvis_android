@@ -11,7 +11,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 object StaticData {
-    fun getData(): HashMap<String, ArrayList<String>> {
+    fun getData(): Map<String, ArrayList<String>> {
         val expandableListDetail:HashMap<String, ArrayList<String>> = HashMap()
 
         val portOverview   = ArrayList<String>()
@@ -42,14 +42,14 @@ object StaticData {
 //        expandableListDetail[side4] = portfolioConstruction
 //        expandableListDetail[side5] = stratAssetAlloc
 //        expandableListDetail[side6] = stressTest
-        expandableListDetail["Portfolio Overview"]          = portOverview
-        expandableListDetail["Asset Liability"]             = assetLiability
-        expandableListDetail["Research"]                    = research
-        expandableListDetail["Performance Measurement"]     = performanceMeasurement
-        expandableListDetail["Portfolio Construction"]      = portfolioConstruction
-        expandableListDetail["Strategic Asset Allocation"]  = stratAssetAlloc
-        expandableListDetail["Stress Tess"]                 = stressTest
-        return expandableListDetail
+        expandableListDetail["1Portfolio Overview"]          = portOverview
+        expandableListDetail["2Asset Liability"]             = assetLiability
+        expandableListDetail["3Research"]                    = research
+        expandableListDetail["4Performance Measurement"]     = performanceMeasurement
+        expandableListDetail["5Portfolio Construction"]      = portfolioConstruction
+        expandableListDetail["6Strategic Asset Allocation"]  = stratAssetAlloc
+        expandableListDetail["7Stress Tess"]                 = stressTest
+        return TreeMap<String,ArrayList<String>>(expandableListDetail)
     }
 
     fun pieData() : List<Pie>{

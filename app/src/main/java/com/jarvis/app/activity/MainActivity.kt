@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNavigationList(){
-        val expandableListDetail: HashMap<String, ArrayList<String>> = StaticData.getData()
+        val expandableListDetail: Map<String, ArrayList<String>> = StaticData.getData()
         val expandableListTitle: ArrayList<String> = ArrayList(StaticData.getData().keys)
         val adapter = SideMenuExpandableAdapter(this, expandableListTitle, expandableListDetail)
         nav_view?.listNavView?.setIndicatorBounds(Util.getWidth(this) - Util.GetDipsFromPixel(this, 50F),

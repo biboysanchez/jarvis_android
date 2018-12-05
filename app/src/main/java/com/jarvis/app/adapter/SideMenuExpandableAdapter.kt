@@ -13,9 +13,9 @@ import com.jarvis.app.R
 class SideMenuExpandableAdapter: BaseExpandableListAdapter {
     private var mContext:Context? = null
     private var titleList: ArrayList<String>? = ArrayList()
-    private var dataList:HashMap<String, ArrayList<String>>? = HashMap()
+    private var dataList:Map<String, ArrayList<String>>? = HashMap()
 
-    constructor(mContext: Context?, titleList: ArrayList<String>?, dataList: HashMap<String, ArrayList<String>>?) : super() {
+    constructor(mContext: Context?, titleList: ArrayList<String>?, dataList: Map<String, ArrayList<String>>?) : super() {
         this.mContext   = mContext
         this.titleList  = titleList
         this.dataList   = dataList
@@ -69,9 +69,9 @@ class SideMenuExpandableAdapter: BaseExpandableListAdapter {
         }
         val listTitleTextView = convertView!!.findViewById<TextView>(R.id.rowParentText)
         val imgDraw           = convertView.findViewById<ImageView>(R.id.imgDrawable)
-        listTitleTextView.text = listTitle
+        listTitleTextView.text = listTitle.substring(1)
 
-        when (listTitle) {
+        when (listTitle.substring(1)) {
             "Portfolio Overview" -> {
                 imgDraw.setImageResource(R.drawable.ic_overview)
             }
