@@ -20,6 +20,9 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import android.R.attr.keySet
 import com.jarvis.app.utils.Util
 import com.jarvis.app.utils.Util.GetDipsFromPixel
+import android.util.DisplayMetrics
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,12 +49,19 @@ class MainActivity : AppCompatActivity() {
         addFragment(HomeFragment(), HomeFragment.TAG)
     }
 
+    fun GetDipsFromPixel(pixels: Float): Int {
+        // Get the screen's density scale
+        val scale = resources.displayMetrics.density
+        // Convert the dps to pixels, based on density scale
+        return (pixels * scale + 0.5f).toInt()
+    }
+
     private fun setNavigationList(){
         val expandableListDetail: Map<String, ArrayList<String>> = StaticData.getData()
         val expandableListTitle: ArrayList<String> = ArrayList(StaticData.getData().keys)
         val adapter = SideMenuExpandableAdapter(this, expandableListTitle, expandableListDetail)
-        nav_view?.listNavView?.setIndicatorBounds(Util.getWidth(this) - Util.GetDipsFromPixel(this, 50F),
-            Util.getWidth(this) - GetDipsFromPixel(this, 10F))
+//        nav_view?.listNavView?.setIndicatorBounds(width - GetDipsFromPixel(this, 50F),
+//            GetDipsFromPixel(this, 10F))
         nav_view?.listNavView?.setAdapter(adapter)
 //        val adapter = NavigationSideMenuListAdapter(this@MainActivity, R.layout.row_nav_list, StaticData.titleAray())
 //        nav_view?.listNavView?.adapter = adapter

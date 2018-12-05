@@ -27,6 +27,7 @@
             <include layout="@layout/nav_header_main"/>
 
             <ExpandableListView
+                    android:indicatorLeft="240dp"
                     android:dividerHeight="0dp"
                     android:divider="@null"
                     android:id="@+id/listNavView"
