@@ -1,33 +1,31 @@
 package com.jarvis.app.activity
 
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.jarvis.app.R
-import com.jarvis.app.adapter.NavigationSideMenuListAdapter
 import com.jarvis.app.adapter.SideMenuExpandableAdapter
 import com.jarvis.app.dataholder.StaticData
 import com.jarvis.app.fragment.HomeFragment
+import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import android.R.attr.keySet
-import com.jarvis.app.utils.Util
-import com.jarvis.app.utils.Util.GetDipsFromPixel
-import android.util.DisplayMetrics
-
-
+import java.util.*
+import com.jarvis.app.adapter.HorizontalListAdapter
 
 
 class MainActivity : AppCompatActivity() {
     private var toggle:ActionBarDrawerToggle? = null
-    private var selectedNavIndex = 0
     private var fm:FragmentManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,33 +45,33 @@ class MainActivity : AppCompatActivity() {
         toggle?.syncState()
 
         addFragment(HomeFragment(), HomeFragment.TAG)
+
+
+        spinnerWeek?.adapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, Arrays.asList(
+            "All Week", "Week 1 - Sep 2018", "Week 2 - Sep 2018", "Week 3 - Sep 2018", "Week 4 - Sep 2018"))
+        spinnerWeek?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            }
+        }
+        Util.changeTextColor(spinnerWeek, "#FFFFFF")
+
+        setHorizontalScrollView()
     }
 
-    fun GetDipsFromPixel(pixels: Float): Int {
-        // Get the screen's density scale
-        val scale = resources.displayMetrics.density
-        // Convert the dps to pixels, based on density scale
-        return (pixels * scale + 0.5f).toInt()
+    private fun setHorizontalScrollView(){
+        val btnLabels =Arrays.asList("BMA", "SMA", "JIWA", "MISG", "ASM", "BSA")
+        rvHorizontal?.layoutManager =  GridLayoutManager(this,  1, GridLayoutManager.HORIZONTAL, false)
+        rvHorizontal?.adapter = HorizontalListAdapter(this, btnLabels)
     }
 
     private fun setNavigationList(){
         val expandableListDetail: Map<String, ArrayList<String>> = StaticData.getData()
         val expandableListTitle: ArrayList<String> = ArrayList(StaticData.getData().keys)
         val adapter = SideMenuExpandableAdapter(this, expandableListTitle, expandableListDetail)
-//        nav_view?.listNavView?.setIndicatorBounds(width - GetDipsFromPixel(this, 50F),
-//            GetDipsFromPixel(this, 10F))
         nav_view?.listNavView?.setAdapter(adapter)
-//        val adapter = NavigationSideMenuListAdapter(this@MainActivity, R.layout.row_nav_list, StaticData.titleAray())
-//        nav_view?.listNavView?.adapter = adapter
-//        nav_view?.listNavView?.onItemClickListener =
-//                AdapterView.OnItemClickListener { parent, view, position, id ->
-//                    selectedNavIndex = position
-//                    if (selectedNavIndex == position){
-//                        view.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_800))
-//                        adapter.notifyDataSetChanged()
-//                    }
-//                    drawer_layout.closeDrawer(GravityCompat.START)
-//                }
     }
 
     fun addFragment(fragment:Fragment, tag:String){

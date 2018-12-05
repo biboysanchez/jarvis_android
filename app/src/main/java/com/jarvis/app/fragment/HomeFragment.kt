@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.jarvis.app.R
 import com.jarvis.app.adapter.HomeListAdapter
@@ -15,6 +16,7 @@ import com.jarvis.app.adapter.PieLegendAdapter
 import com.jarvis.app.dataholder.StaticData
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.utils.Util
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.layout_invesment_selection.*
 import kotlinx.android.synthetic.main.layout_investment_decision.*

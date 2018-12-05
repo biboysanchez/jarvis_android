@@ -17,6 +17,8 @@
     <color name="equity_color">#21C6B7</color>
     <color name="fixed_income_color">#239D92</color>
     <color name="mutual_fund_color">#2C7B74</color>
+    <color name="card_dark">#28A197</color>
+    <color name="card_light">#01FFE8</color>
 
     <color name="home_bg">#D2E3E4</color>
     <color name="login_bg">#F4F9F9</color>

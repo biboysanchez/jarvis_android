@@ -14,6 +14,17 @@ import android.support.v7.app.AppCompatActivity
 
 
 object Util {
+    fun changeTextColor(spinner:Spinner?, hex:String){
+        spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor(hex))
+            }
+        }
+    }
+
     fun changeTextColor(spinner:Spinner?){
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
