@@ -8,12 +8,12 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.jarvis.app.R
-import com.jarvis.app.adapter.SideMenuExpandableAdapter
 import com.jarvis.app.dataholder.StaticData
 import com.jarvis.app.fragment.HomeFragment
 import com.jarvis.app.utils.Util
@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.util.*
 import com.jarvis.app.adapter.HorizontalListAdapter
+import com.jarvis.app.adapter.SideMenuAdapter
 
 
 class MainActivity : AppCompatActivity() {
@@ -68,10 +69,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNavigationList(){
-        val expandableListDetail: Map<String, ArrayList<String>> = StaticData.getData()
-        val expandableListTitle: ArrayList<String> = ArrayList(StaticData.getData().keys)
-        val adapter = SideMenuExpandableAdapter(this, expandableListTitle, expandableListDetail)
-        nav_view?.listNavView?.setAdapter(adapter)
+        nav_view?.listNavView?.layoutManager = LinearLayoutManager(this)
+        nav_view?.listNavView?.adapter = SideMenuAdapter(this, StaticData.sideList())
     }
 
     fun addFragment(fragment:Fragment, tag:String){

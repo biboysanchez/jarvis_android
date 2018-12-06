@@ -11,47 +11,6 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 object StaticData {
-    fun getData(): Map<String, ArrayList<String>> {
-        val expandableListDetail:HashMap<String, ArrayList<String>> = HashMap()
-
-        val portOverview   = ArrayList<String>()
-        val assetLiability = ArrayList<String>()
-        assetLiability.add("Cash Position")
-        assetLiability.add("Duration Match")
-
-        val research = ArrayList<String>()
-        val performanceMeasurement = ArrayList<String>()
-        performanceMeasurement.add("Time Series")
-        performanceMeasurement.add("Detail View")
-
-        val portfolioConstruction = ArrayList<String>()
-        val stratAssetAlloc       = ArrayList<String>()
-        val stressTest            = ArrayList<String>()
-
-//        val side0 = SideMenu("Portfolio Overview", R.drawable.ic_overview)
-//        val side1 = SideMenu("Asset Liability", R.drawable.ic_asset)
-//        val side2 = SideMenu("Research", R.drawable.ic_research)
-//        val side3 = SideMenu("Performance Measurement", R.drawable.ic_performance)
-//        val side4 = SideMenu("Portfolio Construction", R.drawable.ic_portfolio)
-//        val side5 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic)
-//        val side6 = SideMenu("Stress Tess", R.drawable.ic_stress)
-//        expandableListDetail[side0] = portOverview
-//        expandableListDetail[side1] = assetLiability
-//        expandableListDetail[side2] = research
-//        expandableListDetail[side3] = performanceMeasurement
-//        expandableListDetail[side4] = portfolioConstruction
-//        expandableListDetail[side5] = stratAssetAlloc
-//        expandableListDetail[side6] = stressTest
-        expandableListDetail["1Portfolio Overview"]          = portOverview
-        expandableListDetail["2Asset Liability"]             = assetLiability
-        expandableListDetail["3Research"]                    = research
-        expandableListDetail["4Performance Measurement"]     = performanceMeasurement
-        expandableListDetail["5Portfolio Construction"]      = portfolioConstruction
-        expandableListDetail["6Strategic Asset Allocation"]  = stratAssetAlloc
-        expandableListDetail["7Stress Tess"]                 = stressTest
-        return TreeMap<String,ArrayList<String>>(expandableListDetail)
-    }
-
     fun pieData() : List<Pie>{
         val pie0 = Pie(27,Color.parseColor("#18E4D1"), "Cash", 3198855)
         val pie1 = Pie(5,Color.parseColor("#239D92"), "Cash", 798855)
@@ -84,4 +43,14 @@ object StaticData {
         )
     }
 
+    fun sideList():List<SideMenu>{
+        val side0 = SideMenu("Portfolio Overview", R.drawable.ic_overview, ArrayList())
+        val side1 = SideMenu("Asset Liability", R.drawable.ic_asset, Arrays.asList("Cash Position", "Duration Match"))
+        val side2 = SideMenu("Research", R.drawable.ic_research, ArrayList())
+        val side3 = SideMenu("Performance Measurement", R.drawable.ic_performance, Arrays.asList("Time Series", "Detail View"))
+        val side4 = SideMenu("Portfolio Construction", R.drawable.ic_portfolio, ArrayList())
+        val side5 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic, ArrayList())
+        val side6 = SideMenu("Stress Tess", R.drawable.ic_stress, ArrayList())
+        return Arrays.asList(side0, side1, side2, side3, side4, side5, side6)
+    }
 }

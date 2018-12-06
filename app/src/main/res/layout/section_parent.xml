@@ -17,13 +17,22 @@
                android:layout_height="36dp"/>
 
     <TextView
+            android:ellipsize="marquee"
             android:textSize="14sp"
             android:layout_marginStart="16dp"
+            android:paddingEnd="8dp"
             android:text="Text"
             android:id="@+id/rowParentText"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textColor="@color/gray_section_text"/>
+
+    <ImageView
+            android:id="@+id/imgArrow"
+            android:src="@drawable/ic_down_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 </LinearLayout>
 
 
