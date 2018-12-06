@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_white"
+        android:orientation="vertical"
+        android:layout_marginBottom="12dp">
+
+    <TextView
+            style="@style/TextHeader"
+            android:text="@string/cash_placement_yield"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp" android:id="@+id/textView8"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"/>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="0.8dp"
+          android:background="@color/home_bg" app:layout_constraintTop_toBottomOf="@+id/textView8"
+          android:layout_marginTop="16dp" app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent" android:id="@+id/view"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@null"
+            android:padding="8dp"
+            android:background="@drawable/rec_up_raduis"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"
+            android:id="@+id/llTop"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/view">
+        <TextView
+                android:textColor="@color/white"
+                android:text="Asset"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="Amount"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="Yield"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/llTop"
+            app:layout_constraintTop_toBottomOf="@+id/llTop"
+            android:id="@+id/rvAssets"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+    <TextView
+            android:gravity="center"
+            android:padding="12dp"
+            android:background="@drawable/rec_hallow_primary"
+            android:text="Show All"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvShowAll"
+            app:layout_constraintStart_toStartOf="@+id/rvAssets"
+            app:layout_constraintEnd_toEndOf="@+id/rvAssets"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/rvAssets"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"/>
+</android.support.constraint.ConstraintLayout>

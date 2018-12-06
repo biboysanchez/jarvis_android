@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_white"
+        android:orientation="vertical"
+        android:layout_marginBottom="12dp">
+
+    <TextView
+            style="@style/TextHeader"
+            android:text="Cash Flow Summary"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp"
+            android:id="@+id/tvHeaderSelection"
+            android:layout_width="0dp" app:layout_constraintEnd_toEndOf="parent"
+    />
+
+    <View android:layout_width="match_parent"
+          android:layout_height="0.8dp"
+          android:background="@color/home_bg"
+          app:layout_constraintTop_toBottomOf="@+id/tvHeaderSelection"
+          android:layout_marginTop="16dp"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          android:id="@+id/view"/>
+
+    <LinearLayout
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:gravity="center"
+            android:background="@drawable/card_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:orientation="vertical"
+            android:id="@+id/frameLayoutSelection" app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            android:layout_marginEnd="4dp">
+        <TextView
+                android:textColor="@color/gray_section_text"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Avalable Cash"/>
+        <TextView
+                android:textColor="@color/gray_section_text"
+                android:layout_marginTop="4dp"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XX"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:gravity="center"
+            android:background="@drawable/card_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            android:orientation="vertical" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/frameLayoutSelection" android:id="@+id/linearLayout"
+            android:layout_marginStart="4dp" android:layout_marginEnd="16dp">
+        <TextView
+                android:textColor="@color/gray_section_text"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restricted Cash Level"/>
+        <TextView
+                android:textColor="@color/gray_section_text"
+                android:layout_marginTop="4dp"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XX"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/frameLayoutSelection"
+            android:id="@+id/rvSelection" app:layout_constraintTop_toBottomOf="@+id/frameLayoutSelection"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"/>
+
+</android.support.constraint.ConstraintLayout>

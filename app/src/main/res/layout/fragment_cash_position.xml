@@ -11,8 +11,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-        <include layout="@layout/layout_invesment_selection"/>
+        <include layout="@layout/layout_cash_flow_summary"/>
+        <include layout="@layout/layout_cash_placement"/>
 
     </LinearLayout>
 
