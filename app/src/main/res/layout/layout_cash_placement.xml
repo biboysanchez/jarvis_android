@@ -43,21 +43,21 @@
                 android:textColor="@color/white"
                 android:text="Asset"
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
+                android:layout_weight="0.6"
                 android:layout_height="wrap_content"/>
         <TextView
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:text="Amount"
                 android:layout_width="0dp"
-                android:layout_weight="0.25"
+                android:layout_weight="0.2"
                 android:layout_height="wrap_content"/>
         <TextView
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:text="Yield"
                 android:layout_width="0dp"
-                android:layout_weight="0.25"
+                android:layout_weight="0.2"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView

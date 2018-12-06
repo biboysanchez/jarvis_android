@@ -47,9 +47,9 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
             }
 
             itemView.tvBtnText?.setOnClickListener {
-                itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_light)
-                notifyDataSetChanged()
-                lastIndex = i
+//                itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_light)
+//                notifyDataSetChanged()
+//                lastIndex = i
             }
         }
 

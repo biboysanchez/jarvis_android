@@ -13,7 +13,7 @@
             android:layout_height="wrap_content">
         <include layout="@layout/layout_cash_flow_summary"/>
         <include layout="@layout/layout_cash_placement"/>
-
+        <include layout="@layout/layout_cash_movement"/>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

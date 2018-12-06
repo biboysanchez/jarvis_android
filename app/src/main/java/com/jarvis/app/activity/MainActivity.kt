@@ -13,6 +13,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.animation.DecelerateInterpolator
@@ -20,6 +21,7 @@ import androidx.annotation.RequiresApi
 import com.jarvis.app.R
 import com.jarvis.app.R.id.drawer_layout
 import com.jarvis.app.R.id.toolbar
+import com.jarvis.app.adapter.HorizontalListAdapter
 import com.jarvis.app.dataholder.StaticData
 import com.jarvis.app.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,7 +30,9 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import com.jarvis.app.adapter.SideMenuAdapter
 import com.jarvis.app.fragment.BlankFragment
 import com.jarvis.app.fragment.CashPositionFragment
+import com.jarvis.app.fragment.DurationMatchFragment
 import com.jarvis.app.model.UserViewModel
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         title = mainTitle
         addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
+        setHorizontalScrollView()
 
         Thread {
             setNavigationList()
@@ -112,6 +117,10 @@ class MainActivity : AppCompatActivity() {
             10 -> {
                 addFragmentNoAnim(CashPositionFragment(), CashPositionFragment.TAG)
             }
+
+            11 -> {
+                addFragmentNoAnim(DurationMatchFragment(), DurationMatchFragment.TAG)
+            }
             else -> {
                 addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
             }
@@ -141,6 +150,12 @@ class MainActivity : AppCompatActivity() {
         anim?.duration = 400
         anim?.start()
         setDrawerState(!isShowBackButton)
+    }
+
+    private fun setHorizontalScrollView() {
+        val btnLabels = Arrays.asList("BMA", "SMA", "JIWA", "MISG", "ASM", "BSA")
+        rvHorizontal?.layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+        rvHorizontal?.adapter = HorizontalListAdapter(this, btnLabels)
     }
 
     /**

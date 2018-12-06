@@ -60,14 +60,8 @@ class HomeFragment : Fragment() {
             }
         }
         Util.changeTextColor(spinnerWeek, "#FFFFFF")
-        setHorizontalScrollView()
     }
 
-    private fun setHorizontalScrollView() {
-        val btnLabels = Arrays.asList("BMA", "SMA", "JIWA", "MISG", "ASM", "BSA")
-        rvHorizontal?.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
-        rvHorizontal?.adapter = HorizontalListAdapter(context, btnLabels)
-    }
 
     /**
      * Drop down spinners
