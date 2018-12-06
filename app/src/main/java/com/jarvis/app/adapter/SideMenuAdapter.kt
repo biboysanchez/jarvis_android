@@ -11,6 +11,7 @@ import com.jarvis.app.model.SideMenu
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_home_list.view.*
 import kotlinx.android.synthetic.main.section_parent.view.*
+import kotlinx.android.synthetic.main.section_second.view.*
 
 class SideMenuAdapter : RecyclerView.Adapter<SideMenuAdapter.ViewHolder> {
     private var mContext: Context? = null
@@ -41,11 +42,28 @@ class SideMenuAdapter : RecyclerView.Adapter<SideMenuAdapter.ViewHolder> {
             itemView.imgDrawable?.setImageResource(menu!!.icon)
 
             if (menu?.list!!.isEmpty()){
-                itemView.imgArrow.visibility = View.GONE
+                itemView.imgArrow?.visibility = View.GONE
             }else{
-                itemView.imgArrow.visibility = View.VISIBLE
-            }
+                itemView.imgArrow?.visibility = View.VISIBLE
+                itemView.rowSideMenu?.setOnClickListener {
+                    if (menu.isExpanded){
+                        menu.isExpanded = false
+                        itemView.imgArrow?.setImageResource(R.drawable.ic_down_icon)
+                        itemView.llChild?.visibility = View.GONE
+                    }else{
+                        menu.isExpanded = true
+                        itemView.imgArrow?.setImageResource(R.drawable.ic_up_icon)
+                        itemView.llChild?.visibility = View.VISIBLE
 
+                        itemView.llChild?.removeAllViews()
+                        for (i in 0 until menu.list!!.size){
+                            val v = LayoutInflater.from(mContext).inflate(R.layout.section_second, null)
+                            v.rowSecondText?.text = menu.list!![i]
+                            itemView.llChild?.addView(v)
+                        }
+                    }
+                }
+            }
         }
     }
 }

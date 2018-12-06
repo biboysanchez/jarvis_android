@@ -44,13 +44,13 @@ object StaticData {
     }
 
     fun sideList():List<SideMenu>{
-        val side0 = SideMenu("Portfolio Overview", R.drawable.ic_overview, ArrayList())
-        val side1 = SideMenu("Asset Liability", R.drawable.ic_asset, Arrays.asList("Cash Position", "Duration Match"))
-        val side2 = SideMenu("Research", R.drawable.ic_research, ArrayList())
-        val side3 = SideMenu("Performance Measurement", R.drawable.ic_performance, Arrays.asList("Time Series", "Detail View"))
-        val side4 = SideMenu("Portfolio Construction", R.drawable.ic_portfolio, ArrayList())
-        val side5 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic, ArrayList())
-        val side6 = SideMenu("Stress Tess", R.drawable.ic_stress, ArrayList())
+        val side0 = SideMenu("Portfolio Overview", R.drawable.ic_overview, ArrayList(), false)
+        val side1 = SideMenu("Asset Liability", R.drawable.ic_asset, Arrays.asList("Cash Position", "Duration Match"), false)
+        val side2 = SideMenu("Research", R.drawable.ic_research, ArrayList(), false)
+        val side3 = SideMenu("Performance Measurement", R.drawable.ic_performance, Arrays.asList("Time Series", "Detail View"), false)
+        val side4 = SideMenu("Portfolio Construction", R.drawable.ic_portfolio, ArrayList(), false)
+        val side5 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic, ArrayList(), false)
+        val side6 = SideMenu("Stress Tess", R.drawable.ic_stress, ArrayList(), false)
         return Arrays.asList(side0, side1, side2, side3, side4, side5, side6)
     }
 }
