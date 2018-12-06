@@ -3,10 +3,12 @@ package com.jarvis.app.adapter
 import android.content.Context
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
+import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.model.SideMenu
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_home_list.view.*
@@ -43,9 +45,12 @@ class SideMenuAdapter : RecyclerView.Adapter<SideMenuAdapter.ViewHolder> {
 
             if (menu?.list!!.isEmpty()){
                 itemView.imgArrow?.visibility = View.GONE
+                itemView.rowSideMenu?.setOnClickListener {
+                    clickedIndex(i)
+                }
             }else{
                 itemView.imgArrow?.visibility = View.VISIBLE
-                itemView.rowSideMenu?.setOnClickListener {
+                itemView.rowSideMenu?.setOnClickListener { it ->
                     if (menu.isExpanded){
                         menu.isExpanded = false
                         itemView.imgArrow?.setImageResource(R.drawable.ic_down_icon)
@@ -56,14 +61,25 @@ class SideMenuAdapter : RecyclerView.Adapter<SideMenuAdapter.ViewHolder> {
                         itemView.llChild?.visibility = View.VISIBLE
 
                         itemView.llChild?.removeAllViews()
-                        for (i in 0 until menu.list!!.size){
+                        for (a in 0 until menu.list!!.size){
                             val v = LayoutInflater.from(mContext).inflate(R.layout.section_second, null)
-                            v.rowSecondText?.text = menu.list!![i]
+                            v.rowSecondText?.text = menu.list!![a]
+                            v.rowSecondText?.setOnClickListener {
+
+                                clickedIndex("$i$a".toInt())
+                            }
                             itemView.llChild?.addView(v)
+
                         }
                     }
                 }
             }
+        }
+
+        private fun clickedIndex(index:Int){
+            val mActivity = mContext as MainActivity
+            mActivity.getPage(index)
+            Log.i("CLICKED", "row: $index")
         }
     }
 }

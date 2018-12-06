@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.jarvis.app.R
+import com.jarvis.app.R.id.*
 import com.jarvis.app.adapter.HomeListAdapter
+import com.jarvis.app.adapter.HorizontalListAdapter
 import com.jarvis.app.adapter.PieLegendAdapter
 import com.jarvis.app.dataholder.StaticData
 import com.jarvis.app.dataholder.chart.PieChart
@@ -47,6 +49,24 @@ class HomeFragment : Fragment() {
             setInvestmentSelection()
             setTop10Position()
         },300)
+
+        spinnerWeek?.adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, Arrays.asList(
+            "All Week", "Week 1 - Sep 2018", "Week 2 - Sep 2018", "Week 3 - Sep 2018", "Week 4 - Sep 2018"))
+        spinnerWeek?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            }
+        }
+        Util.changeTextColor(spinnerWeek, "#FFFFFF")
+        setHorizontalScrollView()
+    }
+
+    private fun setHorizontalScrollView() {
+        val btnLabels = Arrays.asList("BMA", "SMA", "JIWA", "MISG", "ASM", "BSA")
+        rvHorizontal?.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
+        rvHorizontal?.adapter = HorizontalListAdapter(context, btnLabels)
     }
 
     /**
