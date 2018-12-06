@@ -2,27 +2,24 @@ package com.jarvis.app.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.View
 import com.jarvis.app.activity.MainActivity
+import kotlinx.android.synthetic.main.app_bar_main.*
 
-open class BaseFragment : Fragment() {
-    private var mActivity:MainActivity? = null
+abstract class BaseFragment : Fragment() {
+    var mActivity:MainActivity? = null
+
+    abstract fun setTitle(): String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivity = context as MainActivity
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-       // mActivity?.showBackButton(true)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        mActivity?.toolbar?.title = setTitle()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        if (mActivity?.fm?.backStackEntryCount == 1){
+            mActivity?.toolbar?.title = mActivity?.mainTitle
+        }
     }
 }

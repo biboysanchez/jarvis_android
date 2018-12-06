@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.model.SideMenu
+import kotlinx.android.synthetic.main.layout_top_10.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_home_list.view.*
 import kotlinx.android.synthetic.main.section_parent.view.*
@@ -46,7 +47,7 @@ class SideMenuAdapter : RecyclerView.Adapter<SideMenuAdapter.ViewHolder> {
             if (menu?.list!!.isEmpty()){
                 itemView.imgArrow?.visibility = View.GONE
                 itemView.rowSideMenu?.setOnClickListener {
-                    clickedIndex(i)
+                    clickedIndex(i, menu.name)
                 }
             }else{
                 itemView.imgArrow?.visibility = View.VISIBLE
@@ -65,8 +66,7 @@ class SideMenuAdapter : RecyclerView.Adapter<SideMenuAdapter.ViewHolder> {
                             val v = LayoutInflater.from(mContext).inflate(R.layout.section_second, null)
                             v.rowSecondText?.text = menu.list!![a]
                             v.rowSecondText?.setOnClickListener {
-
-                                clickedIndex("$i$a".toInt())
+                                clickedIndex("$i$a".toInt(), menu.list!![a])
                             }
                             itemView.llChild?.addView(v)
 
@@ -76,8 +76,9 @@ class SideMenuAdapter : RecyclerView.Adapter<SideMenuAdapter.ViewHolder> {
             }
         }
 
-        private fun clickedIndex(index:Int){
+        private fun clickedIndex(index:Int, title:String){
             val mActivity = mContext as MainActivity
+            mActivity.viewModel?.title = title
             mActivity.getPage(index)
             Log.i("CLICKED", "row: $index")
         }

@@ -1,6 +1,8 @@
 package com.jarvis.app.activity
 
 import android.animation.ValueAnimator
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -25,12 +27,15 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import com.jarvis.app.adapter.SideMenuAdapter
 import com.jarvis.app.fragment.BlankFragment
+import com.jarvis.app.model.UserViewModel
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toggle:ActionBarDrawerToggle
     var fm:FragmentManager? = null
     private var lastIndex = 0
+    var viewModel:UserViewModel? = null
+    var mainTitle = "Portfolio Overview"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
+        viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        title = mainTitle
         addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
 
         Thread {
@@ -84,9 +91,13 @@ class MainActivity : AppCompatActivity() {
         ft?.commit()
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun getPage(page:Int){
         drawer_layout.closeDrawer(GravityCompat.START)
+
+        if (page == 0){
+            toolbar.title = mainTitle
+        }
+
         if (lastIndex == page){
             return
         }

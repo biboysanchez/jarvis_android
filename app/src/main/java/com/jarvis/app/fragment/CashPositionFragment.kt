@@ -5,23 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
-import kotlinx.android.synthetic.main.fragment_blank.*
 
-class BlankFragment : BaseFragment() {
+class CashPositionFragment : BaseFragment() {
     override fun setTitle(): String {
-        return mActivity?.viewModel!!.title
+        return "Cash Position"
     }
 
     companion object {
-        val TAG = "BlankFragment"
+        val TAG = "CashPositionFragment"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_blank, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        tvBlankTitle?.text = mActivity?.viewModel!!.title
     }
 }
