@@ -15,7 +15,7 @@ open class BaseFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mActivity?.showBackButton(true)
+       // mActivity?.showBackButton(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

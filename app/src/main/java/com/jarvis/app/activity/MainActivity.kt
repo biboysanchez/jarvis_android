@@ -1,6 +1,7 @@
 package com.jarvis.app.activity
 
 import android.animation.ValueAnimator
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -10,22 +11,18 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.view.View
 import android.view.animation.DecelerateInterpolator
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import com.jarvis.app.R
+import com.jarvis.app.R.id.drawer_layout
+import com.jarvis.app.R.id.toolbar
 import com.jarvis.app.dataholder.StaticData
 import com.jarvis.app.fragment.HomeFragment
-import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import java.util.*
-import com.jarvis.app.adapter.HorizontalListAdapter
 import com.jarvis.app.adapter.SideMenuAdapter
 import com.jarvis.app.fragment.BlankFragment
 
@@ -33,6 +30,7 @@ import com.jarvis.app.fragment.BlankFragment
 class MainActivity : AppCompatActivity() {
     private lateinit var toggle:ActionBarDrawerToggle
     var fm:FragmentManager? = null
+    private var lastIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +45,8 @@ class MainActivity : AppCompatActivity() {
 
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-        addHome()
+
+        addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
 
         Thread {
             setNavigationList()
@@ -57,13 +56,6 @@ class MainActivity : AppCompatActivity() {
     private fun setNavigationList(){
         nav_view?.listNavView?.layoutManager = LinearLayoutManager(this)
         nav_view?.listNavView?.adapter = SideMenuAdapter(this, StaticData.sideList())
-    }
-
-    private fun addHome(){
-        val ft = fm?.beginTransaction()
-        ft?.addToBackStack(null)
-        ft?.add(R.id.main_content, HomeFragment(), HomeFragment.TAG)
-        ft?.commit()
     }
 
     fun addFragment(fragment:Fragment, tag:String){
@@ -79,15 +71,47 @@ class MainActivity : AppCompatActivity() {
         ft?.commit()
     }
 
+    private fun addFragmentNoAnim(fragment:Fragment, tag:String){
+        val ft = fm?.beginTransaction()
+        ft?.addToBackStack(null)
+        ft?.add(R.id.main_content, fragment, tag)
+        ft?.commit()
+    }
+
+    fun replaceFragment(fragment:Fragment, tag:String){
+        val ft = fm?.beginTransaction()
+        ft?.replace(R.id.main_content, fragment, tag)
+        ft?.commit()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun getPage(page:Int){
         drawer_layout.closeDrawer(GravityCompat.START)
-        if (page == 0){
-        }else{
-            Handler().postDelayed({
-                addFragment(BlankFragment(), BlankFragment.TAG)
-            }, 400)
+        if (lastIndex == page){
+            return
+        }
+
+        lastIndex = page
+
+        for (i in 0 until fm?.backStackEntryCount!!){
+            if (i != 0){
+                fm?.popBackStack()
+            }
+        }
+
+        when (page) {
+            0 -> {
+
+            }else ->{
+                addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
+            }
         }
     }
+
+    fun removeAllBackStack() {
+        fm!!.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
 
     /**
      * Set toolbar navigation icon
