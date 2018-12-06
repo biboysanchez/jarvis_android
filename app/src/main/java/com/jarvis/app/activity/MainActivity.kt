@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import com.jarvis.app.adapter.SideMenuAdapter
 import com.jarvis.app.fragment.BlankFragment
+import com.jarvis.app.fragment.CashPositionFragment
 import com.jarvis.app.model.UserViewModel
 
 
@@ -80,25 +81,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun addFragmentNoAnim(fragment:Fragment, tag:String){
         val ft = fm?.beginTransaction()
-        ft?.addToBackStack(null)
+        ft?.addToBackStack(tag)
         ft?.add(R.id.main_content, fragment, tag)
         ft?.commit()
     }
 
-    fun replaceFragment(fragment:Fragment, tag:String){
-        val ft = fm?.beginTransaction()
-        ft?.replace(R.id.main_content, fragment, tag)
-        ft?.commit()
-    }
-
     fun getPage(page:Int){
+        Log.i("MAin Activity", "stack count: ${fm?.backStackEntryCount!!}")
         drawer_layout.closeDrawer(GravityCompat.START)
 
-        if (page == 0){
-            toolbar.title = mainTitle
-        }
-
         if (lastIndex == page){
+            if (lastIndex == 0){
+                toolbar.title = mainTitle
+            }
             return
         }
 
@@ -113,7 +108,11 @@ class MainActivity : AppCompatActivity() {
         when (page) {
             0 -> {
 
-            }else ->{
+            }
+            10 -> {
+                addFragmentNoAnim(CashPositionFragment(), CashPositionFragment.TAG)
+            }
+            else -> {
                 addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
             }
         }
@@ -122,7 +121,6 @@ class MainActivity : AppCompatActivity() {
     fun removeAllBackStack() {
         fm!!.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
-
 
     /**
      * Set toolbar navigation icon
@@ -174,6 +172,10 @@ class MainActivity : AppCompatActivity() {
             Log.i("TAG", "count ${fm?.backStackEntryCount!!}")
             if (fm?.backStackEntryCount!! == 1){
                 finish()
+            }else if (fm?.backStackEntryCount!! == 2){
+                if (lastIndex > 0){
+                    finish()
+                }
             }else{
                 showBackButton(false)
                 super.onBackPressed()
