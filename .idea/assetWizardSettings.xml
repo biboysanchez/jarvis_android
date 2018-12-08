@@ -28,9 +28,13 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_up_icon" />
-                            <entry key="sourceFile" value="C:\Users\Pardz\Downloads\Assets\asset\stress.svg" />
+                            <entry key="height" value="408" />
+                            <entry key="outputName" value="ic_jarvis_logo_white" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="C:\Users\Pardz\Downloads\jarvis_logo.svg" />
+                            <entry key="width" value="961" />
                           </map>
                         </option>
                       </PersistentState>

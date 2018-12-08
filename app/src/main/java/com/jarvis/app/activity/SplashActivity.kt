@@ -6,6 +6,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import com.jarvis.app.R
+import android.view.animation.AnimationUtils
+import kotlinx.android.synthetic.main.activity_splash.*
+
+import android.support.v4.view.ViewCompat
+import android.support.v4.app.ActivityOptionsCompat
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
+
+
 
 class SplashActivity : AppCompatActivity() {
 
@@ -13,12 +22,33 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         hideStatusBar()
-        Handler().postDelayed({
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-            finish()
-        },2000)
+
+        startFadeInAnimation()
     }
     private fun hideStatusBar() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
+
+    private fun startFadeInAnimation() {
+        val startAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in)
+        startAnimation.setAnimationListener(object : AnimationListener {
+            override fun onAnimationStart(anim: Animation) {}
+            override fun onAnimationRepeat(anim: Animation) {}
+            override fun onAnimationEnd(anim: Animation) {
+
+                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this@SplashActivity,
+                    img_logo,
+                    ViewCompat.getTransitionName(img_logo)!!
+                )
+                startActivity(intent, options.toBundle())
+
+                Handler().postDelayed({
+                    this@SplashActivity.finish()
+                },3000)
+            }
+        })
+        img_logo?.startAnimation(startAnimation)
     }
 }
