@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
+import com.jarvis.app.utils.DialogUtil
 import kotlinx.android.synthetic.main.row_home_list.view.*
 
 class HomeListAdapter : RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
@@ -37,6 +38,10 @@ class HomeListAdapter : RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#FFFFFF"))
             }else{
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#E2EEEA"))
+            }
+
+            itemView.llBgRow?.setOnClickListener {
+                DialogUtil.showCustomListDialog(mContext!!, "Konvensional")
             }
         }
     }
