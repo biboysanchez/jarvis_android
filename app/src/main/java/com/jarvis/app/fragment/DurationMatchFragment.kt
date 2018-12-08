@@ -129,6 +129,12 @@ class DurationMatchFragment : BaseFragment() {
         // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
         barChartAsset?.xAxis?.axisMaximum = startYear + barChartAsset.barData.getGroupWidth(groupSpace, barSpace) * groupCount
         barChartAsset?.groupBars(startYear.toFloat(), groupSpace, barSpace)
+
+        barChartAsset?.description = null
+        barChartAsset?.axisLeft?.setDrawLabels(true)
+        barChartAsset?.axisRight?.setDrawLabels(false)
+        barChartAsset?.xAxis?.setDrawLabels(false)
+        barChartAsset?.legend?.isEnabled = false
         barChartAsset?.invalidate()
     }
 
@@ -201,6 +207,7 @@ class DurationMatchFragment : BaseFragment() {
         // create a data object with the data sets
         val data = LineData(set1)
 
+        lineChartSurplus?.legend?.isEnabled = false
         // set data
         lineChartSurplus?.data = data
         lineChartSurplus?.invalidate()
