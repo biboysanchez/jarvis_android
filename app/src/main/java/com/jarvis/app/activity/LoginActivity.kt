@@ -23,6 +23,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkLoginFields(){
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+
         if (editLoginEmail?.text?.trim()!!.isEmpty()){
             inputLoginEmail?.error = "Email is required"
             return
@@ -34,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         inputLoginPassword?.error = null
-        postEmail()
+
     }
 
     private fun postEmail(){

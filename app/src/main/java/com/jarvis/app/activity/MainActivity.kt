@@ -123,6 +123,10 @@ class MainActivity : AppCompatActivity() {
                 addFragmentNoAnim(TimeSeriesFragment(), TimeSeriesFragment.TAG)
             }
 
+            31 -> {
+                addFragmentNoAnim(PerformanceDetailFragment(), PerformanceDetailFragment.TAG)
+            }
+
             else -> {
                 addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
             }

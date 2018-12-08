@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/home_bg"
+        android:clickable="true"
+        android:focusable="true">
+
+    <LinearLayout
+            android:padding="8dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <android.support.constraint.ConstraintLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Liquidity Profile"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvHeaderSelection"
+                    android:layout_width="0dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  app:layout_constraintTop_toBottomOf="@+id/tvHeaderSelection"
+                  android:layout_marginTop="16dp"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:id="@+id/view"/>
+
+
+            <FrameLayout
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp" 
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    android:layout_marginTop="16dp">
+
+                <com.github.mikephil.charting.charts.BarChart
+                        android:layout_marginBottom="24dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/barChartLiquidity"/>
+
+                <LinearLayout
+                        android:layout_gravity="bottom"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="33dp">
+                </LinearLayout>
+            </FrameLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_marginTop="12dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="@string/performance_risk_measurement"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvPerformance"
+                    android:layout_width="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:id="@+id/view3"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  android:layout_marginTop="8dp"
+                  app:layout_constraintTop_toBottomOf="@+id/tvPerformance"/>
+
+            <FrameLayout
+                    android:background="@drawable/card_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/view3"
+                    android:id="@+id/frameLayoutPerformance"
+                    app:layout_constraintStart_toStartOf="@+id/tvPerformance"
+                    app:layout_constraintEnd_toStartOf="@+id/imgMenuDecision">
+                <Spinner
+                        android:id="@+id/spinnerPerformance"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"/>
+            </FrameLayout>
+
+            <ImageView
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_sort"
+                    android:background="@drawable/rec_hallow_primary"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:id="@+id/imgMenuDecision"
+                    app:layout_constraintStart_toEndOf="@+id/frameLayoutPerformance"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/view3"/>
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/frameLayoutPerformance"
+                    app:layout_constraintStart_toStartOf="@+id/frameLayoutPerformance"
+                    app:layout_constraintEnd_toEndOf="@+id/imgMenuDecision"
+                    android:id="@+id/rvPerformanceAndRisk"/>
+
+            <TextView
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:background="@drawable/rec_hallow_primary"
+                    android:text="Show All"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvShowAllDecision"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/rvPerformanceAndRisk"
+                    app:layout_constraintStart_toStartOf="@+id/rvPerformanceAndRisk"
+                    app:layout_constraintEnd_toEndOf="@+id/rvPerformanceAndRisk"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_marginTop="12dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Liquid Profile - Leased Liquid Securities"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvLiquidProfile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:id="@+id/view4"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  android:layout_marginTop="8dp"
+                  app:layout_constraintTop_toBottomOf="@+id/tvLiquidProfile"/>
+
+            <FrameLayout
+                    android:background="@drawable/card_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/view4"
+                    android:id="@+id/frameLayoutLiquidProfile"
+                    app:layout_constraintStart_toStartOf="@+id/tvLiquidProfile"
+                    app:layout_constraintEnd_toStartOf="@+id/imgLiquidProfile"
+                    android:layout_marginEnd="8dp">
+                <Spinner
+                        android:id="@+id/spinnerLiquidProfile"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"/>
+            </FrameLayout>
+
+            <ImageView
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_sort"
+                    android:background="@drawable/rec_hallow_primary"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:id="@+id/imgLiquidProfile"
+                    app:layout_constraintTop_toTopOf="@+id/frameLayoutLiquidProfile"
+                    app:layout_constraintStart_toEndOf="@+id/frameLayoutLiquidProfile"
+            />
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/frameLayoutLiquidProfile"
+                    app:layout_constraintStart_toStartOf="@+id/frameLayoutLiquidProfile"
+                    app:layout_constraintEnd_toEndOf="@+id/tvLiquidProfile"
+                    android:id="@+id/rvLiquidProfile"
+                    android:layout_marginEnd="8dp"/>
+
+            <TextView
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:background="@drawable/rec_hallow_primary"
+                    android:text="Show All"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvShowAllLiquiedProfile"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/rvLiquidProfile"
+                    app:layout_constraintStart_toStartOf="@+id/rvLiquidProfile"
+                    app:layout_constraintEnd_toEndOf="@+id/rvLiquidProfile" android:layout_marginTop="16dp"
+            />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

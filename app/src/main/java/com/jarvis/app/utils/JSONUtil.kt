@@ -15,7 +15,6 @@ object JSONUtil {
     @Throws(JSONException::class)
     fun jsonToMap(json: JSONObject): HashMap<String, String> {
         var retMap = HashMap<String, String>()
-
         if (json !== JSONObject.NULL) {
             retMap = toMap(json)
         }

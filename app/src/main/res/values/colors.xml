@@ -12,7 +12,7 @@
 
     <color name="text_light">#EDECEC</color>
 
-
+    <color name="primaryLight">#83e4db</color>
     <color name="cash_color">#18E4D1</color>
     <color name="equity_color">#21C6B7</color>
     <color name="fixed_income_color">#239D92</color>
