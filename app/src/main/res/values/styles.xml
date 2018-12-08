@@ -31,4 +31,11 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/gray_600</item>
     </style>
+
+    <style name="SpotDialogStyle" parent="android:Theme.DeviceDefault.Light.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Small</item>
+        <item name="DialogTitleText">Please wait…</item>
+        <item name="DialogSpotColor">@color/colorPrimary</item>
+        <item name="DialogSpotCount">5</item>
+    </style>
 </resources>
