@@ -23,14 +23,11 @@ import com.jarvis.app.R.id.drawer_layout
 import com.jarvis.app.R.id.toolbar
 import com.jarvis.app.adapter.HorizontalListAdapter
 import com.jarvis.app.dataholder.StaticData
-import com.jarvis.app.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import com.jarvis.app.adapter.SideMenuAdapter
-import com.jarvis.app.fragment.BlankFragment
-import com.jarvis.app.fragment.CashPositionFragment
-import com.jarvis.app.fragment.DurationMatchFragment
+import com.jarvis.app.fragment.*
 import com.jarvis.app.model.UserViewModel
 import java.util.*
 
@@ -121,6 +118,11 @@ class MainActivity : AppCompatActivity() {
             11 -> {
                 addFragmentNoAnim(DurationMatchFragment(), DurationMatchFragment.TAG)
             }
+
+            30 -> {
+                addFragmentNoAnim(TimeSeriesFragment(), TimeSeriesFragment.TAG)
+            }
+
             else -> {
                 addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
             }
