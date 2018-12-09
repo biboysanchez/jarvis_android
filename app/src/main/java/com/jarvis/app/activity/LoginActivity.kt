@@ -3,7 +3,6 @@ package com.jarvis.app.activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import com.android.volley.VolleyError
 import com.jarvis.app.R
@@ -23,8 +22,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkLoginFields(){
-        if (editLoginEmail?.text?.trim()!!.isEmpty()){
-            inputLoginEmail?.error = "Email is required"
+        if (editLoginUsername?.text?.trim()!!.isEmpty()){
+            inputLoginEmail?.error = "Username is required"
             return
         }
         inputLoginEmail?.error = null
@@ -39,12 +38,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun postLogin(){
         val params = HashMap<String, String>()
-        params["username"] = editLoginEmail?.text.toString()
+        params["username"] = editLoginUsername?.text.toString()
         params["password"] = editLoginPassword?.text.toString()
 
         ApiRequest.post(this, API.login, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
-                if (JSONUtil.isSuccess(response)){
+                if (JSONUtil.isSuccess(this@LoginActivity, response)){
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
                 }

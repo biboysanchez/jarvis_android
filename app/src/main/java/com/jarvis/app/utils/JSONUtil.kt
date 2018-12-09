@@ -1,16 +1,23 @@
 package com.jarvis.app.utils
 
+import android.content.Context
 import android.util.Log
+import com.jarvis.app.extension.simpleDialog
 import com.jarvis.app.extension.string
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
 object JSONUtil {
-    fun isSuccess(response: String): Boolean {
+    fun isSuccess(context: Context, response: String): Boolean {
+        val json = JSONObject(response)
         return try {
-            val json = JSONObject(response)
-            json.string("message_action").contains("SUCCESS")
+            if (json.string("message_action").contains("SUCCESS")){
+                true
+            }else{
+                context.simpleDialog("Failed",json.string("message_desc"))
+                false
+            }
         }catch (e:JSONException){
             e.printStackTrace()
             false

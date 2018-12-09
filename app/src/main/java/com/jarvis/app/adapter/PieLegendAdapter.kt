@@ -13,14 +13,15 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.graphics.Typeface
 import android.text.style.StyleSpan
+import com.jarvis.app.model.PieModel
 import com.jarvis.app.utils.Util
 
 
 class PieLegendAdapter : RecyclerView.Adapter<PieLegendAdapter.ViewHolder> {
     private var mContext:Context? = null
-    private var data:List<Pie>? = ArrayList()
+    private var data:List<PieModel>? = ArrayList()
 
-    constructor(mContext: Context?, data: List<Pie>?) : super() {
+    constructor(mContext: Context?, data: List<PieModel>?) : super() {
         this.mContext = mContext
         this.data = data
     }
@@ -41,15 +42,15 @@ class PieLegendAdapter : RecyclerView.Adapter<PieLegendAdapter.ViewHolder> {
     inner class ViewHolder(itemView:View): RecyclerView.ViewHolder(itemView){
         fun bindItem(i:Int){
             val pie = data?.get(i)
-            val label = "${pie?.name}\n[${pie?.percent}]% ${Util.priceFormat(pie?.amount!!.toFloat()).replace(".00","")} B"
+            val label = "${pie?.item}\n[${pie?.percentage}%] ${Util.priceFormat(pie?.portofolio!!.toFloat()).replace(".00","")} B"
 
             val ssBuilder = SpannableStringBuilder(label)
             val boldSpan  = StyleSpan(Typeface.BOLD)
 
             ssBuilder.setSpan(
                 boldSpan,
-                pie?.name!!.indexOf(pie.name),
-                pie.name.indexOf(pie.name) + pie.name.length,
+                pie.item.indexOf(pie.item),
+                pie.item.indexOf(pie.item) + pie.item.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
 

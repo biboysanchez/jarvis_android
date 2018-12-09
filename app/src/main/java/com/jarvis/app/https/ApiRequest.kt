@@ -37,6 +37,7 @@ object ApiRequest {
         val queue = Volley.newRequestQueue(context)
         val request = object : StringRequest(Request.Method.POST, url, Response.Listener { response ->
             pDialog.dismiss()
+            Log.i(TAG, "URL: $url \n$response")
             url_callback?.didURLResponse(response)
         }, Response.ErrorListener { error ->
             pDialog.dismiss()
@@ -72,6 +73,26 @@ object ApiRequest {
 //            override fun getBodyContentType(): String {
 //                return "application/x-www-form-urlencoded; charset=$paramsEncoding"
 //            }
+        }
+        request.retryPolicy = getRetryPolicy()
+        queue.add(request)
+    }
+
+    /**
+     * Simple api request post with parameters
+     */
+    fun postNoUI(context: Context, url: String, params: MutableMap<String, String>, url_callback: URLCallback?) {
+        val queue = Volley.newRequestQueue(context)
+        val request = object : StringRequest(Request.Method.POST, url, Response.Listener { response ->
+            Log.i(TAG, "URL: $url \n$response")
+            url_callback?.didURLResponse(response)
+        }, Response.ErrorListener { error ->
+            url_callback?.didURLFailed(error)
+        }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                return params
+            }
         }
         request.retryPolicy = getRetryPolicy()
         queue.add(request)
