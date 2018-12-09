@@ -69,36 +69,26 @@ class PerformanceDetailFragment: BaseFragment() {
         l?.formToTextSpace = 4f
         l?.xEntrySpace = 6f
 
-//        val values = ArrayList<BarEntry>()
-//
-//        for (i in 0 until 40) {
-//            val mul = 41.toFloat()
-//            val val1 = (Math.random() * mul).toFloat() + mul / 2
-//            val val2 = (Math.random() * mul).toFloat() + mul / 2
-//            values.add(BarEntry(i.toFloat(), floatArrayOf(val1, val2)))
-//        }
+        val values = ArrayList<BarEntry>()
 
-        val groupCount = 4
-        val startYear = 1980
-        val endYear = startYear + groupCount
-
-        val values1 = ArrayList<BarEntry>()
-        val randomMultiplier = 50f
-        for (i in startYear until endYear) {
-            values1.add(BarEntry(i.toFloat(), (Math.random() * randomMultiplier).toFloat()))
-            values1.add(BarEntry(i.toFloat(), (Math.random() * randomMultiplier).toFloat()))
+        for (i in 0 until 10) {
+            val mul = 11.toFloat()
+            val val1 = (Math.random() * mul).toFloat() + mul / 2
+            val val2 = (Math.random() * mul).toFloat() + mul / 2
+            values.add(BarEntry(i.toFloat(), floatArrayOf(val1, val2)))
         }
 
         val set1: BarDataSet
         if (barChartLiquidity?.data != null && barChartLiquidity?.data?.dataSetCount!! > 0) {
             set1 = barChartLiquidity.data.getDataSetByIndex(0) as BarDataSet
-            set1.values = values1
+            set1.values = values
+            set1.setColors(Color.parseColor("#21C6B7"), Color.parseColor("#F3B62C"))
             barChartLiquidity.data.notifyDataChanged()
             barChartLiquidity.notifyDataSetChanged()
         } else {
-            set1 = BarDataSet(values1, "Statistics Vienna 2014")
+            set1 = BarDataSet(values, "Statistics Vienna 2014")
             set1.setDrawIcons(false)
-            set1.setColors()
+            set1.setColors(Color.parseColor("#21C6B7"), Color.parseColor("#F3B62C"))
             set1.stackLabels = arrayOf("Births", "Divorces")
 
             val dataSets = ArrayList<IBarDataSet>()
@@ -110,6 +100,17 @@ class PerformanceDetailFragment: BaseFragment() {
             barChartLiquidity?.data = data
         }
 
+        val sets = barChartLiquidity?.data?.dataSets
+        if (sets != null) {
+            for (iSet in sets) {
+                val set = iSet as BarDataSet
+                set.setDrawValues(!set.isDrawValuesEnabled)
+            }
+        }
+
+        barChartLiquidity?.description = null
+        barChartLiquidity?.legend?.isEnabled = false
+        barChartLiquidity?.setDrawValueAboveBar(false)
         barChartLiquidity?.setFitBars(true)
         barChartLiquidity?.invalidate()
     }
