@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
+import com.jarvis.app.fragment.HomeFragment
 import com.jarvis.app.model.Company
 import kotlinx.android.synthetic.main.button_scroll.view.*
 
@@ -35,7 +36,7 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val mActivity = mContext as MainActivity
+        private val mActivity = mContext as MainActivity
 
         fun bindItem(i: Int) {
             val company = data?.get(i)
@@ -54,6 +55,9 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
 
                 data!![i].isSelected = true
                 notifyDataSetChanged()
+
+                HomeFragment.instance?.getPieData()
+                HomeFragment.instance?.getPieData2()
             }
         }
 

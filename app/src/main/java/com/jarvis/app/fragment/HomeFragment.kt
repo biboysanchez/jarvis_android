@@ -53,9 +53,11 @@ class HomeFragment : Fragment() {
 
     companion object {
         val TAG = "HomeFragment"
+        var instance: HomeFragment? = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        instance = this
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -211,8 +213,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-
-    private fun getPieData(){
+    fun getPieData(){
         val params = HashMap<String, String>()
         params["category"]  = selectedSpinner1
         params["company"]   = mActivity?.viewModel?.selectedCompany!!
@@ -247,7 +248,7 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun getPieData2(){
+    fun getPieData2(){
         val params = HashMap<String, String>()
         params["category"]  = selectedSpinner2
         params["company"]   = mActivity?.viewModel?.selectedCompany!!
@@ -291,5 +292,10 @@ class HomeFragment : Fragment() {
 
         recyclerView?.layoutManager = GridLayoutManager(context,  2)
         recyclerView?.adapter = PieLegendAdapter(context, ArrayList())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        instance = null
     }
 }
