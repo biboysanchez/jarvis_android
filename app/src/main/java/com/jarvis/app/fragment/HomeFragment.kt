@@ -38,8 +38,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
+    private var arrPortfolioList:ArrayList<String>? = ArrayList()
+
     private var arrPieTop:ArrayList<PieModel>? = ArrayList()
     private var arrPieBottom:ArrayList<PieModel>? = ArrayList()
+
 
     companion object {
         val TAG = "HomeFragment"
@@ -53,8 +56,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Handler().postDelayed({
-            setSpinners()
-
             setPerformanceSummary()
             setInvestmentDecision()
             setInvestmentSelection()
@@ -77,29 +78,27 @@ class HomeFragment : Fragment() {
      * Drop down spinners
      */
     private fun setSpinners(){
-        val list1 = Arrays.asList("Sectors", "Asset Class", "SMMA")
-        val list2 = Arrays.asList("Rating", "Company Type", "SMMA", "Duration")
         spinnerAssetClass?.adapter = ArrayAdapter<String>(context!!,
-            R.layout.support_simple_spinner_dropdown_item, list1)
+            R.layout.support_simple_spinner_dropdown_item, arrPortfolioList!!)
         spinnerAssetClass?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
-                getPieData(list1[position])
+                getPieData(arrPortfolioList!![position])
             }
         }
 
         spinnerCompanyType?.adapter = ArrayAdapter<String>(context!!,
-            R.layout.support_simple_spinner_dropdown_item, list2)
+            R.layout.support_simple_spinner_dropdown_item, arrPortfolioList!!)
         spinnerCompanyType?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
-                getPieData2(list2[position])
+                getPieData2(arrPortfolioList!![position])
             }
         }
     }
@@ -135,6 +134,31 @@ class HomeFragment : Fragment() {
         Util.changeTextColor(spinnerPosition)
         rvPosition?.layoutManager = LinearLayoutManager(context)
         rvPosition?.adapter = HomeListAdapter(context, ArrayList())
+    }
+
+    private fun getPortfolioDropdownList(){
+        ApiRequest.postNoUI(context!!, API.portfolioDropDownList, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        arrPortfolioList = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("portfolio_overview_category_list")
+                        if (arr.length() > 0){
+                            for (i in 0 until arr.length()){
+                                Log.i(TAG, "==> ${arr.getString(i)}")
+                                arrPortfolioList?.add(arr.getString(i))
+                            }
+                            setSpinners()
+                        }
+                    }catch (e:JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
     }
 
     private fun getPieData(category: String){

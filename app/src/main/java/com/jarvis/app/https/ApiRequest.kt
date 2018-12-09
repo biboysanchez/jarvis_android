@@ -28,19 +28,13 @@ object ApiRequest {
     /**
      * Simple api request post no parameters
      */
-    fun post(context: Context, url: String, url_callback: URLCallback?) {
+    fun postNoUI(context: Context, url: String, url_callback: URLCallback?) {
         Log.i(TAG, "URL: $url")
-
-        val pDialog = SpotsDialog(context, R.style.SpotDialogStyle)
-        pDialog.show()
-
         val queue = Volley.newRequestQueue(context)
         val request = object : StringRequest(Request.Method.POST, url, Response.Listener { response ->
-            pDialog.dismiss()
             Log.i(TAG, "URL: $url \n$response")
             url_callback?.didURLResponse(response)
         }, Response.ErrorListener { error ->
-            pDialog.dismiss()
             url_callback?.didURLFailed(error)
         }) {
         }

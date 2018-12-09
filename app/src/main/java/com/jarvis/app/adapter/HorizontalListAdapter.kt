@@ -7,14 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
+import com.jarvis.app.model.Company
 import kotlinx.android.synthetic.main.button_scroll.view.*
 
 class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: List<String>? = ArrayList()
+    private var data: List<Company>? = ArrayList()
     private var lastIndex = 100
 
-    constructor(mContext: Context?, data: List<String>?) : super() {
+    constructor(mContext: Context?, data: List<Company>?) : super() {
         this.mContext = mContext
         this.data = data
     }
@@ -34,22 +35,21 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItem(i: Int) {
-            itemView.tvBtnText?.text = data?.get(i)
-
-//            if (itemView.tvBtnText?.tag == i){
-//                itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_light)
-//            }else{
-//                itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_primary)
-//            }
-
-            if (lastIndex == i){
+            val company = data?.get(i)
+            itemView.tvBtnText?.text = company?.name
+            if (company?.isSelected!!){
+                itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_light)
+            }else{
                 itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_primary)
             }
 
             itemView.tvBtnText?.setOnClickListener {
-//                itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_light)
-//                notifyDataSetChanged()
-//                lastIndex = i
+                for (a in 0 until data!!.size){
+                    data!![a].isSelected = false
+                }
+
+                data!![i].isSelected = true
+                notifyDataSetChanged()
             }
         }
 

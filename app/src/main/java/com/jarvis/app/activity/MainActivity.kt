@@ -18,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.RequiresApi
+import com.android.volley.VolleyError
 import com.jarvis.app.R
 import com.jarvis.app.R.id.drawer_layout
 import com.jarvis.app.R.id.toolbar
@@ -27,8 +28,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import com.jarvis.app.adapter.SideMenuAdapter
+import com.jarvis.app.extension.arr
+import com.jarvis.app.extension.obj
 import com.jarvis.app.fragment.*
+import com.jarvis.app.https.API
+import com.jarvis.app.https.ApiRequest
+import com.jarvis.app.model.Company
 import com.jarvis.app.model.UserViewModel
+import com.jarvis.app.utils.JSONUtil
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
 
 
@@ -38,6 +47,8 @@ class MainActivity : AppCompatActivity() {
     private var lastIndex = 0
     var viewModel:UserViewModel? = null
     var mainTitle = "Portfolio Overview"
+
+    private var arrCompanyList:ArrayList<Company>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +67,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         title = mainTitle
         addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
-        setHorizontalScrollView()
-
+        getCompanyList()
         Thread {
             setNavigationList()
         }.start()
@@ -158,12 +168,6 @@ class MainActivity : AppCompatActivity() {
         setDrawerState(!isShowBackButton)
     }
 
-    private fun setHorizontalScrollView() {
-        val btnLabels = Arrays.asList("BMA", "SMA", "JIWA", "MISG", "ASM", "BSA")
-        rvHorizontal?.layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        rvHorizontal?.adapter = HorizontalListAdapter(this, btnLabels)
-    }
-
     /**
      * Control drawer behavior
      * @param isEnabled if true disable the side menu and unable to swipe else enable
@@ -184,6 +188,37 @@ class MainActivity : AppCompatActivity() {
             drawer_layout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             toolbar?.setNavigationOnClickListener{ onBackPressed() }
         }
+    }
+
+    private fun getCompanyList(){
+        ApiRequest.postNoUI(this, API.companyList, object : ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(this@MainActivity, response)){
+                    try {
+                        arrCompanyList = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("portfolio_overview_company_list")
+                        if (arr.length() > 0){
+                            for (i in 0 until arr.length()){
+                                Log.i(HomeFragment.TAG, "==> ${arr.getString(i)}")
+                                var company = Company(arr.getString(i), false)
+                                if (i == 0){
+                                    company = Company(arr.getString(i), true)
+                                }
+                                arrCompanyList?.add(company)
+                            }
+
+                            rvHorizontal?.layoutManager = GridLayoutManager(this@MainActivity, 1, GridLayoutManager.HORIZONTAL, false)
+                            rvHorizontal?.adapter = HorizontalListAdapter(this@MainActivity, arrCompanyList)
+                        }
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
     }
 
     override fun onBackPressed() {
