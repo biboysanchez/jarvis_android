@@ -1,15 +1,20 @@
 package com.jarvis.app.utils
 
 import android.util.Log
+import com.jarvis.app.extension.string
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
 object JSONUtil {
-    private const val TAG = "JSONUtil"
     fun isSuccess(response: String): Boolean {
-        Log.i(TAG, ": RESPONSE: $response")
-        return JSONObject(response).getBoolean("success")
+        return try {
+            val json = JSONObject(response)
+            json.string("message_action").contains("SUCCESS")
+        }catch (e:JSONException){
+            e.printStackTrace()
+            false
+        }
     }
 
     @Throws(JSONException::class)

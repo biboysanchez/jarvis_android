@@ -23,9 +23,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkLoginFields(){
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-
         if (editLoginEmail?.text?.trim()!!.isEmpty()){
             inputLoginEmail?.error = "Email is required"
             return
@@ -37,22 +34,24 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         inputLoginPassword?.error = null
-
+        postLogin()
     }
 
-    private fun postEmail(){
+    private fun postLogin(){
         val params = HashMap<String, String>()
+        params["username"] = editLoginEmail?.text.toString()
+        params["password"] = editLoginPassword?.text.toString()
+
         ApiRequest.post(this, API.login, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(response)){
-
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    finish()
                 }
             }
 
             override fun didURLFailed(error: VolleyError?) {
             }
         })
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 }
