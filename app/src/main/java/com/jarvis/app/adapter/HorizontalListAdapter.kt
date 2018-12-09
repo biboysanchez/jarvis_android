@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
+import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.model.Company
 import kotlinx.android.synthetic.main.button_scroll.view.*
 
@@ -34,10 +35,13 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val mActivity = mContext as MainActivity
+
         fun bindItem(i: Int) {
             val company = data?.get(i)
             itemView.tvBtnText?.text = company?.name
             if (company?.isSelected!!){
+                mActivity.viewModel?.selectedCompany = company.name
                 itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_light)
             }else{
                 itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_primary)
