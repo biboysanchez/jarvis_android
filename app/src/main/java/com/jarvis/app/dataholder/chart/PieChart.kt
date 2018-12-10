@@ -33,6 +33,7 @@ class PieChart {
     private var context: Context? = null
     private var chart: PieChart? = null
     private var data:ArrayList<PieModel>? = ArrayList()
+    private var totalAssets = 0.0
 
     constructor(context: Context?, chart: PieChart?, data: ArrayList<PieModel>?) {
         this.context = context
@@ -45,7 +46,6 @@ class PieChart {
         chart?.setUsePercentValues(false)
         chart?.description?.isEnabled = false
         chart?.dragDecelerationFrictionCoef = 0.95f
-        chart?.centerText = generateCenterSpannableText()
         chart?.isDrawHoleEnabled = true
         chart?.setHoleColor(Color.WHITE)
 
@@ -94,6 +94,7 @@ class PieChart {
 
         val colors = ArrayList<Int>()
         for (col:PieModel in data!!){
+            totalAssets += col.portofolio
             colors.add(col.color)
             entries.add(PieEntry(col.percentage.toFloat(), col.item))
         }
@@ -103,6 +104,7 @@ class PieChart {
         val data = PieData(dataSet)
         data.setDrawValues(false)
         chart?.data = data
+        chart?.centerText = generateCenterSpannableText()
 
         // undo all highlights
         chart?.highlightValues(null)
@@ -119,7 +121,7 @@ class PieChart {
 //        s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - 14, s.length, 0)
 
         val title = "Total Assets"
-        var price = "34,08 B"
+        val price = "${Util.priceFormat(totalAssets.toFloat()).replace(".00","")} B"
 
         val s = SpannableString("$title\n$price")
         s.setSpan(RelativeSizeSpan(.8f), 0, title.length, 0)

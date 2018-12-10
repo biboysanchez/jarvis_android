@@ -8,8 +8,10 @@ import com.android.volley.VolleyError
 import com.jarvis.app.R
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
+import com.jarvis.app.sessions.UserSession
 import com.jarvis.app.utils.JSONUtil
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,8 @@ class LoginActivity : AppCompatActivity() {
         ApiRequest.post(this, API.login, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(this@LoginActivity, response)){
+                    UserSession(this@LoginActivity).authorize(JSONObject(response))
+
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
                 }

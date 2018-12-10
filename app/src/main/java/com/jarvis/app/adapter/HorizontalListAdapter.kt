@@ -56,8 +56,7 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
                 data!![i].isSelected = true
                 notifyDataSetChanged()
 
-                HomeFragment.instance?.getPieData()
-                HomeFragment.instance?.getPieData2()
+                HomeFragment.instance?.refreshAll()
             }
         }
 

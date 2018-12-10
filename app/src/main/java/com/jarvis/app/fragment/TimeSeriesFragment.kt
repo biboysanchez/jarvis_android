@@ -56,7 +56,7 @@ class TimeSeriesFragment : BaseFragment() {
 
     private fun setRecyclerAdapter(){
         rvPerformanceAttribute?.layoutManager = LinearLayoutManager(context)
-        rvPerformanceAttribute?.adapter = HomeListAdapter(context, null)
+     //   rvPerformanceAttribute?.adapter = HomeListAdapter(context, null)
     }
 
     private fun returnLineChart(){

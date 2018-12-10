@@ -27,6 +27,7 @@ import com.jarvis.app.https.API.weekList
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.Pie
 import com.jarvis.app.model.PieModel
+import com.jarvis.app.model.Table1
 import com.jarvis.app.utils.ColorUtil
 import com.jarvis.app.utils.JSONUtil
 import com.jarvis.app.utils.Util
@@ -46,10 +47,13 @@ class HomeFragment : Fragment() {
     private var arrPieTop:ArrayList<PieModel>? = ArrayList()
     private var arrPieBottom:ArrayList<PieModel>? = ArrayList()
     private var mActivity:MainActivity? = null
+    private var tablePerformance:ArrayList<Table1>? = ArrayList()
 
     private var selectedWeek = ""
     private var selectedSpinner1 = ""
     private var selectedSpinner2 = ""
+
+    private var selectedPerformance = 0
 
     companion object {
         val TAG = "HomeFragment"
@@ -67,22 +71,38 @@ class HomeFragment : Fragment() {
         mActivity = context as MainActivity?
 
         Handler().postDelayed({
-            getWeekList()
+            spinnerDefaultList()
 
-            setPerformanceSummary()
-            setInvestmentDecision()
-            setInvestmentSelection()
-            setTop10Position()
+            getWeekList()
+//            setInvestmentDecision()
+//            setInvestmentSelection()
+//            setTop10Position()
         },300)
     }
 
-    private fun setPerformanceSummary(){
+    /**
+     * Refresh data when change company name
+     */
+    fun refreshAll(){
+        getPieData()
+        getPieData2()
+        getPerformanceSummary()
+    }
+
+    private fun spinnerDefaultList(){
         spinnerSummary?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
             Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
-        Util.changeTextColor(spinnerSummary)
+        spinnerSummary?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
 
-        rvPerformance?.layoutManager = LinearLayoutManager(context)
-        rvPerformance?.adapter = HomeListAdapter(context, ArrayList())
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
+                selectedPerformance = position
+                rvPerformance?.layoutManager = LinearLayoutManager(context)
+                rvPerformance?.adapter = HomeListAdapter(context, tablePerformance, selectedPerformance)
+            }
+        }
     }
 
     private fun setInvestmentDecision(){
@@ -90,7 +110,7 @@ class HomeFragment : Fragment() {
             Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
         Util.changeTextColor(spinnerDecision)
         rvDecision?.layoutManager = LinearLayoutManager(context)
-        rvDecision?.adapter = HomeListAdapter(context, ArrayList())
+      //  rvDecision?.adapter = HomeListAdapter(context, ArrayList())
     }
 
     private fun setInvestmentSelection(){
@@ -98,7 +118,7 @@ class HomeFragment : Fragment() {
             Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
         Util.changeTextColor(spinnerSelection)
         rvSelection?.layoutManager = LinearLayoutManager(context)
-        rvSelection?.adapter = HomeListAdapter(context, ArrayList())
+       // rvSelection?.adapter = HomeListAdapter(context, ArrayList())
     }
 
     private fun setTop10Position(){
@@ -106,7 +126,7 @@ class HomeFragment : Fragment() {
             Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
         Util.changeTextColor(spinnerPosition)
         rvPosition?.layoutManager = LinearLayoutManager(context)
-        rvPosition?.adapter = HomeListAdapter(context, ArrayList())
+      //  rvPosition?.adapter = HomeListAdapter(context, ArrayList())
     }
 
     /**
@@ -136,9 +156,9 @@ class HomeFragment : Fragment() {
 
                                     if (arrPortfolioList?.size!! == 0){
                                         getPortfolioDropdownList()
+                                        getPerformanceSummary()
                                     }else{
-                                        getPieData()
-                                        getPieData2()
+                                        refreshAll()
                                     }
                                 }
                             }
@@ -166,7 +186,6 @@ class HomeFragment : Fragment() {
                         val arr = JSONObject(response).obj("message_data").arr("portfolio_overview_category_list")
                         if (arr.length() > 0){
                             for (i in 0 until arr.length()){
-                                Log.i(TAG, "==> ${arr.getString(i)}")
                                 arrPortfolioList?.add(arr.getString(i))
                             }
                             setSpinners()
@@ -289,9 +308,39 @@ class HomeFragment : Fragment() {
         pie?.centerText = "No data results for \n$selectedWeek"
         pie?.setCenterTextColor(Color.parseColor("#BDBDBD"))
         pie?.invalidate()
-
         recyclerView?.layoutManager = GridLayoutManager(context,  2)
         recyclerView?.adapter = PieLegendAdapter(context, ArrayList())
+    }
+
+    private fun getPerformanceSummary(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.viewModel?.selectedCompany!!
+        params["week_id"]   = selectedWeek
+        ApiRequest.postNoUI(context!!, API.performanceSummary, params, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        Log.i(TAG, "==> response")
+                        tablePerformance = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("performance_summary_list")
+                        if (arr.length() > 0){
+                            for (i in 0 until arr.length()){
+                                val performance = Table1(arr.getJSONObject(i))
+                                tablePerformance?.add(performance)
+                            }
+
+                            rvPerformance?.layoutManager = LinearLayoutManager(context)
+                            rvPerformance?.adapter = HomeListAdapter(context, tablePerformance, selectedPerformance)
+                        }
+                    }catch (e:JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
     }
 
     override fun onDestroy() {
