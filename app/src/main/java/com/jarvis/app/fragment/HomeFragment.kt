@@ -17,15 +17,13 @@ import android.widget.TextView
 import com.android.volley.VolleyError
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
-import com.jarvis.app.adapter.HomeListAdapter
+import com.jarvis.app.adapter.PerformanceSummaryAdapter
 import com.jarvis.app.adapter.PieLegendAdapter
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.https.API
-import com.jarvis.app.https.API.weekList
 import com.jarvis.app.https.ApiRequest
-import com.jarvis.app.model.Pie
 import com.jarvis.app.model.PieModel
 import com.jarvis.app.model.Table1
 import com.jarvis.app.utils.ColorUtil
@@ -100,7 +98,7 @@ class HomeFragment : Fragment() {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
                 selectedPerformance = position
                 rvPerformance?.layoutManager = LinearLayoutManager(context)
-                rvPerformance?.adapter = HomeListAdapter(context, tablePerformance, selectedPerformance)
+                rvPerformance?.adapter = PerformanceSummaryAdapter(context, tablePerformance, selectedPerformance)
             }
         }
     }
@@ -110,7 +108,7 @@ class HomeFragment : Fragment() {
             Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
         Util.changeTextColor(spinnerDecision)
         rvDecision?.layoutManager = LinearLayoutManager(context)
-      //  rvDecision?.adapter = HomeListAdapter(context, ArrayList())
+      //  rvDecision?.adapter = PerformanceSummaryAdapter(context, ArrayList())
     }
 
     private fun setInvestmentSelection(){
@@ -118,7 +116,7 @@ class HomeFragment : Fragment() {
             Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
         Util.changeTextColor(spinnerSelection)
         rvSelection?.layoutManager = LinearLayoutManager(context)
-       // rvSelection?.adapter = HomeListAdapter(context, ArrayList())
+       // rvSelection?.adapter = PerformanceSummaryAdapter(context, ArrayList())
     }
 
     private fun setTop10Position(){
@@ -126,7 +124,7 @@ class HomeFragment : Fragment() {
             Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
         Util.changeTextColor(spinnerPosition)
         rvPosition?.layoutManager = LinearLayoutManager(context)
-      //  rvPosition?.adapter = HomeListAdapter(context, ArrayList())
+      //  rvPosition?.adapter = PerformanceSummaryAdapter(context, ArrayList())
     }
 
     /**
@@ -330,7 +328,9 @@ class HomeFragment : Fragment() {
                             }
 
                             rvPerformance?.layoutManager = LinearLayoutManager(context)
-                            rvPerformance?.adapter = HomeListAdapter(context, tablePerformance, selectedPerformance)
+                            rvPerformance?.adapter = PerformanceSummaryAdapter(context, tablePerformance, selectedPerformance)
+                        }else{
+                            rvPerformance?.adapter = PerformanceSummaryAdapter(context, tablePerformance, selectedPerformance)
                         }
                     }catch (e:JSONException){
                         e.printStackTrace()

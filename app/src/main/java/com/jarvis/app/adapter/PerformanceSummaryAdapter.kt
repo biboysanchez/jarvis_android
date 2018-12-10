@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.dataholder.Constant
 import com.jarvis.app.model.Table1
+import com.jarvis.app.model.ValueKey
 import com.jarvis.app.utils.DialogUtil
 import kotlinx.android.synthetic.main.row_home_list.view.*
+import java.util.*
 
-class HomeListAdapter : RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
+class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter.ViewHolder> {
     private var mContext: Context? = null
     private var data: ArrayList<Table1>? = ArrayList()
     private var selected = 0
@@ -23,7 +25,7 @@ class HomeListAdapter : RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
         this.selected = selected
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): HomeListAdapter.ViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): PerformanceSummaryAdapter.ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_home_list, p0, false)
         return ViewHolder(view)
     }
@@ -36,7 +38,7 @@ class HomeListAdapter : RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
         }
     }
 
-    override fun onBindViewHolder(p0: HomeListAdapter.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(p0: PerformanceSummaryAdapter.ViewHolder, p1: Int) {
         p0.bindItem(p1)
     }
 
@@ -80,9 +82,16 @@ class HomeListAdapter : RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
                 }
             }
 
-
             itemView.llBgRow?.setOnClickListener {
-                DialogUtil.showCustomListDialog(mContext!!, "Konvensional")
+                val arrayList:List<ValueKey> = Arrays.asList(
+                    ValueKey("AUM [Bn]",obj?.aum!!),
+                    ValueKey("Return - NAV",obj.nav),
+                    ValueKey("Return - BMK",obj.bmk),
+                    ValueKey("Information Ratio",obj.informationRatio),
+                    ValueKey("Yield",obj.yield),
+                    ValueKey("Var",obj.varM)
+                )
+                DialogUtil.showCustomListDialog(mContext!!, obj.portFolio, arrayList)
             }
         }
     }

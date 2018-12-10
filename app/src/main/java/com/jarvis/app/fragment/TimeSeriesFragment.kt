@@ -14,7 +14,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.EntryXComparator
 import com.jarvis.app.R
-import com.jarvis.app.adapter.HomeListAdapter
 import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.fragment_time_series.*
 import java.util.*
@@ -56,7 +55,7 @@ class TimeSeriesFragment : BaseFragment() {
 
     private fun setRecyclerAdapter(){
         rvPerformanceAttribute?.layoutManager = LinearLayoutManager(context)
-     //   rvPerformanceAttribute?.adapter = HomeListAdapter(context, null)
+     //   rvPerformanceAttribute?.adapter = PerformanceSummaryAdapter(context, null)
     }
 
     private fun returnLineChart(){

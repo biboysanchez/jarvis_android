@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.button_scroll.view.*
 class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHolder> {
     private var mContext: Context? = null
     private var data: List<Company>? = ArrayList()
-    private var lastIndex = 100
 
     constructor(mContext: Context?, data: List<Company>?) : super() {
         this.mContext = mContext
