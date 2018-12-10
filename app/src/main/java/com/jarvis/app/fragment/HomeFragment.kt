@@ -20,6 +20,7 @@ import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.adapter.home.PerformanceSummaryAdapter
 import com.jarvis.app.adapter.PieLegendAdapter
+import com.jarvis.app.adapter.home.AssetAllocationAdapter
 import com.jarvis.app.adapter.home.SecuritySelectionAdapter
 import com.jarvis.app.adapter.home.TopTenAdapter
 import com.jarvis.app.dataholder.chart.PieChart
@@ -27,15 +28,12 @@ import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
-import com.jarvis.app.model.PieModel
-import com.jarvis.app.model.Table1
-import com.jarvis.app.model.Table2
-import com.jarvis.app.model.Table3
+import com.jarvis.app.model.*
 import com.jarvis.app.utils.ColorUtil
 import com.jarvis.app.utils.JSONUtil
 import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.layout_invesment_selection.*
+import kotlinx.android.synthetic.main.layout_investment_selection.*
 import kotlinx.android.synthetic.main.layout_investment_decision.*
 import kotlinx.android.synthetic.main.layout_performance_summary.*
 import kotlinx.android.synthetic.main.layout_top_10.*
@@ -55,6 +53,9 @@ class HomeFragment : Fragment() {
     private var tableSecurities:ArrayList<Table2>? = ArrayList()
     private var tableTopTen:ArrayList<Table3>? = ArrayList()
 
+    private var underWeightList:ArrayList<Table4>? = ArrayList()
+    private var overWeightList:ArrayList<Table4>?  = ArrayList()
+
     private var selectedWeek        = ""
     private var selectedSpinner1    = ""
     private var selectedSpinner2    = ""
@@ -62,6 +63,7 @@ class HomeFragment : Fragment() {
     private var selectedPerformance = 0
     private var selectedSecurities  = 0
     private var selectedTopTen      = 0
+    private var selectedWeight      = 0
 
     companion object {
         val TAG = "HomeFragment"
@@ -93,6 +95,7 @@ class HomeFragment : Fragment() {
         getPerformanceSummary()
         getSecuritiesSelection()
         getTopTen()
+        getAssetAllocation()
     }
 
     private fun spinnerDefaultList(){
@@ -150,14 +153,26 @@ class HomeFragment : Fragment() {
                 )
             }
         }
-    }
 
-    private fun setInvestmentDecision(){
         spinnerDecision?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
-            Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
-        Util.changeTextColor(spinnerDecision)
-        rvDecision?.layoutManager = LinearLayoutManager(context)
-      //  rvDecision?.adapter = PerformanceSummaryAdapter(context, ArrayList())
+            Table4.table3DropDownList())
+        spinnerDecision?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
+                selectedWeight = position
+                rvDecision?.layoutManager = LinearLayoutManager(context)
+                if (selectedWeight == 0){
+                    rvDecision?.adapter = AssetAllocationAdapter(context, underWeightList, selectedWeight)
+                }else{
+                    rvDecision?.adapter = AssetAllocationAdapter(context, overWeightList, selectedWeight)
+                }
+                rvDecision?.adapter?.notifyDataSetChanged()
+            }
+        }
+
     }
 
     /**
@@ -190,6 +205,7 @@ class HomeFragment : Fragment() {
                                         getPerformanceSummary()
                                         getSecuritiesSelection()
                                         getTopTen()
+                                        getAssetAllocation()
                                     }else{
                                         refreshAll()
                                     }
@@ -458,6 +474,56 @@ class HomeFragment : Fragment() {
                                 tableTopTen,
                                 selectedTopTen
                             )
+                        }
+                    }catch (e:JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
+    private fun getAssetAllocation(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.viewModel?.selectedCompany!!
+        params["week_id"]   = selectedWeek
+        ApiRequest.postNoUI(context!!, API.assetAllocation, params, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+
+                        underWeightList = ArrayList()
+                        overWeightList  = ArrayList()
+                        val arrUnderWeight = JSONObject(response).obj("message_data").obj("asset_allocation_dict").arr("UNDERWEIGHT")
+                        val arrOverWeight  = JSONObject(response).obj("message_data").obj("asset_allocation_dict").arr("OVERWEIGHT")
+                        if (arrUnderWeight.length() > 0){
+                            for (i in 0 until arrUnderWeight.length()){
+                                val underweight = Table4(arrUnderWeight.getJSONObject(i))
+                                underWeightList?.add(underweight)
+                            }
+
+                            rvDecision?.layoutManager = LinearLayoutManager(context)
+                            rvDecision?.adapter = AssetAllocationAdapter(
+                                context,
+                                underWeightList,
+                                selectedWeight
+                            )
+                        }else{
+                            rvDecision?.adapter = AssetAllocationAdapter(
+                                context,
+                                underWeightList,
+                                selectedWeight
+                            )
+                        }
+
+                        if (arrOverWeight.length() > 0){
+                            for (i in 0 until arrOverWeight.length()){
+                                val overWeight = Table4(arrOverWeight.getJSONObject(i))
+                                overWeightList?.add(overWeight)
+                            }
                         }
                     }catch (e:JSONException){
                         e.printStackTrace()

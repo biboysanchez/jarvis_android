@@ -11,4 +11,5 @@ object API {
     const val performanceSummary    = "$baseUrl/api/get-performance-summary"
     const val securitySelection     = "$baseUrl/api/get-securities-selection"
     const val topTen                = "$baseUrl/api/get-top-ten"
+    const val assetAllocation       = "$baseUrl/api/get-asset-allocation"
 }

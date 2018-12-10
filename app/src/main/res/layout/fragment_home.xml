@@ -130,7 +130,7 @@
             </LinearLayout>
 
             <include layout="@layout/layout_performance_summary"/>
-            <include layout="@layout/layout_invesment_selection"/>
+            <include layout="@layout/layout_investment_selection"/>
             <include layout="@layout/layout_investment_decision"/>
             <include layout="@layout/layout_top_10"/>
 
