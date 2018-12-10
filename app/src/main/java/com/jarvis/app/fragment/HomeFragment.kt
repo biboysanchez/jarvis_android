@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 import com.android.volley.VolleyError
 import com.jarvis.app.R
@@ -20,6 +21,7 @@ import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.adapter.home.PerformanceSummaryAdapter
 import com.jarvis.app.adapter.PieLegendAdapter
 import com.jarvis.app.adapter.home.SecuritySelectionAdapter
+import com.jarvis.app.adapter.home.TopTenAdapter
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
@@ -28,6 +30,7 @@ import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.PieModel
 import com.jarvis.app.model.Table1
 import com.jarvis.app.model.Table2
+import com.jarvis.app.model.Table3
 import com.jarvis.app.utils.ColorUtil
 import com.jarvis.app.utils.JSONUtil
 import com.jarvis.app.utils.Util
@@ -47,15 +50,18 @@ class HomeFragment : Fragment() {
     private var arrPieTop:ArrayList<PieModel>? = ArrayList()
     private var arrPieBottom:ArrayList<PieModel>? = ArrayList()
     private var mActivity:MainActivity? = null
+
     private var tablePerformance:ArrayList<Table1>? = ArrayList()
     private var tableSecurities:ArrayList<Table2>? = ArrayList()
+    private var tableTopTen:ArrayList<Table3>? = ArrayList()
 
-    private var selectedWeek = ""
-    private var selectedSpinner1 = ""
-    private var selectedSpinner2 = ""
+    private var selectedWeek        = ""
+    private var selectedSpinner1    = ""
+    private var selectedSpinner2    = ""
 
     private var selectedPerformance = 0
-    private var selectedSecurities = 0
+    private var selectedSecurities  = 0
+    private var selectedTopTen      = 0
 
     companion object {
         val TAG = "HomeFragment"
@@ -86,6 +92,7 @@ class HomeFragment : Fragment() {
         getPieData2()
         getPerformanceSummary()
         getSecuritiesSelection()
+        getTopTen()
     }
 
     private fun spinnerDefaultList(){
@@ -125,6 +132,24 @@ class HomeFragment : Fragment() {
                 )
             }
         }
+
+        spinnerPosition?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
+            Table3.table3DropDownList())
+        spinnerPosition?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
+                selectedTopTen = position
+                rvPosition?.layoutManager = LinearLayoutManager(context)
+                rvPosition?.adapter = TopTenAdapter(
+                    context,
+                    tableTopTen,
+                    selectedTopTen
+                )
+            }
+        }
     }
 
     private fun setInvestmentDecision(){
@@ -133,14 +158,6 @@ class HomeFragment : Fragment() {
         Util.changeTextColor(spinnerDecision)
         rvDecision?.layoutManager = LinearLayoutManager(context)
       //  rvDecision?.adapter = PerformanceSummaryAdapter(context, ArrayList())
-    }
-
-    private fun setTop10Position(){
-        spinnerPosition?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
-            Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
-        Util.changeTextColor(spinnerPosition)
-        rvPosition?.layoutManager = LinearLayoutManager(context)
-      //  rvPosition?.adapter = PerformanceSummaryAdapter(context, ArrayList())
     }
 
     /**
@@ -172,6 +189,7 @@ class HomeFragment : Fragment() {
                                         getPortfolioDropdownList()
                                         getPerformanceSummary()
                                         getSecuritiesSelection()
+                                        getTopTen()
                                     }else{
                                         refreshAll()
                                     }
@@ -397,6 +415,48 @@ class HomeFragment : Fragment() {
                                 context,
                                 tableSecurities,
                                 selectedSecurities
+                            )
+                        }
+                    }catch (e:JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
+    private fun getTopTen(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.viewModel?.selectedCompany!!
+        params["week_id"]   = selectedWeek
+        ApiRequest.postNoUI(context!!, API.topTen, params, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+
+                        tableTopTen = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("top_10_position_list")
+                        if (arr.length() > 0){
+                            for (i in 0 until arr.length()){
+                                val topTen = Table3(arr.getJSONObject(i))
+                                Log.i(TAG, "==> ${arr.getJSONObject(i)}")
+                                tableTopTen?.add(topTen)
+                            }
+
+                            rvPosition?.layoutManager = LinearLayoutManager(context)
+                            rvPosition?.adapter = TopTenAdapter(
+                                context,
+                                tableTopTen,
+                                selectedTopTen
+                            )
+                        }else{
+                            rvPosition?.adapter = TopTenAdapter(
+                                context,
+                                tableTopTen,
+                                selectedTopTen
                             )
                         }
                     }catch (e:JSONException){

@@ -10,4 +10,5 @@ object API {
     const val weekList              = "$baseUrl/api/get-performance-overview-week-id"
     const val performanceSummary    = "$baseUrl/api/get-performance-summary"
     const val securitySelection     = "$baseUrl/api/get-securities-selection"
+    const val topTen                = "$baseUrl/api/get-top-ten"
 }
