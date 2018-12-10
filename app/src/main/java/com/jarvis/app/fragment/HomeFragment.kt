@@ -17,8 +17,9 @@ import android.widget.TextView
 import com.android.volley.VolleyError
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
-import com.jarvis.app.adapter.PerformanceSummaryAdapter
+import com.jarvis.app.adapter.home.PerformanceSummaryAdapter
 import com.jarvis.app.adapter.PieLegendAdapter
+import com.jarvis.app.adapter.home.SecuritySelectionAdapter
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
@@ -26,6 +27,7 @@ import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.PieModel
 import com.jarvis.app.model.Table1
+import com.jarvis.app.model.Table2
 import com.jarvis.app.utils.ColorUtil
 import com.jarvis.app.utils.JSONUtil
 import com.jarvis.app.utils.Util
@@ -46,12 +48,14 @@ class HomeFragment : Fragment() {
     private var arrPieBottom:ArrayList<PieModel>? = ArrayList()
     private var mActivity:MainActivity? = null
     private var tablePerformance:ArrayList<Table1>? = ArrayList()
+    private var tableSecurities:ArrayList<Table2>? = ArrayList()
 
     private var selectedWeek = ""
     private var selectedSpinner1 = ""
     private var selectedSpinner2 = ""
 
     private var selectedPerformance = 0
+    private var selectedSecurities = 0
 
     companion object {
         val TAG = "HomeFragment"
@@ -70,11 +74,7 @@ class HomeFragment : Fragment() {
 
         Handler().postDelayed({
             spinnerDefaultList()
-
             getWeekList()
-//            setInvestmentDecision()
-//            setInvestmentSelection()
-//            setTop10Position()
         },300)
     }
 
@@ -85,11 +85,12 @@ class HomeFragment : Fragment() {
         getPieData()
         getPieData2()
         getPerformanceSummary()
+        getSecuritiesSelection()
     }
 
     private fun spinnerDefaultList(){
         spinnerSummary?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
-            Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
+            Table1.table1DropdownList())
         spinnerSummary?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -98,7 +99,30 @@ class HomeFragment : Fragment() {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
                 selectedPerformance = position
                 rvPerformance?.layoutManager = LinearLayoutManager(context)
-                rvPerformance?.adapter = PerformanceSummaryAdapter(context, tablePerformance, selectedPerformance)
+                rvPerformance?.adapter = PerformanceSummaryAdapter(
+                    context,
+                    tablePerformance,
+                    selectedPerformance
+                )
+            }
+        }
+
+        spinnerSelection?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
+            Table2.table2DropDownList())
+        Util.changeTextColor(spinnerSelection)
+        spinnerSelection?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
+                selectedSecurities = position
+                rvSelection?.layoutManager = LinearLayoutManager(context)
+                rvSelection?.adapter = SecuritySelectionAdapter(
+                    context,
+                    tableSecurities,
+                    selectedSecurities
+                )
             }
         }
     }
@@ -109,14 +133,6 @@ class HomeFragment : Fragment() {
         Util.changeTextColor(spinnerDecision)
         rvDecision?.layoutManager = LinearLayoutManager(context)
       //  rvDecision?.adapter = PerformanceSummaryAdapter(context, ArrayList())
-    }
-
-    private fun setInvestmentSelection(){
-        spinnerSelection?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
-            Arrays.asList("AUM (BN)", "Return - Nav", "Return - BMK", "IR", "Yield", "VAR"))
-        Util.changeTextColor(spinnerSelection)
-        rvSelection?.layoutManager = LinearLayoutManager(context)
-       // rvSelection?.adapter = PerformanceSummaryAdapter(context, ArrayList())
     }
 
     private fun setTop10Position(){
@@ -155,6 +171,7 @@ class HomeFragment : Fragment() {
                                     if (arrPortfolioList?.size!! == 0){
                                         getPortfolioDropdownList()
                                         getPerformanceSummary()
+                                        getSecuritiesSelection()
                                     }else{
                                         refreshAll()
                                     }
@@ -328,9 +345,59 @@ class HomeFragment : Fragment() {
                             }
 
                             rvPerformance?.layoutManager = LinearLayoutManager(context)
-                            rvPerformance?.adapter = PerformanceSummaryAdapter(context, tablePerformance, selectedPerformance)
+                            rvPerformance?.adapter = PerformanceSummaryAdapter(
+                                context,
+                                tablePerformance,
+                                selectedPerformance
+                            )
                         }else{
-                            rvPerformance?.adapter = PerformanceSummaryAdapter(context, tablePerformance, selectedPerformance)
+                            rvPerformance?.adapter = PerformanceSummaryAdapter(
+                                context,
+                                tablePerformance,
+                                selectedPerformance
+                            )
+                        }
+                    }catch (e:JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
+    private fun getSecuritiesSelection(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.viewModel?.selectedCompany!!
+        params["week_id"]   = selectedWeek
+        ApiRequest.postNoUI(context!!, API.securitySelection, params, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+
+                        tableSecurities = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("securities_selection_list")
+                        if (arr.length() > 0){
+                            for (i in 0 until arr.length()){
+                                val security = Table2(arr.getJSONObject(i))
+                                Log.i(TAG, "==> ${arr.getJSONObject(i)}")
+                                tableSecurities?.add(security)
+                            }
+
+                            rvSelection?.layoutManager = LinearLayoutManager(context)
+                            rvSelection?.adapter = SecuritySelectionAdapter(
+                                context,
+                                tableSecurities,
+                                selectedSecurities
+                            )
+                        }else{
+                            rvSelection?.adapter = SecuritySelectionAdapter(
+                                context,
+                                tableSecurities,
+                                selectedSecurities
+                            )
                         }
                     }catch (e:JSONException){
                         e.printStackTrace()

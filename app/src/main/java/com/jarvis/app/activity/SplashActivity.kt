@@ -13,7 +13,7 @@ import android.support.v4.view.ViewCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
-
+import com.jarvis.app.sessions.UserSession
 
 
 class SplashActivity : AppCompatActivity() {
@@ -36,17 +36,22 @@ class SplashActivity : AppCompatActivity() {
             override fun onAnimationRepeat(anim: Animation) {}
             override fun onAnimationEnd(anim: Animation) {
 
-                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    this@SplashActivity,
-                    img_logo,
-                    ViewCompat.getTransitionName(img_logo)!!
-                )
-                startActivity(intent, options.toBundle())
+                if (UserSession(this@SplashActivity).isActive){
+                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        this@SplashActivity,
+                        img_logo,
+                        ViewCompat.getTransitionName(img_logo)!!
+                    )
+                    startActivity(intent, options.toBundle())
 
-                Handler().postDelayed({
-                    this@SplashActivity.finish()
-                },3000)
+                    Handler().postDelayed({
+                        this@SplashActivity.finish()
+                    },3000)
+                }
             }
         })
         img_logo?.startAnimation(startAnimation)

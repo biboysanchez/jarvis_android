@@ -1,4 +1,4 @@
-package com.jarvis.app.adapter
+package com.jarvis.app.adapter.home
 
 import android.content.Context
 import android.graphics.Color
@@ -25,7 +25,7 @@ class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter
         this.selected = selected
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): PerformanceSummaryAdapter.ViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_home_list, p0, false)
         return ViewHolder(view)
     }
@@ -38,60 +38,33 @@ class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter
         }
     }
 
-    override fun onBindViewHolder(p0: PerformanceSummaryAdapter.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.bindItem(p1)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItem(position: Int) {
             val obj = data?.get(position)
-            itemView.tvRowTable1Name?.text = obj?.portFolio
+
+            val list:List<ValueKey> = Arrays.asList(
+                ValueKey(Table1.table1DropdownList()[0], obj?.aum!!),
+                ValueKey(Table1.table1DropdownList()[1], obj.nav),
+                ValueKey(Table1.table1DropdownList()[2], obj.bmk),
+                ValueKey(Table1.table1DropdownList()[3], obj.informationRatio),
+                ValueKey(Table1.table1DropdownList()[4], obj.yield),
+                ValueKey(Table1.table1DropdownList()[5], obj.varM)
+            )
+
+            itemView.tvRowTable1Name?.text = obj.portFolio
+            itemView.tvRowTable1Value?.text = list[selected].value
+
             if (position % 2 == 1){
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#FFFFFF"))
             }else{
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#E2EEEA"))
             }
-
-            when(selected){
-                Constant.AUM -> {
-                    itemView.tvRowTable1Value?.text = obj?.aum
-                }
-
-                Constant.RETURN_NAV -> {
-                    itemView.tvRowTable1Value?.text = obj?.nav
-                }
-
-                Constant.RETURN_BMK -> {
-                    itemView.tvRowTable1Value?.text = obj?.bmk
-                }
-
-                Constant.IR -> {
-                    itemView.tvRowTable1Value?.text = obj?.informationRatio
-                }
-
-                Constant.YIELD -> {
-                    itemView.tvRowTable1Value?.text = obj?.yield
-                }
-
-                Constant.VAR -> {
-                    itemView.tvRowTable1Value?.text = obj?.varM
-                }
-
-                else ->{
-                    itemView.tvRowTable1Value?.text = obj?.aum
-                }
-            }
-
             itemView.llBgRow?.setOnClickListener {
-                val arrayList:List<ValueKey> = Arrays.asList(
-                    ValueKey("AUM [Bn]",obj?.aum!!),
-                    ValueKey("Return - NAV",obj.nav),
-                    ValueKey("Return - BMK",obj.bmk),
-                    ValueKey("Information Ratio",obj.informationRatio),
-                    ValueKey("Yield",obj.yield),
-                    ValueKey("Var",obj.varM)
-                )
-                DialogUtil.showCustomListDialog(mContext!!, obj.portFolio, arrayList)
+                DialogUtil.showCustomListDialog(mContext!!, obj.portFolio, list)
             }
         }
     }
