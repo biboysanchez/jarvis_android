@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.TextView
 import com.android.volley.VolleyError
 import com.jarvis.app.R
@@ -56,9 +55,9 @@ class HomeFragment : Fragment() {
     private var underWeightList:ArrayList<Table4>? = ArrayList()
     private var overWeightList:ArrayList<Table4>?  = ArrayList()
 
-    private var selectedWeek        = ""
-    private var selectedSpinner1    = ""
-    private var selectedSpinner2    = ""
+    //private var selectedWeek        = ""
+    //private var selectedSpinner1    = ""
+   // private var selectedSpinner2    = ""
 
     private var selectedPerformance = 0
     private var selectedSecurities  = 0
@@ -198,7 +197,7 @@ class HomeFragment : Fragment() {
 
                                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                                     (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                                    selectedWeek = weekList[position]
+                                    mActivity?.viewModel?.selectedWeek = weekList[position]
 
                                     if (arrPortfolioList?.size!! == 0){
                                         getPortfolioDropdownList()
@@ -262,7 +261,7 @@ class HomeFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
-                selectedSpinner1 = arrPortfolioList!![position]
+                mActivity?.viewModel?.selectedCategory1 = arrPortfolioList!![position]
                 getPieData()
             }
         }
@@ -275,7 +274,7 @@ class HomeFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
-                selectedSpinner2 = arrPortfolioList!![position]
+                mActivity?.viewModel?.selectedCategory2 = arrPortfolioList!![position]
                 getPieData2()
             }
         }
@@ -283,9 +282,10 @@ class HomeFragment : Fragment() {
 
     fun getPieData(){
         val params = HashMap<String, String>()
-        params["category"]  = selectedSpinner1
+        params["category"]  = mActivity?.viewModel?.selectedCategory1!!
         params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = selectedWeek
+        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
+
         ApiRequest.postNoUI(context!!, API.pieAssetClass, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -318,9 +318,9 @@ class HomeFragment : Fragment() {
 
     fun getPieData2(){
         val params = HashMap<String, String>()
-        params["category"]  = selectedSpinner2
+        params["category"]  = mActivity?.viewModel?.selectedCategory2!!
         params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = selectedWeek
+        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.pieCompany, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -354,7 +354,7 @@ class HomeFragment : Fragment() {
     private fun noData(pie:com.github.mikephil.charting.charts.PieChart?,
                        recyclerView: RecyclerView?){
         PieChart(activity, pie, ArrayList())
-        pie?.centerText = "No data results for \n$selectedWeek"
+        pie?.centerText = "No data results for \n${mActivity?.viewModel?.selectedWeek}"
         pie?.setCenterTextColor(Color.parseColor("#BDBDBD"))
         pie?.invalidate()
         recyclerView?.layoutManager = GridLayoutManager(context,  2)
@@ -364,7 +364,7 @@ class HomeFragment : Fragment() {
     private fun getPerformanceSummary(){
         val params = HashMap<String, String>()
         params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = selectedWeek
+        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.performanceSummary, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -405,7 +405,7 @@ class HomeFragment : Fragment() {
     private fun getSecuritiesSelection(){
         val params = HashMap<String, String>()
         params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = selectedWeek
+        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.securitySelection, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -447,7 +447,7 @@ class HomeFragment : Fragment() {
     private fun getTopTen(){
         val params = HashMap<String, String>()
         params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = selectedWeek
+        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.topTen, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -489,7 +489,7 @@ class HomeFragment : Fragment() {
     private fun getAssetAllocation(){
         val params = HashMap<String, String>()
         params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = selectedWeek
+        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.assetAllocation, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){

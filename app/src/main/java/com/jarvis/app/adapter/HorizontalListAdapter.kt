@@ -43,8 +43,10 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
             if (company?.isSelected!!){
                 mActivity.viewModel?.selectedCompany = company.name
                 itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_light)
+                itemView.tvBtnText?.isEnabled = false
             }else{
                 itemView.tvBtnText?.setBackgroundResource(R.drawable.rounded_primary)
+                itemView.tvBtnText?.isEnabled = true
             }
 
             itemView.tvBtnText?.setOnClickListener {
@@ -54,6 +56,7 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
 
                 data!![i].isSelected = true
                 notifyDataSetChanged()
+
 
                 HomeFragment.instance?.refreshAll()
             }
