@@ -20,11 +20,13 @@ class SecuritySelectionAdapter : RecyclerView.Adapter<SecuritySelectionAdapter.V
     private var mContext: Context? = null
     private var data: ArrayList<Table2>? = ArrayList()
     private var selected = 0
+    private var isAll = false
 
-    constructor(mContext: Context?, data: ArrayList<Table2>?, selected:Int) : super() {
+    constructor(mContext: Context?, data: ArrayList<Table2>?, selected:Int, isAll:Boolean) : super() {
         this.mContext = mContext
         this.data = data
         this.selected = selected
+        this.isAll = isAll
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
@@ -33,10 +35,14 @@ class SecuritySelectionAdapter : RecyclerView.Adapter<SecuritySelectionAdapter.V
     }
 
     override fun getItemCount(): Int {
-        return if (data?.size!! > 4){
-            5
-        }else{
+        return if (isAll){
             data?.size!!
+        }else{
+            if (data?.size!! > 4){
+                5
+            }else{
+                data?.size!!
+            }
         }
     }
 

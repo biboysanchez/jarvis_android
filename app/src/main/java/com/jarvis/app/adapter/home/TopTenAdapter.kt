@@ -21,11 +21,13 @@ class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder> {
     private var mContext: Context? = null
     private var data: ArrayList<Table3>? = ArrayList()
     private var selected = 0
+    private var isAll = false
 
-    constructor(mContext: Context?, data: ArrayList<Table3>?, selected:Int) : super() {
+    constructor(mContext: Context?, data: ArrayList<Table3>?, selected:Int, isAll:Boolean) : super() {
         this.mContext = mContext
         this.data = data
         this.selected = selected
+        this.isAll = isAll
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
@@ -34,10 +36,14 @@ class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder> {
     }
 
     override fun getItemCount(): Int {
-        return if (data?.size!! > 4){
-            5
-        }else{
+        return if (isAll){
             data?.size!!
+        }else{
+            if (data?.size!! > 4){
+                5
+            }else{
+                data?.size!!
+            }
         }
     }
 

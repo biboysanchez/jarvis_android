@@ -11,15 +11,17 @@ import android.widget.TextView
 import com.jarvis.app.R
 import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.model.Table1
+import com.jarvis.app.model.Table2
+import com.jarvis.app.model.Table3
 import com.jarvis.app.model.UserViewModel
 import kotlinx.android.synthetic.main.fragment_list_all.*
 import java.util.ArrayList
 
 class ListDetailsFragment : BaseFragment() {
     override fun setTitle(): String {
-        return "Performance Summary"
+        return mActivity?.viewModel?.fragmentTag!!
     }
-    private var viewModel:UserViewModel? = null
+
     companion object {
         const val TAG = "ListDetailsFragment"
     }
@@ -30,18 +32,18 @@ class ListDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!).get(UserViewModel::class.java)
+
         setList()
         isShowBack(true)
     }
 
     private fun setList(){
         rvListDetails?.layoutManager = LinearLayoutManager(context)
-        when(viewModel?.fragmentTag){
+        when(mActivity?.viewModel?.fragmentTag){
             "Performance Summary" -> {
-                val adapter = PerformanceSummaryAdapter(context, viewModel?.list as ArrayList<Table1>?, 0, true)
+                val adapter = PerformanceSummaryAdapter(context, mActivity?.viewModel?.list as ArrayList<Table1>?, 0, true)
                 rvListDetails?.adapter = adapter
-                spinnerList?.adapter = viewModel?.sAdapter
+                spinnerList?.adapter = mActivity?.viewModel?.sAdapter
                 spinnerList?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }
@@ -50,7 +52,48 @@ class ListDetailsFragment : BaseFragment() {
                         rvListDetails?.layoutManager = LinearLayoutManager(context)
                         rvListDetails?.adapter = PerformanceSummaryAdapter(
                             context,
-                            viewModel?.list as ArrayList<Table1>?,
+                            mActivity?.viewModel?.list as ArrayList<Table1>?,
+                            position,
+                            true
+                        )
+                    }
+                }
+            }
+
+            "Securities Selection" -> {
+                val adapter = SecuritySelectionAdapter(context, mActivity?.viewModel?.list as ArrayList<Table2>?, 0, true)
+                rvListDetails?.adapter = adapter
+                spinnerList?.adapter = mActivity?.viewModel?.sAdapter
+                spinnerList?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                        rvListDetails?.layoutManager = LinearLayoutManager(context)
+                        rvListDetails?.adapter = SecuritySelectionAdapter(
+                            context,
+                            mActivity?.viewModel?.list as ArrayList<Table2>?,
+                            position,
+                            true
+                        )
+                    }
+                }
+            }
+
+            //Top 10 Position
+            else -> {
+                val adapter = TopTenAdapter(context, mActivity?.viewModel?.list as ArrayList<Table3>?, 0, true)
+                rvListDetails?.adapter = adapter
+                spinnerList?.adapter = mActivity?.viewModel?.sAdapter
+                spinnerList?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                        rvListDetails?.layoutManager = LinearLayoutManager(context)
+                        rvListDetails?.adapter = TopTenAdapter(
+                            context,
+                            mActivity?.viewModel?.list as ArrayList<Table3>?,
                             position,
                             true
                         )

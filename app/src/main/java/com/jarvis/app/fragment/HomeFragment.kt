@@ -57,6 +57,8 @@ class HomeFragment : Fragment() {
    // private var selectedSpinner2    = ""
 
     private var summaryArrayAdapter:ArrayAdapter<String>? = null
+    private var securityAdapter:ArrayAdapter<String>? = null
+    private var top10Apdater:ArrayAdapter<String>? = null
 
     private var selectedPerformance = 0
     private var selectedSecurities  = 0
@@ -87,6 +89,20 @@ class HomeFragment : Fragment() {
             mActivity?.viewModel?.sAdapter = summaryArrayAdapter
             mActivity?.viewModel?.fragmentTag = "Performance Summary"
             mActivity?.viewModel?.list = tablePerformance
+            mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
+        }
+
+        tvShowAllSelection?.setOnClickListener {
+            mActivity?.viewModel?.sAdapter = securityAdapter
+            mActivity?.viewModel?.fragmentTag = "Securities Selection"
+            mActivity?.viewModel?.list = tableSecurities
+            mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
+        }
+
+        tvShowAllPosition?.setOnClickListener {
+            mActivity?.viewModel?.sAdapter = top10Apdater
+            mActivity?.viewModel?.fragmentTag = "Top 10 Position"
+            mActivity?.viewModel?.list = tableTopTen
             mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
         }
     }
@@ -127,8 +143,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-        spinnerSelection?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
+        securityAdapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
             Table2.table2DropDownList())
+        spinnerSelection?.adapter =  securityAdapter
         Util.changeTextColor(spinnerSelection)
         spinnerSelection?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -141,13 +158,15 @@ class HomeFragment : Fragment() {
                 rvSelection?.adapter = SecuritySelectionAdapter(
                     context,
                     tableSecurities,
-                    selectedSecurities
+                    selectedSecurities,
+                    false
                 )
             }
         }
 
-        spinnerPosition?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
+        top10Apdater = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
             Table3.table3DropDownList())
+        spinnerPosition?.adapter = top10Apdater
         spinnerPosition?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -159,7 +178,8 @@ class HomeFragment : Fragment() {
                 rvPosition?.adapter = TopTenAdapter(
                     context,
                     tableTopTen,
-                    selectedTopTen
+                    selectedTopTen,
+                    false
                 )
             }
         }
@@ -436,13 +456,15 @@ class HomeFragment : Fragment() {
                             rvSelection?.adapter = SecuritySelectionAdapter(
                                 context,
                                 tableSecurities,
-                                selectedSecurities
+                                selectedSecurities,
+                                false
                             )
                         }else{
                             rvSelection?.adapter = SecuritySelectionAdapter(
                                 context,
                                 tableSecurities,
-                                selectedSecurities
+                                selectedSecurities,
+                                false
                             )
                         }
                     }catch (e:JSONException){
@@ -478,13 +500,15 @@ class HomeFragment : Fragment() {
                             rvPosition?.adapter = TopTenAdapter(
                                 context,
                                 tableTopTen,
-                                selectedTopTen
+                                selectedTopTen,
+                                false
                             )
                         }else{
                             rvPosition?.adapter = TopTenAdapter(
                                 context,
                                 tableTopTen,
-                                selectedTopTen
+                                selectedTopTen,
+                                false
                             )
                         }
                     }catch (e:JSONException){
