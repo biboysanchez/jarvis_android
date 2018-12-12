@@ -10,43 +10,37 @@
         android:focusable="true"
         android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <LinearLayout
             android:background="@color/colorPrimary"
-            android:layout_height="wrap_content"
+            android:padding="16dp"
             android:layout_width="match_parent"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:elevation="0dp">
-        <LinearLayout
-                android:padding="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <FrameLayout
-                    android:background="@drawable/rounded_primary_rad"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:id="@+id/frameLayout"
-                    tools:layout_editor_absoluteY="16dp">
-                <Spinner
-                        android:id="@+id/spinnerSummary"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="0dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"/>
-            </FrameLayout>
-            <ImageView
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="@null"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_sort"
-                    android:background="@drawable/rec_hallow_light"
-                    android:layout_width="38dp"
+            android:layout_height="wrap_content">
+        <FrameLayout
+                android:background="@drawable/rounded_primary_rad"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:id="@+id/frameLayout"
+                tools:layout_editor_absoluteY="16dp">
+            <Spinner
+                    android:id="@+id/spinnerList"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="38dp"/>
-        </LinearLayout>
-    </android.support.design.widget.AppBarLayout>
+        </FrameLayout>
+        <ImageView
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@null"
+                android:padding="8dp"
+                android:src="@drawable/ic_sort"
+                android:background="@drawable/rec_hallow_light"
+                android:layout_width="38dp"
+                android:layout_height="38dp"/>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
             android:paddingTop="8dp"

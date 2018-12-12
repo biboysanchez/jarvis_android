@@ -56,6 +56,8 @@ class HomeFragment : Fragment() {
     //private var selectedSpinner1    = ""
    // private var selectedSpinner2    = ""
 
+    private var summaryArrayAdapter:ArrayAdapter<String>? = null
+
     private var selectedPerformance = 0
     private var selectedSecurities  = 0
     private var selectedTopTen      = 0
@@ -82,6 +84,7 @@ class HomeFragment : Fragment() {
         },300)
 
         tvShowAll?.setOnClickListener {
+            mActivity?.viewModel?.sAdapter = summaryArrayAdapter
             mActivity?.viewModel?.fragmentTag = "Performance Summary"
             mActivity?.viewModel?.list = tablePerformance
             mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
@@ -104,8 +107,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun spinnerDefaultList(){
-        spinnerSummary?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item,
+        summaryArrayAdapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
             Table1.table1DropdownList())
+        spinnerSummary?.adapter = summaryArrayAdapter
         spinnerSummary?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -178,8 +182,8 @@ class HomeFragment : Fragment() {
                 rvDecision?.adapter?.notifyDataSetChanged()
             }
         }
-
     }
+
 
     /**
      * 1st API call get all available week list

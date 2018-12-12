@@ -1,10 +1,13 @@
 package com.jarvis.app.adapter.home
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.TextView
 import com.jarvis.app.R
 import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.model.Table1
@@ -36,11 +39,27 @@ class ListDetailsFragment : BaseFragment() {
         rvListDetails?.layoutManager = LinearLayoutManager(context)
         when(viewModel?.fragmentTag){
             "Performance Summary" -> {
-                val adapter = PerformanceSummaryAdapter(context, viewModel?.list as ArrayList<Table1>, 0, true)
+                val adapter = PerformanceSummaryAdapter(context, viewModel?.list as ArrayList<Table1>?, 0, true)
                 rvListDetails?.adapter = adapter
+                spinnerList?.adapter = viewModel?.sAdapter
+                spinnerList?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                        rvListDetails?.layoutManager = LinearLayoutManager(context)
+                        rvListDetails?.adapter = PerformanceSummaryAdapter(
+                            context,
+                            viewModel?.list as ArrayList<Table1>?,
+                            position,
+                            true
+                        )
+                    }
+                }
             }
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
