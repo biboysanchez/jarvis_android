@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.RequiresApi
 import com.android.volley.VolleyError
@@ -195,6 +196,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun isShowCompany(isHide:Boolean){
+        flCompany?.visibility = if (isHide) View.GONE else View.VISIBLE
+    }
+
     private fun getCompanyList(){
         ApiRequest.postNoUI(this, API.companyList, object : ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
@@ -236,6 +241,8 @@ class MainActivity : AppCompatActivity() {
             }else if (fm?.backStackEntryCount!! == 2){
                 if (lastIndex > 0){
                     finish()
+                }else{
+                    super.onBackPressed()
                 }
             }else{
                 showBackButton(false)

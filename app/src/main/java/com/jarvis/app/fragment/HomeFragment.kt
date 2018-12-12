@@ -17,11 +17,8 @@ import android.widget.TextView
 import com.android.volley.VolleyError
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
-import com.jarvis.app.adapter.home.PerformanceSummaryAdapter
 import com.jarvis.app.adapter.PieLegendAdapter
-import com.jarvis.app.adapter.home.AssetAllocationAdapter
-import com.jarvis.app.adapter.home.SecuritySelectionAdapter
-import com.jarvis.app.adapter.home.TopTenAdapter
+import com.jarvis.app.adapter.home.*
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
@@ -83,6 +80,12 @@ class HomeFragment : Fragment() {
             spinnerDefaultList()
             getWeekList()
         },300)
+
+        tvShowAll?.setOnClickListener {
+            mActivity?.viewModel?.fragmentTag = "Performance Summary"
+            mActivity?.viewModel?.list = tablePerformance
+            mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
+        }
     }
 
     /**
@@ -114,7 +117,8 @@ class HomeFragment : Fragment() {
                 rvPerformance?.adapter = PerformanceSummaryAdapter(
                     context,
                     tablePerformance,
-                    selectedPerformance
+                    selectedPerformance,
+                     false
                 )
             }
         }
@@ -384,13 +388,15 @@ class HomeFragment : Fragment() {
                             rvPerformance?.adapter = PerformanceSummaryAdapter(
                                 context,
                                 tablePerformance,
-                                selectedPerformance
+                                selectedPerformance,
+                                false
                             )
                         }else{
                             rvPerformance?.adapter = PerformanceSummaryAdapter(
                                 context,
                                 tablePerformance,
-                                selectedPerformance
+                                selectedPerformance,
+                                false
                             )
                         }
                     }catch (e:JSONException){

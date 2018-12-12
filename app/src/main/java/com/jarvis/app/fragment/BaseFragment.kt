@@ -22,4 +22,9 @@ abstract class BaseFragment : Fragment() {
             mActivity?.toolbar?.title = mActivity?.mainTitle
         }
     }
+
+    fun isShowBack(isShow:Boolean){
+        mActivity?.showBackButton(isShow)
+        mActivity?.isShowCompany(isShow)
+    }
 }
