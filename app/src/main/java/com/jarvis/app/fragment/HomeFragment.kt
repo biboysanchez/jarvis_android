@@ -89,6 +89,9 @@ class HomeFragment : Fragment() {
      * Refresh data when change company name
      */
     fun refreshAll(){
+        Log.i(TAG, "View model Company: ${mActivity?.selectedCompany}")
+        Log.i(TAG, "View model week: ${mActivity?.selectedWeek}")
+
         getPieData()
         getPieData2()
         getPerformanceSummary()
@@ -197,7 +200,7 @@ class HomeFragment : Fragment() {
 
                                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                                     (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                                    mActivity?.viewModel?.selectedWeek = weekList[position]
+                                    mActivity?.selectedWeek = weekList[position]
 
                                     if (arrPortfolioList?.size!! == 0){
                                         getPortfolioDropdownList()
@@ -261,7 +264,7 @@ class HomeFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
-                mActivity?.viewModel?.selectedCategory1 = arrPortfolioList!![position]
+                mActivity?.selectedCategory1 = arrPortfolioList!![position]
                 getPieData()
             }
         }
@@ -274,7 +277,7 @@ class HomeFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
-                mActivity?.viewModel?.selectedCategory2 = arrPortfolioList!![position]
+                mActivity?.selectedCategory2 = arrPortfolioList!![position]
                 getPieData2()
             }
         }
@@ -282,10 +285,9 @@ class HomeFragment : Fragment() {
 
     fun getPieData(){
         val params = HashMap<String, String>()
-        params["category"]  = mActivity?.viewModel?.selectedCategory1!!
-        params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
-
+        params["category"]  = mActivity?.selectedCategory1!!
+        params["company"]   = mActivity?.selectedCompany!!
+        params["week_id"]   = mActivity?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.pieAssetClass, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -318,9 +320,9 @@ class HomeFragment : Fragment() {
 
     fun getPieData2(){
         val params = HashMap<String, String>()
-        params["category"]  = mActivity?.viewModel?.selectedCategory2!!
-        params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
+        params["category"]  = mActivity?.selectedCategory2!!
+        params["company"]   = mActivity?.selectedCompany!!
+        params["week_id"]   = mActivity?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.pieCompany, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -354,7 +356,7 @@ class HomeFragment : Fragment() {
     private fun noData(pie:com.github.mikephil.charting.charts.PieChart?,
                        recyclerView: RecyclerView?){
         PieChart(activity, pie, ArrayList())
-        pie?.centerText = "No data results for \n${mActivity?.viewModel?.selectedWeek}"
+        pie?.centerText = "No data results for \n${mActivity?.selectedWeek}"
         pie?.setCenterTextColor(Color.parseColor("#BDBDBD"))
         pie?.invalidate()
         recyclerView?.layoutManager = GridLayoutManager(context,  2)
@@ -363,8 +365,8 @@ class HomeFragment : Fragment() {
 
     private fun getPerformanceSummary(){
         val params = HashMap<String, String>()
-        params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
+        params["company"]   = mActivity?.selectedCompany!!
+        params["week_id"]   = mActivity?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.performanceSummary, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -404,8 +406,8 @@ class HomeFragment : Fragment() {
 
     private fun getSecuritiesSelection(){
         val params = HashMap<String, String>()
-        params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
+        params["company"]   = mActivity?.selectedCompany!!
+        params["week_id"]   = mActivity?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.securitySelection, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -446,8 +448,8 @@ class HomeFragment : Fragment() {
 
     private fun getTopTen(){
         val params = HashMap<String, String>()
-        params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
+        params["company"]   = mActivity?.selectedCompany!!
+        params["week_id"]   = mActivity?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.topTen, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
@@ -488,8 +490,8 @@ class HomeFragment : Fragment() {
 
     private fun getAssetAllocation(){
         val params = HashMap<String, String>()
-        params["company"]   = mActivity?.viewModel?.selectedCompany!!
-        params["week_id"]   = mActivity?.viewModel?.selectedWeek!!
+        params["company"]   = mActivity?.selectedCompany!!
+        params["week_id"]   = mActivity?.selectedWeek!!
         ApiRequest.postNoUI(context!!, API.assetAllocation, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){

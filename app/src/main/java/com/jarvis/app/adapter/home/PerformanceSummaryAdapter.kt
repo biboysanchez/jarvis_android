@@ -48,8 +48,8 @@ class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter
 
             val list:List<ValueKey> = Arrays.asList(
                 ValueKey(Table1.table1DropdownList()[0], obj?.aum!!),
-                ValueKey(Table1.table1DropdownList()[1], obj.nav),
-                ValueKey(Table1.table1DropdownList()[2], obj.bmk),
+                ValueKey(Table1.table1DropdownList()[1], obj.realized),
+                ValueKey(Table1.table1DropdownList()[2], obj.target),
                 ValueKey(Table1.table1DropdownList()[3], obj.informationRatio),
                 ValueKey(Table1.table1DropdownList()[4], obj.yield),
                 ValueKey(Table1.table1DropdownList()[5], obj.varM)

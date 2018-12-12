@@ -48,6 +48,11 @@ class MainActivity : AppCompatActivity() {
     var viewModel:UserViewModel? = null
     var mainTitle = "Portfolio Overview"
 
+    var selectedCompany = ""
+    var selectedWeek = ""
+    var selectedCategory1 = ""
+    var selectedCategory2 = ""
+
     private var arrCompanyList:ArrayList<Company>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {

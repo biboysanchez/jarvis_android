@@ -47,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(this@LoginActivity, response)){
                     UserSession(this@LoginActivity).authorize(JSONObject(response))
-
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
                 }

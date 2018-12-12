@@ -39,6 +39,7 @@ class SplashActivity : AppCompatActivity() {
                 if (UserSession(this@SplashActivity).isActive){
                     val intent = Intent(this@SplashActivity, MainActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }else{
                     val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                     val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
