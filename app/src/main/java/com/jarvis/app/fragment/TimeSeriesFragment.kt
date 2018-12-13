@@ -37,6 +37,9 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.CombinedData
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.jarvis.app.custom.MyMarkerView
 import com.jarvis.app.helpers.ValueFormatter
 import java.sql.Array
 
@@ -131,34 +134,29 @@ class TimeSeriesFragment : BaseFragment() {
     }
 
     private fun returnLineChart(arrayList: ArrayList<Benchmark>){
-//        lineChartReturnBenchMark?.setPinchZoom(false)
-//        lineChartReturnBenchMark?.description = null
-//        lineChartReturnBenchMark?.axisLeft?.setDrawLabels(true)
-//            // lineChartReturnBenchMark?.setDrawMarkers(true)
-//        lineChartReturnBenchMark?.axisRight?.setDrawLabels(false)
-//        lineChartReturnBenchMark?.xAxis?.setDrawLabels(false)
-//        lineChartReturnBenchMark?.legend?.isEnabled = true
-//        lineChartReturnBenchMark?.resetTracking()
-//        lineChartReturnBenchMark?.axisLeft?.setDrawGridLines(false)
-//        lineChartReturnBenchMark?.xAxis?.setDrawGridLines(false)
-//
-//        lineChartReturnBenchMark?.xAxis?.granularity = 0f // only intervals of 1 day
-//        lineChartReturnBenchMark?.xAxis?.setCenterAxisLabels(true)
-
         lineChartReturnBenchMark?.description = null
-        lineChartReturnBenchMark?.setTouchEnabled(true)
-        lineChartReturnBenchMark?.isDragEnabled = true
-        lineChartReturnBenchMark?.setScaleEnabled(true)
-        lineChartReturnBenchMark?.setPinchZoom(true)
-        lineChartReturnBenchMark?.setDrawMarkers(false)
-        lineChartReturnBenchMark?.legend?.isEnabled = true
         lineChartReturnBenchMark?.setExtraOffsets(0f,0f,0f,20f)
-        portfolioLineChart?.description = null
         lineChartReturnBenchMark?.xAxis?.setDrawGridLines(false)
         lineChartReturnBenchMark?.axisLeft?.setDrawGridLines(true)
-        lineChartReturnBenchMark?.axisRight?.setDrawGridLines(false)
         lineChartReturnBenchMark?.axisRight?.setDrawLabels(false)
         lineChartReturnBenchMark?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
+        lineChartReturnBenchMark?.setDrawMarkers(true)
+
+
+        val mv = MyMarkerView(context, R.layout.custom_marker_view)
+        mv.chartView = lineChartReturnBenchMark // For bounds control
+        lineChartReturnBenchMark?.marker = mv // Set the marker to the chart
+        lineChartReturnBenchMark?.setOnChartValueSelectedListener(object : OnChartValueSelectedListener{
+            override fun onNothingSelected() {
+            }
+
+            override fun onValueSelected(e: Entry?, h: Highlight?) {
+                Log.i("Entry selected", e.toString())
+                Log.i("LOW HIGH", "low: " + lineChartReturnBenchMark?.lowestVisibleX + ", high: " + lineChartReturnBenchMark?.highestVisibleX)
+                Log.i("MIN MAX", "xMin: " + lineChartReturnBenchMark?.xChartMin + ", xMax: " + lineChartReturnBenchMark?.xChartMax + ", yMin: " + lineChartReturnBenchMark?.yChartMin + ", yMax: " + lineChartReturnBenchMark?.yChartMax
+                )
+            }
+        })
 
         val dataSets = ArrayList<ILineDataSet>()
         val values = ArrayList<Entry>()
@@ -176,16 +174,12 @@ class TimeSeriesFragment : BaseFragment() {
 
             val d = LineDataSet(values, "Sanamas Saham")
             d.lineWidth = 2f
-            d.isHighlightEnabled = false
-            d.setDrawHighlightIndicators(false)
             d.setDrawCircles(false)
             d.setColors(Color.parseColor("#21C6B7"))
             dataSets.add(d)
 
             val e = LineDataSet(values1, "Jci Index")
             e.lineWidth = 2f
-            e.isHighlightEnabled = false
-            e.setDrawHighlightIndicators(false)
             e.setDrawCircles(false)
             e.setColors(Color.parseColor("#BDBDBD"))
             dataSets.add(e)
@@ -193,10 +187,15 @@ class TimeSeriesFragment : BaseFragment() {
 
         val xAxis = lineChartReturnBenchMark?.xAxis
         xAxis?.valueFormatter = ValueFormatter(labels)
-        xAxis?.granularity = 1f
-
+       // xAxis?.granularity = 1f
         val data = LineData(dataSets)
         lineChartReturnBenchMark?.data = data
+
+        val sets = lineChartReturnBenchMark.data.dataSets
+        for (iSet in sets) {
+            val set = iSet as LineDataSet
+            set.setDrawValues(!set.isDrawValuesEnabled)
+        }
         lineChartReturnBenchMark?.invalidate()
     }
 
