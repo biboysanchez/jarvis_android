@@ -1,6 +1,7 @@
 package com.jarvis.app.fragment
 
 import android.graphics.Color
+import android.graphics.DashPathEffect
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -12,6 +13,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.android.volley.VolleyError
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -33,6 +36,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.CombinedData
+import com.jarvis.app.helpers.ValueFormatter
+import java.sql.Array
 
 
 class TimeSeriesFragment : BaseFragment() {
@@ -146,18 +152,26 @@ class TimeSeriesFragment : BaseFragment() {
         lineChartReturnBenchMark?.setPinchZoom(true)
         lineChartReturnBenchMark?.setDrawMarkers(false)
         lineChartReturnBenchMark?.legend?.isEnabled = true
+        lineChartReturnBenchMark?.setExtraOffsets(0f,0f,0f,20f)
+        portfolioLineChart?.description = null
         lineChartReturnBenchMark?.xAxis?.setDrawGridLines(false)
+        lineChartReturnBenchMark?.axisLeft?.setDrawGridLines(true)
+        lineChartReturnBenchMark?.axisRight?.setDrawGridLines(false)
         lineChartReturnBenchMark?.axisRight?.setDrawLabels(false)
         lineChartReturnBenchMark?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
 
         val dataSets = ArrayList<ILineDataSet>()
         val values = ArrayList<Entry>()
         val values1 = ArrayList<Entry>()
+        var labels:ArrayList<String>? = ArrayList()
+
         for (z in 0 until 1) {
+            labels = ArrayList()
             for (i in 0 until arrayList.size) {
                 val benchmark = arrayList[i]
                 values.add(Entry(i.toFloat(), benchmark.danamasSaham.toFloat()))
                 values1.add(Entry(i.toFloat(), benchmark.jciIndex.toFloat()))
+                labels.add(benchmark.id)
             }
 
             val d = LineDataSet(values, "Sanamas Saham")
@@ -177,37 +191,9 @@ class TimeSeriesFragment : BaseFragment() {
             dataSets.add(e)
         }
 
-  //      (dataSets[0] as LineDataSet).setColors(Color.parseColor("#BDBDBD"))
-  //      (dataSets[1] as LineDataSet).setColors(Color.parseColor("#21C6B7"))
-
-        // make the first DataSet dashed
-        //(dataSets[0] as LineDataSet).enableDashedLine(10f, 10f, 0f)
-//        (dataSets[0] as LineDataSet).setColors(Color.parseColor("#BDBDBD"))
-//        (dataSets[1] as LineDataSet).setColors(Color.parseColor("#21C6B7"))
-
-
-/*        for (z in 0..1) {
-            val values = ArrayList<Entry>()
-            for (i in 0 until progress) {
-                val `val` = Math.random() * 14
-                values.add(Entry(i.toFloat(), `val`.toFloat()))
-            }
-
-            val d = LineDataSet(values, "DataSet " + (z + 1))
-            d.lineWidth = 2f
-
-            d.isHighlightEnabled = false // allow highlighting for DataSet
-            d.setDrawHighlightIndicators(false)
-           // d.setHighlightColor(Color.BLACK)
-           // d.setDrawFilled(true)
-            d.setDrawCircles(false)
-            dataSets.add(d)
-        }
-
-        // make the first DataSet dashed
-        //(dataSets[0] as LineDataSet).enableDashedLine(10f, 10f, 0f)
-        (dataSets[0] as LineDataSet).setColors(Color.parseColor("#BDBDBD"))
-        (dataSets[1] as LineDataSet).setColors(Color.parseColor("#21C6B7"))*/
+        val xAxis = lineChartReturnBenchMark?.xAxis
+        xAxis?.valueFormatter = ValueFormatter(labels)
+        xAxis?.granularity = 1f
 
         val data = LineData(dataSets)
         lineChartReturnBenchMark?.data = data
