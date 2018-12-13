@@ -4,21 +4,42 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
+import com.android.volley.VolleyError
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.EntryXComparator
 import com.jarvis.app.R
+import com.jarvis.app.extension.arr
+import com.jarvis.app.extension.obj
+import com.jarvis.app.https.API
+import com.jarvis.app.https.ApiRequest
+import com.jarvis.app.model.Benchmark
+import com.jarvis.app.utils.JSONUtil
 import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.fragment_time_series.*
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import com.github.mikephil.charting.components.XAxis
+
 
 class TimeSeriesFragment : BaseFragment() {
+    var benchmarkMap:HashMap<String, JSONArray>? = HashMap()
+    var arrayDanamasSaham:ArrayList<Benchmark>? = ArrayList()
+    var arraySimasSaham:ArrayList<Benchmark>? = ArrayList()
+
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
     }
@@ -34,9 +55,9 @@ class TimeSeriesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getData()
         setRecyclerAdapter()
         setSpinner()
-        returnLineChart()
         returnPortfolioListChart()
     }
 
@@ -47,36 +68,125 @@ class TimeSeriesFragment : BaseFragment() {
 
         spinnerSelection?.adapter = ArrayAdapter(context!!,
             R.layout.support_simple_spinner_dropdown_item,
-            Arrays.asList("Simas Saham Bertumbuh") )
+            Arrays.asList("Danamas Saham","Simas Saham Bertumbuh") )
 
-        Util.changeTextColor(spinnerPerformance, "#9E9E9E")
-        Util.changeTextColor(spinnerSelection, "#9E9E9E")
+        spinnerSelection?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9E9E9E"))
+
+                if (position == 0){
+                    returnLineChart(arrayDanamasSaham!!)
+                }else{
+                    returnLineChart(arraySimasSaham!!)
+                }
+            }
+        }
     }
+
+    private fun getData(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.returnVsBenchmark, params, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        arrayDanamasSaham = ArrayList()
+                        val json = JSONObject(response).obj("message_data").obj("portfolio_unique_dict")
+                        val array1 = json.arr("Danamas Saham")
+                        val array2 = json.arr("Simas Saham Bertumbuh")
+
+                        for (i in 0 until array1.length()){
+                            arrayDanamasSaham?.add(Benchmark(array1.getJSONObject(i)))
+                        }
+
+                        for (i in 0 until array2.length()){
+                            arraySimasSaham?.add(Benchmark(array2.getJSONObject(i)))
+                        }
+
+                       setSpinner()
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
 
     private fun setRecyclerAdapter(){
         rvPerformanceAttribute?.layoutManager = LinearLayoutManager(context)
      //   rvPerformanceAttribute?.adapter = PerformanceSummaryAdapter(context, null)
     }
 
-    private fun returnLineChart(){
-        // if disabled, scaling can be done on x- and y-axis separately
-        lineChartReturnBenchMark?.setPinchZoom(false)
+    private fun returnLineChart(arrayList: ArrayList<Benchmark>){
+//        lineChartReturnBenchMark?.setPinchZoom(false)
+//        lineChartReturnBenchMark?.description = null
+//        lineChartReturnBenchMark?.axisLeft?.setDrawLabels(true)
+//            // lineChartReturnBenchMark?.setDrawMarkers(true)
+//        lineChartReturnBenchMark?.axisRight?.setDrawLabels(false)
+//        lineChartReturnBenchMark?.xAxis?.setDrawLabels(false)
+//        lineChartReturnBenchMark?.legend?.isEnabled = true
+//        lineChartReturnBenchMark?.resetTracking()
+//        lineChartReturnBenchMark?.axisLeft?.setDrawGridLines(false)
+//        lineChartReturnBenchMark?.xAxis?.setDrawGridLines(false)
+//
+//        lineChartReturnBenchMark?.xAxis?.granularity = 0f // only intervals of 1 day
+//        lineChartReturnBenchMark?.xAxis?.setCenterAxisLabels(true)
+
         lineChartReturnBenchMark?.description = null
-        lineChartReturnBenchMark?.axisLeft?.setDrawLabels(true)
-        lineChartReturnBenchMark?.setDrawMarkers(true)
+        lineChartReturnBenchMark?.setTouchEnabled(true)
+        lineChartReturnBenchMark?.isDragEnabled = true
+        lineChartReturnBenchMark?.setScaleEnabled(true)
+        lineChartReturnBenchMark?.setPinchZoom(true)
+        lineChartReturnBenchMark?.setDrawMarkers(false)
+        lineChartReturnBenchMark?.legend?.isEnabled = true
+        lineChartReturnBenchMark?.xAxis?.setDrawGridLines(false)
         lineChartReturnBenchMark?.axisRight?.setDrawLabels(false)
-        lineChartReturnBenchMark?.axisLeft?.setDrawZeroLine(false)
-        lineChartReturnBenchMark?.xAxis?.setDrawLabels(false)
-        lineChartReturnBenchMark?.legend?.isEnabled = false
-        lineChartReturnBenchMark?.resetTracking()
+        lineChartReturnBenchMark?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
 
-        lineChartReturnBenchMark?.axisLeft?.setDrawGridLines(true)
-        lineChartReturnBenchMark?.xAxis?.setDrawGridLines(true)
-
-        val progress = 10
         val dataSets = ArrayList<ILineDataSet>()
+        val values = ArrayList<Entry>()
+        val values1 = ArrayList<Entry>()
+        for (z in 0 until 1) {
+            for (i in 0 until arrayList.size) {
+                val benchmark = arrayList[i]
+                values.add(Entry(i.toFloat(), benchmark.danamasSaham.toFloat()))
+                values1.add(Entry(i.toFloat(), benchmark.jciIndex.toFloat()))
+            }
 
-        for (z in 0..1) {
+            val d = LineDataSet(values, "Sanamas Saham")
+            d.lineWidth = 2f
+            d.isHighlightEnabled = false
+            d.setDrawHighlightIndicators(false)
+            d.setDrawCircles(false)
+            d.setColors(Color.parseColor("#21C6B7"))
+            dataSets.add(d)
+
+            val e = LineDataSet(values1, "Jci Index")
+            e.lineWidth = 2f
+            e.isHighlightEnabled = false
+            e.setDrawHighlightIndicators(false)
+            e.setDrawCircles(false)
+            e.setColors(Color.parseColor("#BDBDBD"))
+            dataSets.add(e)
+        }
+
+  //      (dataSets[0] as LineDataSet).setColors(Color.parseColor("#BDBDBD"))
+  //      (dataSets[1] as LineDataSet).setColors(Color.parseColor("#21C6B7"))
+
+        // make the first DataSet dashed
+        //(dataSets[0] as LineDataSet).enableDashedLine(10f, 10f, 0f)
+//        (dataSets[0] as LineDataSet).setColors(Color.parseColor("#BDBDBD"))
+//        (dataSets[1] as LineDataSet).setColors(Color.parseColor("#21C6B7"))
+
+
+/*        for (z in 0..1) {
             val values = ArrayList<Entry>()
             for (i in 0 until progress) {
                 val `val` = Math.random() * 14
@@ -97,7 +207,7 @@ class TimeSeriesFragment : BaseFragment() {
         // make the first DataSet dashed
         //(dataSets[0] as LineDataSet).enableDashedLine(10f, 10f, 0f)
         (dataSets[0] as LineDataSet).setColors(Color.parseColor("#BDBDBD"))
-        (dataSets[1] as LineDataSet).setColors(Color.parseColor("#21C6B7"))
+        (dataSets[1] as LineDataSet).setColors(Color.parseColor("#21C6B7"))*/
 
         val data = LineData(dataSets)
         lineChartReturnBenchMark?.data = data

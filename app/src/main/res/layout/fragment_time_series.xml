@@ -73,13 +73,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/lineChartReturnBenchMark"/>
-
-                <LinearLayout
-                        android:layout_gravity="bottom"
-                        android:background="@color/white"
-                        android:layout_width="match_parent"
-                        android:layout_height="33dp">
-                </LinearLayout>
             </FrameLayout>
 
         </android.support.constraint.ConstraintLayout>

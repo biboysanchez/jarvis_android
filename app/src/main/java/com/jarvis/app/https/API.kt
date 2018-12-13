@@ -12,4 +12,5 @@ object API {
     const val securitySelection     = "$baseUrl/api/get-securities-selection"
     const val topTen                = "$baseUrl/api/get-top-ten"
     const val assetAllocation       = "$baseUrl/api/get-asset-allocation"
+    const val returnVsBenchmark     = "$baseUrl/api/get-pm-return-vs-benchmark"
 }
