@@ -39,6 +39,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.CombinedData
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.jarvis.app.custom.CustomMarkerView
 import com.jarvis.app.custom.MyMarkerView
 import com.jarvis.app.helpers.ValueFormatter
 import java.sql.Array
@@ -143,17 +144,31 @@ class TimeSeriesFragment : BaseFragment() {
         lineChartReturnBenchMark?.setDrawMarkers(true)
 
 
-        val mv = MyMarkerView(context, R.layout.custom_marker_view)
+        val mv = CustomMarkerView(context, R.layout.custom_marker_view_2)
         mv.chartView = lineChartReturnBenchMark // For bounds control
         lineChartReturnBenchMark?.marker = mv // Set the marker to the chart
+
+        val tvTop = mv.findViewById<TextView>(R.id.tvTop)
+        val tvSub = mv.findViewById<TextView>(R.id.tvBottom)
+
         lineChartReturnBenchMark?.setOnChartValueSelectedListener(object : OnChartValueSelectedListener{
             override fun onNothingSelected() {
             }
 
             override fun onValueSelected(e: Entry?, h: Highlight?) {
+               //Log.i("Entry selected", e.toString())
                 Log.i("Entry selected", e.toString())
                 Log.i("LOW HIGH", "low: " + lineChartReturnBenchMark?.lowestVisibleX + ", high: " + lineChartReturnBenchMark?.highestVisibleX)
-                Log.i("MIN MAX", "xMin: " + lineChartReturnBenchMark?.xChartMin + ", xMax: " + lineChartReturnBenchMark?.xChartMax + ", yMin: " + lineChartReturnBenchMark?.yChartMin + ", yMax: " + lineChartReturnBenchMark?.yChartMax
+                Log.i(
+                    "MIN MAX",
+                    "xMin: "
+                            + lineChartReturnBenchMark?.xChartMin
+                            + ", xMax: "
+                            + lineChartReturnBenchMark?.xChartMax
+                            + ", yMin: "
+                            + lineChartReturnBenchMark?.yChartMin
+                            + ", yMax: "
+                            + lineChartReturnBenchMark?.yChartMax
                 )
             }
         })
@@ -172,7 +187,7 @@ class TimeSeriesFragment : BaseFragment() {
                 labels.add(benchmark.id)
             }
 
-            val d = LineDataSet(values, "Sanamas Saham")
+            val d = LineDataSet(values, "Danamas Saham")
             d.lineWidth = 2f
             d.setDrawCircles(false)
             d.setColors(Color.parseColor("#21C6B7"))

@@ -19,27 +19,29 @@ import com.jarvis.app.R;
  * @author Philipp Jahoda
  */
 @SuppressLint("ViewConstructor")
-public class MyMarkerView extends MarkerView {
+public class CustomMarkerView extends MarkerView {
 
-    private final TextView tvContent;
+    private final TextView tvTop;
+    private final TextView tvSub;
 
-    public MyMarkerView(Context context, int layoutResource) {
+    public CustomMarkerView(Context context, int layoutResource) {
         super(context, layoutResource);
 
-        tvContent = findViewById(R.id.tvContent);
+        tvTop     = findViewById(R.id.tvTop);
+        tvSub     =  findViewById(R.id.tvBottom);
     }
 
     // runs every time the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-
-        if (e instanceof CandleEntry) {
-            CandleEntry ce = (CandleEntry) e;
-            tvContent.setText(Utils.formatNumber(ce.getHigh(), 0, true));
-        } else {
-            tvContent.setText(Utils.formatNumber(e.getY(), 0, true));
-        }
+//        if (e instanceof CandleEntry) {
+//            CandleEntry ce = (CandleEntry) e;
+//            tvTop.setText(Utils.formatNumber(ce.getHigh(), 0, true));
+//        } else {
+            tvTop.setText(String.format("%.2f", e.getX()));
+            tvSub.setText(String.format("%.2f", e.getY()));
+//        }
 
         super.refreshContent(e, highlight);
     }
