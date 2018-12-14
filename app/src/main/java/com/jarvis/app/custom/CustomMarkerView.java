@@ -39,8 +39,8 @@ public class CustomMarkerView extends MarkerView {
 //            CandleEntry ce = (CandleEntry) e;
 //            tvTop.setText(Utils.formatNumber(ce.getHigh(), 0, true));
 //        } else {
-            tvTop.setText(String.format("%.2f", e.getX()));
-            tvSub.setText(String.format("%.2f", e.getY()));
+//          tvTop.setText(String.format("%.2f", e.getX()));
+//          tvSub.setText(String.format("%.2f", e.getY()));
 //        }
 
         super.refreshContent(e, highlight);

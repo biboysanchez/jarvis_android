@@ -157,19 +157,10 @@ class TimeSeriesFragment : BaseFragment() {
 
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                //Log.i("Entry selected", e.toString())
-                Log.i("Entry selected", e.toString())
-                Log.i("LOW HIGH", "low: " + lineChartReturnBenchMark?.lowestVisibleX + ", high: " + lineChartReturnBenchMark?.highestVisibleX)
-                Log.i(
-                    "MIN MAX",
-                    "xMin: "
-                            + lineChartReturnBenchMark?.xChartMin
-                            + ", xMax: "
-                            + lineChartReturnBenchMark?.xChartMax
-                            + ", yMin: "
-                            + lineChartReturnBenchMark?.yChartMin
-                            + ", yMax: "
-                            + lineChartReturnBenchMark?.yChartMax
-                )
+                val danamas = String.format("%.2f",arrayList[e?.x!!.toInt()].danamasSaham.toFloat() )
+                val jci     = String.format("%.2f",arrayList[e.x.toInt()].jciIndex.toFloat() )
+                tvSub.text = danamas
+                tvTop.text = jci
             }
         })
 
