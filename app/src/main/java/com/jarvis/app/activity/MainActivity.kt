@@ -1,11 +1,8 @@
 package com.jarvis.app.activity
 
 import android.animation.ValueAnimator
-import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -18,11 +15,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import androidx.annotation.RequiresApi
 import com.android.volley.VolleyError
 import com.jarvis.app.R
-import com.jarvis.app.R.id.drawer_layout
-import com.jarvis.app.R.id.toolbar
 import com.jarvis.app.adapter.HorizontalListAdapter
 import com.jarvis.app.dataholder.StaticData
 import kotlinx.android.synthetic.main.activity_main.*

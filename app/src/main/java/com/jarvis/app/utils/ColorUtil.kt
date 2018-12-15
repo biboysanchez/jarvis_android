@@ -109,4 +109,57 @@ object ColorUtil {
             color210, color211, color212, color213, color214, color215, color216, color217, color218, color219
         )
     }
+
+    fun arrColorTeal(): List<Int>{
+        val color0 = Color.parseColor("#E0F2F1")
+        val color1 = Color.parseColor("#B2DFDB")
+        val color2 = Color.parseColor("#80CBC4")
+        val color3 = Color.parseColor("#4DB6AC")
+        val color4 = Color.parseColor("#26A69A")
+        val color5 = Color.parseColor("#009688")
+        val color6 = Color.parseColor("#00897B")
+        val color7 = Color.parseColor("#00796B")
+        val color8 = Color.parseColor("#00695C")
+        val color9 = Color.parseColor("#004D40")
+
+        val color10 = Color.parseColor("#E0F2F1")
+        val color11 = Color.parseColor("#B2DFDB")
+        val color12 = Color.parseColor("#80CBC4")
+        val color13 = Color.parseColor("#4DB6AC")
+        val color14 = Color.parseColor("#26A69A")
+        val color15 = Color.parseColor("#009688")
+        val color16 = Color.parseColor("#00897B")
+        val color17 = Color.parseColor("#00796B")
+        val color18 = Color.parseColor("#00695C")
+        val color19 = Color.parseColor("#004D40")
+
+        val color110 = Color.parseColor("#E0F2F1")
+        val color111 = Color.parseColor("#B2DFDB")
+        val color112 = Color.parseColor("#80CBC4")
+        val color113 = Color.parseColor("#4DB6AC")
+        val color114 = Color.parseColor("#26A69A")
+        val color115 = Color.parseColor("#009688")
+        val color116 = Color.parseColor("#00897B")
+        val color117 = Color.parseColor("#00796B")
+        val color118 = Color.parseColor("#00695C")
+        val color119 = Color.parseColor("#004D40")
+
+        val color210 = Color.parseColor("#E0F2F1")
+        val color211 = Color.parseColor("#B2DFDB")
+        val color212 = Color.parseColor("#80CBC4")
+        val color213 = Color.parseColor("#4DB6AC")
+        val color214 = Color.parseColor("#26A69A")
+        val color215 = Color.parseColor("#009688")
+        val color216 = Color.parseColor("#00897B")
+        val color217 = Color.parseColor("#00796B")
+        val color218 = Color.parseColor("#00695C")
+        val color219 = Color.parseColor("#004D40")
+
+        return Arrays.asList(
+            color10, color11, color12, color13, color14, color15, color16, color17, color18, color19,
+            color0, color1, color2, color3, color4, color5, color6, color7, color8, color9,
+            color110, color111, color112, color113, color114, color115, color116, color117, color118, color119,
+            color210, color211, color212, color213, color214, color215, color216, color217, color218, color219
+        )
+    }
 }

@@ -12,5 +12,12 @@ object API {
     const val securitySelection     = "$baseUrl/api/get-securities-selection"
     const val topTen                = "$baseUrl/api/get-top-ten"
     const val assetAllocation       = "$baseUrl/api/get-asset-allocation"
+
+    //Time Series
     const val returnVsBenchmark     = "$baseUrl/api/get-pm-return-vs-benchmark"
+    const val portfolio             = "$baseUrl/api/get-pm-portfolio-holding"
+
+    //Detail View
+    const val liquidityProfile     = "$baseUrl/api/get-pm-liquidity-profile"
+
 }

@@ -1,7 +1,6 @@
 package com.jarvis.app.fragment
 
 import android.graphics.Color
-import android.graphics.DashPathEffect
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -13,13 +12,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.android.volley.VolleyError
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.utils.EntryXComparator
 import com.jarvis.app.R
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
@@ -27,28 +23,26 @@ import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.Benchmark
 import com.jarvis.app.utils.JSONUtil
-import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.fragment_time_series.*
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.CombinedData
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.jarvis.app.custom.CustomMarkerView
-import com.jarvis.app.custom.MyMarkerView
 import com.jarvis.app.helpers.ValueFormatter
-import java.sql.Array
+import com.jarvis.app.model.Portfolio
+import com.jarvis.app.utils.ColorUtil
 
 
 class TimeSeriesFragment : BaseFragment() {
-    var benchmarkMap:HashMap<String, JSONArray>? = HashMap()
     var arrayDanamasSaham:ArrayList<Benchmark>? = ArrayList()
     var arraySimasSaham:ArrayList<Benchmark>? = ArrayList()
+    var mapPortfolio:HashMap<String, ArrayList<Portfolio>>? = HashMap()
+    var keys:ArrayList<String>?= ArrayList()
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -68,7 +62,8 @@ class TimeSeriesFragment : BaseFragment() {
         getData()
         setRecyclerAdapter()
         setSpinner()
-        returnPortfolioListChart()
+
+        getPortfolio()
     }
 
     private fun setSpinner(){
@@ -94,6 +89,11 @@ class TimeSeriesFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    fun refreshAll(){
+        getData()
+        getPortfolio()
     }
 
     private fun getData(){
@@ -142,7 +142,6 @@ class TimeSeriesFragment : BaseFragment() {
         lineChartReturnBenchMark?.axisRight?.setDrawLabels(false)
         lineChartReturnBenchMark?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
         lineChartReturnBenchMark?.setDrawMarkers(true)
-
 
         val mv = CustomMarkerView(context, R.layout.custom_marker_view_2)
         mv.chartView = lineChartReturnBenchMark // For bounds control
@@ -205,6 +204,89 @@ class TimeSeriesFragment : BaseFragment() {
         lineChartReturnBenchMark?.invalidate()
     }
 
+    private fun getPortfolio(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        params["portfolio"] = "Danamas Saham"
+        ApiRequest.postNoUI(context!!, API.portfolio, params, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        mapPortfolio = HashMap()
+                        keys         = ArrayList()
+
+                        val json = JSONObject(response).obj("message_data").obj("portfolio_unique_dict")
+                        val iter: Iterator<String> = json.keys()
+                        while (iter.hasNext()) {
+                            val key = iter.next()
+                            try {
+                                keys?.add(key)
+                                val arrList = ArrayList<Portfolio>()
+                                val arr = json.arr(key)
+                                for (i in 0 until arr.length()){
+                                    arrList.add(Portfolio(arr.getJSONObject(i)))
+                                }
+                                mapPortfolio?.put(key, arrList)
+                                setPortfolioChart()
+                            } catch (e: JSONException) {
+                                e.printStackTrace()
+                            }
+                        }
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
+    private fun setPortfolioChart(){
+        var data:LineData? = null
+        val entries = ArrayList<Entry>()
+
+        for (z in 0 until keys?.size!!){
+            val arr:ArrayList<Portfolio> = mapPortfolio?.get(keys!![z]) as ArrayList<Portfolio>
+
+            for (i in 0 until arr.size){
+                val port:Portfolio = arr[i]
+                entries.add(Entry(i.toFloat(), port.target.replace("%", "").toFloat()))
+            }
+            val set = LineDataSet(entries, keys?.get(z))
+            set.lineWidth = 0f
+            set.setDrawCircles(false)
+            set.setDrawFilled(true)
+            set.valueTextColor = android.R.color.transparent
+           // set.fillDrawable = ContextCompat.getDrawable(context!!, R.drawable.solid_green_lvl1)
+            data = LineData(set)
+        }
+
+//        for ((key, value) in mapPortfolio!!) {
+//            for (i in 0 until value.size){
+//                val port:Portfolio = value[i]
+//                entries.add(Entry(i.toFloat(), port.target.replace("%", "").toFloat()))
+//            }
+//            val set = LineDataSet(entries, key)
+//            set.lineWidth = 0f
+//            set.setDrawCircles(false)
+//            set.setDrawFilled(true)
+//            set.valueTextColor = android.R.color.transparent
+//            set.fillDrawable = ContextCompat.getDrawable(context!!, R.drawable.solid_green_lvl1)
+//            data = LineData(set)
+//        }
+
+        portfolioLineChart?.legend?.isEnabled = false
+        portfolioLineChart?.description = null
+        portfolioLineChart?.axisRight?.setDrawLabels(false)
+        portfolioLineChart?.setDrawGridBackground(true)
+        portfolioLineChart?.setGridBackgroundColor(Color.parseColor("#2C7B74"))
+
+        // set data
+        portfolioLineChart?.data = data
+        portfolioLineChart?.invalidate()
+    }
+/*
     private fun returnPortfolioListChart(){
         val entries = ArrayList<Entry>()
         entries.add(Entry(10f, 80f))
@@ -271,4 +353,5 @@ class TimeSeriesFragment : BaseFragment() {
         portfolioLineChart?.data = data
         portfolioLineChart?.invalidate()
     }
+    */
 }
