@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.fragment.HomeFragment
+import com.jarvis.app.fragment.PerformanceDetailFragment
+import com.jarvis.app.fragment.TimeSeriesFragment
 import com.jarvis.app.model.Company
 import kotlinx.android.synthetic.main.button_scroll.view.*
 
@@ -61,6 +63,9 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
                 data!![i].isSelected = true
                 mActivity.selectedCompany = company.name
                 HomeFragment.instance?.refreshAll()
+                PerformanceDetailFragment.instance?.refreshAll()
+                TimeSeriesFragment.instance?.refreshAll()
+
                 notifyDataSetChanged()
             }
         }

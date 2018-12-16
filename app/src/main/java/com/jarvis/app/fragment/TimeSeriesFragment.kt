@@ -50,9 +50,11 @@ class TimeSeriesFragment : BaseFragment() {
 
     companion object {
         const val TAG = "TimeSeriesFragment"
+        var instance:TimeSeriesFragment? = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        instance = this
         return inflater.inflate(R.layout.fragment_time_series, container, false)
     }
 
@@ -201,6 +203,8 @@ class TimeSeriesFragment : BaseFragment() {
             val set = iSet as LineDataSet
             set.setDrawValues(!set.isDrawValuesEnabled)
         }
+
+        lineChartReturnBenchMark?.animateX(1600)
         lineChartReturnBenchMark?.invalidate()
     }
 
@@ -276,6 +280,7 @@ class TimeSeriesFragment : BaseFragment() {
 //            data = LineData(set)
 //        }
 
+        portfolioLineChart?.animateX(1600)
         portfolioLineChart?.legend?.isEnabled = false
         portfolioLineChart?.description = null
         portfolioLineChart?.axisRight?.setDrawLabels(false)
@@ -354,4 +359,9 @@ class TimeSeriesFragment : BaseFragment() {
         portfolioLineChart?.invalidate()
     }
     */
+
+    override fun onDestroy() {
+        super.onDestroy()
+        instance = null
+    }
 }
