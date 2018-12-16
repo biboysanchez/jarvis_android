@@ -29,6 +29,8 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
+import android.text.method.TextKeyListener.clear
+import com.github.mikephil.charting.data.DataSet
 
 
 class PerformanceDetailFragment: BaseFragment() {
@@ -63,19 +65,23 @@ class PerformanceDetailFragment: BaseFragment() {
                     try {
                         val arr = JSONObject(response).obj("message_data").arr("chart_data_list")
                         arrLiquidProfile = ArrayList()
-                        arrLiquidTitle = ArrayList()
+
                         for (i in 0 until arr.length()){
                             val list:ArrayList<PerformanceDetail> = ArrayList()
                             val jsonArray = arr.getJSONArray(i)
+
                             for (z in 0 until jsonArray.length()){
                                 val arrDetail = PerformanceDetail(jsonArray.getJSONObject(z))
                                 list.add(arrDetail)
-                                if (!arrLiquidTitle!!.contains(arrDetail.target.trim())) {
-                                    arrLiquidTitle?.add(arrDetail.target.trim())
-                                }
                             }
                             arrLiquidProfile?.add(list)
                         }
+
+//                        val values = ArrayList<String>()
+//                        val hashSet = HashSet<String>()
+//                        hashSet.addAll(values)
+//                        values.clear()
+//                        values.addAll(hashSet)
 
                         setStackBarChart()
                     }catch (e: JSONException){
@@ -102,7 +108,6 @@ class PerformanceDetailFragment: BaseFragment() {
 
         val xLabels = barChartLiquidity?.xAxis
         xLabels?.position = XAxis.XAxisPosition.BOTTOM
-        xLabels?.setLabelCount(arrLiquidTitle!!.size, true)
 
         val l = barChartLiquidity?.legend
         l?.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
@@ -111,50 +116,87 @@ class PerformanceDetailFragment: BaseFragment() {
         l?.formToTextSpace = 4f
         l?.xEntrySpace = 6f
 
-        val values = ArrayList<BarEntry>()
+        val values1 = ArrayList<BarEntry>()
+        val values2 = ArrayList<BarEntry>()
+        arrLiquidTitle = ArrayList()
+        var set1: BarDataSet? = null
+        var set2: BarDataSet? = null
+        var title1 = ""
+        var title2 = ""
+
         for (i in 0 until arrLiquidProfile!!.size){
             val arr = arrLiquidProfile?.get(i)
-            arr?.sortWith(Comparator { o1, o2 -> o2?.saham!!.compareTo(o1!!.saham) })
+          // arr?.sortWith(Comparator { o1, o2 -> o1?.saham!!.compareTo(o2!!.saham) })
+
+
+
             for (z in 0 until arr!!.size){
                 val performanceDetail = arr[z]
-                values.add(BarEntry(i.toFloat(), performanceDetail.saham.toFloat()))
+
+                if (performanceDetail.portfolio == "Danamas Saham"){
+                    values2.add(BarEntry(i.toFloat(), performanceDetail.saham.toFloat()))
+                    title2 = performanceDetail.portfolio
+                    set2 = BarDataSet(values2, title2)
+                    set2.color = Color.parseColor("#21C6B7")
+                }else{
+                    values1.add(BarEntry(i.toFloat(), performanceDetail.saham.toFloat()))
+                    title1 = performanceDetail.portfolio
+                    set1 = BarDataSet(values1, title1)
+                    set1.color = Color.parseColor("#F3B62C")
+                }
+
+//                if (z == 0){
+//                    values1.add(BarEntry(i.toFloat(), performanceDetail.saham.toFloat()))
+//                    title1 = performanceDetail.portfolio
+//                    set1 = BarDataSet(values1, title1)
+//                    set1.color = Color.parseColor("#F3B62C")
+//                }else{
+//                    values2.add(BarEntry(i.toFloat(), performanceDetail.saham.toFloat()))
+//                    title2 = performanceDetail.portfolio
+//                    set2 = BarDataSet(values2, title2)
+//                    set2.color = Color.parseColor("#21C6B7")
+//                }
+
+                if (!arrLiquidTitle!!.contains(performanceDetail.target)){
+                    arrLiquidTitle?.add(performanceDetail.target)
+                }
             }
         }
 
         val xAxis = barChartLiquidity?.xAxis
+        xAxis?.granularity = 1f
         xAxis?.valueFormatter = ValueFormatter(arrLiquidTitle)
-        xAxis?.granularity = 0.5f
+        xLabels?.setLabelCount(arrLiquidTitle!!.size-1, false)
         val set: BarDataSet
         if (barChartLiquidity?.data != null && barChartLiquidity?.data?.dataSetCount!! > 0) {
             set = barChartLiquidity.data.getDataSetByIndex(0) as BarDataSet
-            set.values = values
+            set.values = values1
             set.setColors(Color.parseColor("#F3B62C"), Color.parseColor("#21C6B7"))
             barChartLiquidity.data.notifyDataChanged()
             barChartLiquidity.notifyDataSetChanged()
         } else {
-            set = BarDataSet(values, "Statistics Vienna 2014")
-            set.setDrawIcons(false)
-            set.setColors(Color.parseColor("#F3B62C"), Color.parseColor("#21C6B7"))
             val dataSets = ArrayList<IBarDataSet>()
-            dataSets.add(set)
+            dataSets.add(set1!!)
+            dataSets.add(set2!!)
             val data = BarData(dataSets)
-            data.setValueFormatter(StackedValueFormatter(false, "", 1))
-            data.setValueTextColor(Color.WHITE)
             barChartLiquidity?.data = data
         }
 
         val sets = barChartLiquidity?.data?.dataSets
         if (sets != null) {
             for (iSet in sets) {
-                val set = iSet as BarDataSet
-                set.setDrawValues(!set.isDrawValuesEnabled)
+                val setB = iSet as BarDataSet
+                setB.label = "222"
+                setB.setDrawValues(!setB.isDrawValuesEnabled)
             }
         }
 
         barChartLiquidity?.description = null
         barChartLiquidity?.legend?.isEnabled = true
+        barChartLiquidity?.isHighlightFullBarEnabled = true
         barChartLiquidity?.setDrawValueAboveBar(true)
-        barChartLiquidity?.setFitBars(false)
+
+        barChartLiquidity?.setFitBars(true)
         barChartLiquidity?.invalidate()
     }
 
