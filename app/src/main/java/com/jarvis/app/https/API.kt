@@ -16,6 +16,7 @@ object API {
     //Time Series
     const val returnVsBenchmark     = "$baseUrl/api/get-pm-return-vs-benchmark"
     const val portfolio             = "$baseUrl/api/get-pm-portfolio-holding"
+    const val portfolioDropdown     = "$baseUrl/api/get-pm-portfolio"
 
     //Detail View
     const val liquidityProfile     = "$baseUrl/api/get-pm-liquidity-profile"

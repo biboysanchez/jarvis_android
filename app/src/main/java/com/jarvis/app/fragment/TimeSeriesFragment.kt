@@ -48,6 +48,8 @@ class TimeSeriesFragment : BaseFragment() {
     var keys:ArrayList<String>?= ArrayList()
     var arrPortfolioTitle:ArrayList<String> = ArrayList()
 
+    var portfolio:String = ""
+
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
     }
@@ -68,8 +70,6 @@ class TimeSeriesFragment : BaseFragment() {
         getData()
         setRecyclerAdapter()
         setSpinner()
-
-        getPortfolio()
     }
 
     private fun setSpinner(){
@@ -95,6 +95,45 @@ class TimeSeriesFragment : BaseFragment() {
                 }
             }
         }
+
+        getPortfolioDropDown()
+
+    }
+
+    private fun getPortfolioDropDown(){
+        ApiRequest.postNoUI(context!!, API.portfolioDropdown, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        Log.i(TAG, "DROPDOWN:: $response")
+                        val json = JSONObject(response).obj("message_data").arr("portfolio_list")
+                        val list = ArrayList<String>()
+                        for (i in 0 until json.length()){
+                            list.add(json.getString(i))
+                        }
+
+                        spinnerPortfolio?.adapter = ArrayAdapter(context!!,
+                            R.layout.support_simple_spinner_dropdown_item,
+                            list)
+                        spinnerPortfolio?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                            }
+
+                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9E9E9E"))
+                                portfolio = list[position]
+                                getPortfolio()
+                            }
+                        }
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
     }
 
     fun refreshAll(){
