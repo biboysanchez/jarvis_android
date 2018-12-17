@@ -12,6 +12,8 @@ fun JSONObject.string(value: String): String{
     }
 }
 
+
+
 fun JSONObject.int(value: String) : Int{
     return try {
         this.getInt(value)

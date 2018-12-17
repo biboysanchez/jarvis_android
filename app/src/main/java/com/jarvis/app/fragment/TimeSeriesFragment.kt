@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import com.android.volley.VolleyError
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -33,9 +34,13 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.jarvis.app.custom.CustomMarkerView
+import com.jarvis.app.extension.string
 import com.jarvis.app.helpers.ValueFormatter
+import com.jarvis.app.https.API.portfolio
 import com.jarvis.app.model.Portfolio
 import com.jarvis.app.utils.ColorUtil
+import com.jarvis.app.utils.Util
+import kotlin.Comparator
 
 
 class TimeSeriesFragment : BaseFragment() {
@@ -43,6 +48,7 @@ class TimeSeriesFragment : BaseFragment() {
     var arraySimasSaham:ArrayList<Benchmark>? = ArrayList()
     var mapPortfolio:HashMap<String, ArrayList<Portfolio>>? = HashMap()
     var keys:ArrayList<String>?= ArrayList()
+    var arrPortfolioTitle:ArrayList<String> = ArrayList()
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -218,24 +224,70 @@ class TimeSeriesFragment : BaseFragment() {
                     try {
                         mapPortfolio = HashMap()
                         keys         = ArrayList()
-
-                        val json = JSONObject(response).obj("message_data").obj("portfolio_unique_dict")
+                        val json     = JSONObject(response).obj("message_data").obj("portfolio_unique_dict")
                         val iter: Iterator<String> = json.keys()
                         while (iter.hasNext()) {
                             val key = iter.next()
                             try {
                                 keys?.add(key)
-                                val arrList = ArrayList<Portfolio>()
-                                val arr = json.arr(key)
-                                for (i in 0 until arr.length()){
-                                    arrList.add(Portfolio(arr.getJSONObject(i)))
-                                }
-                                mapPortfolio?.put(key, arrList)
-                                setPortfolioChart()
                             } catch (e: JSONException) {
                                 e.printStackTrace()
                             }
                         }
+
+                        var data: LineData? = null
+                        val arrSet:ArrayList<LineDataSet>? = ArrayList()
+
+                        for (i in 0 until keys!!.size){
+                            val key = keys!![i]
+                            val arr = json.getJSONArray(key)
+                            var set: LineDataSet? = null
+
+                            val arrayList = ArrayList<Portfolio>()
+                            val entries = ArrayList<Entry>()
+                            for (a in 0 until arr.length()) {
+                                val portfolio = Portfolio(arr.getJSONObject(a))
+                                portfolio.dateLong = Util.getDateMillisFromString(portfolio.date.toString())
+                                arrayList.add(portfolio)
+                               arrayList.sortWith(Comparator { o1, o2 -> o1?.dateLong!!.compareTo(o2!!.dateLong) })
+                            }
+
+                            arrayList.sortWith(Comparator { o1, o2 -> o1?.dateLong!!.compareTo(o2!!.dateLong) })
+                            arrPortfolioTitle = ArrayList()
+                            for (a in 0 until arrayList.size) {
+                                val portfolio = arrayList[a]
+                                Log.i(TAG, "date:::>($a) ${portfolio.date}")
+                                if (!arrPortfolioTitle.contains(portfolio.date)){
+                                    arrPortfolioTitle.add(portfolio.date)
+                                }
+                                entries.add(Entry(a.toFloat(), portfolio.target.replace("%", "").toFloat()))
+                            }
+
+                            set = LineDataSet(entries, key)
+                            set.color = ColorUtil.arrColorA()[i]
+                            set.lineWidth = 1f
+                            set.setDrawCircles(false)
+                            set.setDrawFilled(true)
+                            set.valueTextColor = android.R.color.transparent
+                            set.fillColor = ColorUtil.arrColorA()[i]
+                            arrSet?.add(set)
+                        }
+
+                        val xAxis = portfolioLineChart?.xAxis
+                        xAxis?.valueFormatter = ValueFormatter(arrPortfolioTitle)
+
+                        data = LineData(arrSet as List<ILineDataSet>?)
+                        portfolioLineChart?.setExtraOffsets(0f,0f,0f,20f)
+                        portfolioLineChart?.xAxis?.setDrawGridLines(false)
+                        portfolioLineChart?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
+                        portfolioLineChart?.animateX(1600)
+                        portfolioLineChart?.legend?.isEnabled = true
+                        portfolioLineChart?.description = null
+                        portfolioLineChart?.axisRight?.setDrawLabels(false)
+                        portfolioLineChart?.setDrawGridBackground(true)
+                        portfolioLineChart?.setGridBackgroundColor(Color.parseColor("#F4F9F9"))
+                        portfolioLineChart?.data = data
+                        portfolioLineChart?.invalidate()
                     }catch (e: JSONException){
                         e.printStackTrace()
                     }
@@ -245,120 +297,6 @@ class TimeSeriesFragment : BaseFragment() {
             }
         })
     }
-
-    private fun setPortfolioChart(){
-        var data:LineData? = null
-        val entries = ArrayList<Entry>()
-
-        for (z in 0 until keys?.size!!){
-            val arr:ArrayList<Portfolio> = mapPortfolio?.get(keys!![z]) as ArrayList<Portfolio>
-
-            for (i in 0 until arr.size){
-                val port:Portfolio = arr[i]
-                entries.add(Entry(i.toFloat(), port.target.replace("%", "").toFloat()))
-            }
-            val set = LineDataSet(entries, keys?.get(z))
-            set.lineWidth = 0f
-            set.setDrawCircles(false)
-            set.setDrawFilled(true)
-            set.valueTextColor = android.R.color.transparent
-           // set.fillDrawable = ContextCompat.getDrawable(context!!, R.drawable.solid_green_lvl1)
-            data = LineData(set)
-        }
-
-//        for ((key, value) in mapPortfolio!!) {
-//            for (i in 0 until value.size){
-//                val port:Portfolio = value[i]
-//                entries.add(Entry(i.toFloat(), port.target.replace("%", "").toFloat()))
-//            }
-//            val set = LineDataSet(entries, key)
-//            set.lineWidth = 0f
-//            set.setDrawCircles(false)
-//            set.setDrawFilled(true)
-//            set.valueTextColor = android.R.color.transparent
-//            set.fillDrawable = ContextCompat.getDrawable(context!!, R.drawable.solid_green_lvl1)
-//            data = LineData(set)
-//        }
-
-        portfolioLineChart?.animateX(1600)
-        portfolioLineChart?.legend?.isEnabled = false
-        portfolioLineChart?.description = null
-        portfolioLineChart?.axisRight?.setDrawLabels(false)
-        portfolioLineChart?.setDrawGridBackground(true)
-        portfolioLineChart?.setGridBackgroundColor(Color.parseColor("#2C7B74"))
-
-        // set data
-        portfolioLineChart?.data = data
-        portfolioLineChart?.invalidate()
-    }
-/*
-    private fun returnPortfolioListChart(){
-        val entries = ArrayList<Entry>()
-        entries.add(Entry(10f, 80f))
-        entries.add(Entry(20f, 85f))
-        entries.add(Entry(30f, 80f))
-        entries.add(Entry(40f, 86f))
-        entries.add(Entry(50f, 81f))
-        entries.add(Entry(60f, 87f))
-
-        val entries2 = ArrayList<Entry>()
-        entries2.add(Entry(10f, 75f))
-        entries2.add(Entry(20f, 74f))
-        entries2.add(Entry(30f, 72f))
-        entries2.add(Entry(40f, 78f))
-        entries2.add(Entry(50f, 74f))
-        entries2.add(Entry(60f, 78f))
-
-        val entries3 = ArrayList<Entry>()
-        entries3.add(Entry(10f, 65f))
-        entries3.add(Entry(20f, 66f))
-        entries3.add(Entry(30f, 62f))
-        entries3.add(Entry(40f, 64f))
-        entries3.add(Entry(50f, 58f))
-        entries3.add(Entry(60f, 67f))
-
-        // sort by x-value
-        Collections.sort(entries, EntryXComparator())
-
-        // create a dataset and give it a type
-        val set1 = LineDataSet(entries, "DataSet 1")
-        set1.lineWidth = 0f
-        set1.setDrawCircles(false)
-        set1.setDrawFilled(true)
-        set1.valueTextColor = android.R.color.transparent
-        set1.fillDrawable = ContextCompat.getDrawable(context!!, R.drawable.solid_green_lvl1)
-
-        // create a dataset and give it a type
-        val set2 = LineDataSet(entries2, "DataSet 2")
-        set2.lineWidth = 0f
-        set2.setDrawCircles(false)
-        set2.setDrawFilled(true)
-        set2.valueTextColor = android.R.color.transparent
-        set2.fillDrawable = ContextCompat.getDrawable(context!!, R.drawable.solid_green_lvl2)
-
-        // create a dataset and give it a type
-        val set3 = LineDataSet(entries3, "DataSet 3")
-        set3.lineWidth = 0f
-        set3.setDrawCircles(false)
-        set3.setDrawFilled(true)
-        set3.valueTextColor = android.R.color.transparent
-        set3.fillDrawable = ContextCompat.getDrawable(context!!, R.drawable.solid_green_lvl3)
-
-        // create a data object with the data sets
-        val data = LineData(set1, set2, set3)
-
-        portfolioLineChart?.legend?.isEnabled = false
-        portfolioLineChart?.description = null
-        portfolioLineChart?.axisRight?.setDrawLabels(false)
-        portfolioLineChart?.setDrawGridBackground(true)
-        portfolioLineChart?.setGridBackgroundColor(Color.parseColor("#2C7B74"))
-
-
-        // set data
-        portfolioLineChart?.data = data
-        portfolioLineChart?.invalidate()
-    }
-    */
 
     override fun onDestroy() {
         super.onDestroy()

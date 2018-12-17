@@ -1,5 +1,6 @@
 package com.jarvis.app.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
@@ -10,7 +11,10 @@ import android.widget.TextView
 import java.text.NumberFormat
 import android.util.DisplayMetrics
 import android.support.v7.app.AppCompatActivity
-
+import android.widget.Toast
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 object Util {
@@ -65,4 +69,16 @@ object Util {
         return (pixels * scale + 0.5f).toInt()
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun getDateMillisFromString(dateString:String):Long{
+        try {
+            val dateFormat = SimpleDateFormat("MMM-yy")
+            val mDate = dateFormat.parse(dateString)
+            val timeInMilliseconds = mDate.time
+            return timeInMilliseconds
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        return 0L
+    }
 }
