@@ -12,6 +12,9 @@ public class ValueFormatter implements IAxisValueFormatter {
         this.mValues = values;
     }
 
+    public ValueFormatter() {
+    }
+
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
         // "value" represents the position of the label on the axis (x or y)

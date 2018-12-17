@@ -2,7 +2,6 @@ package com.jarvis.app.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import com.android.volley.VolleyError
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -31,12 +29,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.jarvis.app.custom.CustomMarkerView
-import com.jarvis.app.extension.string
+import com.jarvis.app.custom.CustomValueFormatter
 import com.jarvis.app.helpers.ValueFormatter
-import com.jarvis.app.https.API.portfolio
 import com.jarvis.app.model.Portfolio
 import com.jarvis.app.utils.ColorUtil
 import com.jarvis.app.utils.Util
@@ -272,6 +270,21 @@ class TimeSeriesFragment : BaseFragment() {
                             set.fillColor = ColorUtil.arrColorA()[i]
                             arrSet?.add(set)
                         }
+
+                        val custom = CustomValueFormatter("%")
+
+                        val leftAxis = portfolioLineChart.axisLeft
+                        //leftAxis.setLabelCount(8, false)
+                        leftAxis.valueFormatter = custom
+                        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+                        leftAxis.spaceTop = 15f
+                       // leftAxis.axisMinimum = 0f //
+
+                        val l = portfolioLineChart.legend
+                        //l.setDrawInside(false)
+                       // l.form = Legend.LegendForm.SQUARE
+                        //l.formSize = 9f
+                        l.xEntrySpace = 20f
 
                         val xAxis = portfolioLineChart?.xAxis
                         xAxis?.valueFormatter = ValueFormatter(arrPortfolioTitle)
