@@ -32,21 +32,28 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.jarvis.app.adapter.home.PerformanceAttributeAdapter
+import com.jarvis.app.adapter.home.TopTenAdapter
 import com.jarvis.app.custom.CustomMarkerView
 import com.jarvis.app.custom.CustomValueFormatter
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.model.Portfolio
+import com.jarvis.app.model.Table3
+import com.jarvis.app.model.Table5
 import com.jarvis.app.utils.ColorUtil
 import com.jarvis.app.utils.Util
 import kotlin.Comparator
 
 
 class TimeSeriesFragment : BaseFragment() {
-    var arrayDanamasSaham:ArrayList<Benchmark>? = ArrayList()
-    var arraySimasSaham:ArrayList<Benchmark>? = ArrayList()
-    var mapPortfolio:HashMap<String, ArrayList<Portfolio>>? = HashMap()
-    var keys:ArrayList<String>?= ArrayList()
-    var arrPortfolioTitle:ArrayList<String> = ArrayList()
+    private var arrayDanamasSaham:ArrayList<Benchmark>? = ArrayList()
+    private var arraySimasSaham:ArrayList<Benchmark>? = ArrayList()
+    private var mapPortfolio:HashMap<String, ArrayList<Portfolio>>? = HashMap()
+    private var keys:ArrayList<String>?= ArrayList()
+    private var arrPortfolioTitle:ArrayList<String> = ArrayList()
+    private var arrPerformance:ArrayList<Table5> = ArrayList()
+    private var performanceAdapter:ArrayAdapter<String>? = null
+    private var selectedPerformance = 0
 
     var portfolio:String = ""
 
@@ -68,7 +75,7 @@ class TimeSeriesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         getData()
-        setRecyclerAdapter()
+        setPerformanceAttribute()
         setSpinner()
     }
 
@@ -96,8 +103,20 @@ class TimeSeriesFragment : BaseFragment() {
             }
         }
 
-        getPortfolioDropDown()
+        performanceAdapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
+            Table5.table5DropdownList())
+        spinnerPerformance?.adapter = performanceAdapter
+        spinnerPerformance?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
 
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
+                selectedPerformance = position
+                setRecyclerView()
+            }
+        }
+        getPortfolioDropDown()
     }
 
     private fun getPortfolioDropDown(){
@@ -139,6 +158,7 @@ class TimeSeriesFragment : BaseFragment() {
     fun refreshAll(){
         getData()
         getPortfolio()
+        setPerformanceAttribute()
     }
 
     private fun getData(){
@@ -174,9 +194,39 @@ class TimeSeriesFragment : BaseFragment() {
     }
 
 
-    private fun setRecyclerAdapter(){
+    private fun setPerformanceAttribute(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        //params["portfolio"] = "Danamas Saham"
+        ApiRequest.postNoUI(context!!, API.performanceAttribute, params, object :ApiRequest.URLCallback {
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)) {
+                    try {
+                        arrPerformance = ArrayList()
+                        val array = JSONObject(response).obj("message_data").arr("perf_attrib_list")
+                        for (i in 0 until array.length()){
+                            val perf = Table5(array.getJSONObject(i))
+                            arrPerformance.add(perf)
+                        }
+                        setRecyclerView()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
+    private fun setRecyclerView(){
         rvPerformanceAttribute?.layoutManager = LinearLayoutManager(context)
-     //   rvPerformanceAttribute?.adapter = PerformanceSummaryAdapter(context, null)
+        rvPerformanceAttribute?.adapter = PerformanceAttributeAdapter(
+            context,
+            arrPerformance,
+            selectedPerformance,
+            true
+        )
     }
 
     private fun returnLineChart(arrayList: ArrayList<Benchmark>){

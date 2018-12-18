@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.android.volley.VolleyError
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
@@ -22,9 +23,16 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.LargeValueFormatter
 import com.jarvis.app.adapter.AssetAdapter
+import com.jarvis.app.https.API
+import com.jarvis.app.https.ApiRequest
+import com.jarvis.app.model.Matching
+import com.jarvis.app.utils.JSONUtil
+import org.json.JSONException
+import kotlin.collections.ArrayList
 
 
 class DurationMatchFragment : BaseFragment() {
+    private var arrMatch :ArrayList<Matching>? = ArrayList()
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -43,8 +51,27 @@ class DurationMatchFragment : BaseFragment() {
         tvBlankTitle?.text = mActivity?.viewModel!!.title
         setBarChart()
 
-        setAssetList()
-        setLiabilityList()
+       // setAssetList()
+       // setLiabilityList()
+        setAssetLiabilityMatching()
+    }
+
+    private fun setAssetLiabilityMatching(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.assetMatching, params, object : ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        arrMatch = ArrayList()
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
     }
 
     private fun setBarChart(){
