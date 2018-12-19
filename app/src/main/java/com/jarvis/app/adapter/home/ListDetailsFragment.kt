@@ -9,11 +9,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
 import com.jarvis.app.R
+import com.jarvis.app.adapter.LeaseAdapter
 import com.jarvis.app.fragment.BaseFragment
-import com.jarvis.app.model.Table1
-import com.jarvis.app.model.Table2
-import com.jarvis.app.model.Table3
-import com.jarvis.app.model.UserViewModel
+import com.jarvis.app.model.*
 import kotlinx.android.synthetic.main.fragment_list_all.*
 import java.util.ArrayList
 
@@ -73,6 +71,26 @@ class ListDetailsFragment : BaseFragment() {
                         rvListDetails?.adapter = SecuritySelectionAdapter(
                             context,
                             mActivity?.viewModel?.list as ArrayList<Table2>?,
+                            position,
+                            true
+                        )
+                    }
+                }
+            }
+
+            "Lease Liquid Securities" -> {
+                val adapter = LeaseAdapter(context, mActivity?.viewModel?.list as ArrayList<Table6>?, 0, true)
+                rvListDetails?.adapter = adapter
+                spinnerList?.adapter = mActivity?.viewModel?.sAdapter
+                spinnerList?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                        rvListDetails?.layoutManager = LinearLayoutManager(context)
+                        rvListDetails?.adapter = LeaseAdapter(
+                            context,
+                            mActivity?.viewModel?.list as ArrayList<Table6>?,
                             position,
                             true
                         )

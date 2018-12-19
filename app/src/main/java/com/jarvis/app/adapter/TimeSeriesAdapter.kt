@@ -11,6 +11,7 @@ import com.jarvis.app.dataholder.Constant
 import com.jarvis.app.model.*
 import com.jarvis.app.utils.DialogUtil
 import kotlinx.android.synthetic.main.row_home_list.view.*
+import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -73,8 +74,9 @@ class TimeSeriesAdapter : RecyclerView.Adapter<TimeSeriesAdapter.ViewHolder> {
             }else{
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
+
             itemView.tvRowTable1Name?.text = obj?.group
-            itemView.tvRowTable1Value?.text = list[selected].value
+            itemView.tvRowTable1Value?.text = String.format("%.2f", list[selected].value.toFloat())
             itemView.tvRowTable1SubTitle?.visibility = View.VISIBLE
             itemView.tvRowTable1SubTitle?.text = obj?.id
 

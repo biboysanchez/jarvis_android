@@ -20,6 +20,8 @@ abstract class BaseFragment : Fragment() {
         super.onDestroyView()
         if (mActivity?.fm?.backStackEntryCount == 1){
             mActivity?.toolbar?.title = mActivity?.mainTitle
+        }else{
+            PerformanceDetailFragment.instance?.title()
         }
     }
 

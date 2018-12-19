@@ -17,15 +17,20 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.jarvis.app.R
+import com.jarvis.app.adapter.LeaseAdapter
 import com.jarvis.app.adapter.TimeSeriesAdapter
+import com.jarvis.app.adapter.home.ListDetailsFragment
+import com.jarvis.app.adapter.home.PerformanceAttributeAdapter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.PerformanceDetail
+import com.jarvis.app.model.Table6
 import com.jarvis.app.model.TableRisk
 import com.jarvis.app.utils.JSONUtil
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_performance_detail.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -41,9 +46,18 @@ class PerformanceDetailFragment: BaseFragment() {
     private var arrRiskMeasureAllList:ArrayList<TableRisk>? = ArrayList()
     private var arrRiskMeasure:ArrayList<TableRisk>? = ArrayList()
     private var hashRiskMeasure:HashMap<String, ArrayList<TableRisk>>? = HashMap()
+    private val arrPortfolioList = Arrays.asList("Danamas Saham", "Simas Saham Bertumbuh")
+    private var selectedPortfolio = ""
+    private var selectedLease = 0
+    private var arrLease:ArrayList<Table6>? = ArrayList()
+    private var leaseArrayAdapter:ArrayAdapter<String>? = null
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
+    }
+
+    fun title(){
+        mActivity?.toolbar?.title = "Detail View"
     }
 
     companion object {
@@ -59,12 +73,62 @@ class PerformanceDetailFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         refreshAll()
+        setSpinners()
+    }
+
+    private fun setSpinners(){
+        leaseArrayAdapter =  ArrayAdapter(context!!,
+            R.layout.support_simple_spinner_dropdown_item, Table6.table6DropdownList())
+
+        spinnerLiquidPortfolio?.adapter = ArrayAdapter<String>(context!!,
+            R.layout.support_simple_spinner_dropdown_item, arrPortfolioList)
+
+        spinnerLiquidPortfolio?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
+                selectedPortfolio = arrPortfolioList[position]
+                getLeaseLiquid()
+            }
+        }
+
+        spinnerLiquidProfile?.adapter = leaseArrayAdapter
+        spinnerLiquidProfile?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
+                selectedLease = position
+                rvLiquidProfile?.layoutManager = LinearLayoutManager(context)
+                rvLiquidProfile?.adapter = LeaseAdapter(
+                    context,
+                    arrLease,
+                    selectedLease,
+                    false
+                )
+            }
+        }
+
+        tvShowAllLiquiedProfile?.setOnClickListener {
+            mActivity?.viewModel?.sAdapter = leaseArrayAdapter
+            mActivity?.viewModel?.fragmentTag = "Lease Liquid Securities"
+            mActivity?.viewModel?.list = arrLease
+            mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
+        }
     }
 
     fun refreshAll(){
         getLiquidityProfile()
         getPerformanceRiskAndManagement()
+
+        if (selectedPortfolio.isNotEmpty()){
+            getLeaseLiquid()
+        }
     }
 
     private fun getLiquidityProfile(){
@@ -240,6 +304,38 @@ class PerformanceDetailFragment: BaseFragment() {
 
                             }
                         }
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
+    private fun getLeaseLiquid(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        params["portfolio"] = selectedPortfolio
+        ApiRequest.postNoUI(context!!, API.leasedLiquid, params, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        arrLease = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("lease_liquidity_list")
+                        for (i in 0 until arr.length()) {
+                            val mObj = Table6(arr.getJSONObject(i))
+                            arrLease?.add(mObj)
+                        }
+
+                        rvLiquidProfile?.layoutManager = LinearLayoutManager(context)
+                        rvLiquidProfile?.adapter = LeaseAdapter(
+                            context,
+                            arrLease,
+                            selectedLease,
+                            false
+                        )
                     }catch (e: JSONException){
                         e.printStackTrace()
                     }

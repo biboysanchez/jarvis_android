@@ -172,12 +172,31 @@
                   android:layout_marginTop="8dp"
                   app:layout_constraintTop_toBottomOf="@+id/tvLiquidProfile"/>
 
+
+            <FrameLayout
+                    android:background="@drawable/card_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/frameLayoutLiquidPortfolio"
+                    app:layout_constraintTop_toBottomOf="@+id/view4" android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/tvLiquidProfile"
+                    app:layout_constraintEnd_toEndOf="@+id/tvLiquidProfile">
+                <Spinner
+                        android:id="@+id/spinnerLiquidPortfolio"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </FrameLayout>
+
+
             <FrameLayout
                     android:background="@drawable/card_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/view4"
+                    app:layout_constraintTop_toBottomOf="@+id/frameLayoutLiquidPortfolio"
                     android:id="@+id/frameLayoutLiquidProfile"
                     app:layout_constraintStart_toStartOf="@+id/tvLiquidProfile"
                     app:layout_constraintEnd_toStartOf="@+id/imgLiquidProfile"
