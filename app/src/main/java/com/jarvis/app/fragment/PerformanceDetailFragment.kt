@@ -2,37 +2,45 @@ package com.jarvis.app.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.android.volley.VolleyError
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.StackedValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.jarvis.app.R
+import com.jarvis.app.adapter.TimeSeriesAdapter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.PerformanceDetail
+import com.jarvis.app.model.TableRisk
 import com.jarvis.app.utils.JSONUtil
 import kotlinx.android.synthetic.main.fragment_performance_detail.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
-
+import kotlin.collections.HashMap
 
 class PerformanceDetailFragment: BaseFragment() {
     private lateinit var mView:View
     private var arrLiquidProfile: ArrayList<ArrayList<PerformanceDetail>>? = ArrayList()
     private var arrLiquidTitle:ArrayList<String>? = ArrayList()
+
+    private var arrRiskMeasureAllList:ArrayList<TableRisk>? = ArrayList()
+    private var arrRiskMeasure:ArrayList<TableRisk>? = ArrayList()
+    private var hashRiskMeasure:HashMap<String, ArrayList<TableRisk>>? = HashMap()
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -51,11 +59,12 @@ class PerformanceDetailFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getLiquidityProfile()
+        refreshAll()
     }
 
     fun refreshAll(){
         getLiquidityProfile()
+        getPerformanceRiskAndManagement()
     }
 
     private fun getLiquidityProfile(){
@@ -185,6 +194,60 @@ class PerformanceDetailFragment: BaseFragment() {
         barChartLiquidity?.setDrawValueAboveBar(true)
         barChartLiquidity?.setFitBars(true)
         barChartLiquidity?.invalidate()
+    }
+
+    private fun getPerformanceRiskAndManagement(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.riskMeasurement, params, object :ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        hashRiskMeasure = HashMap()
+                        arrRiskMeasureAllList = ArrayList()
+
+                        val obj = JSONObject(response).obj("message_data").obj("perf_risk_dict")
+                        val iter: Iterator<String> = obj.keys()
+                        while (iter.hasNext()) {
+                            arrRiskMeasure = ArrayList()
+                            val key = iter.next()
+                            try {
+                                val arr = obj.arr(key)
+                                for (i in 0 until arr.length()){
+                                    val mObj = TableRisk(arr.getJSONObject(i))
+                                    mObj.group = key
+                                    arrRiskMeasure?.add(mObj)
+                                    arrRiskMeasureAllList?.add(mObj)
+                                }
+                                hashRiskMeasure?.put(key, arrRiskMeasure!!)
+                            } catch (e: JSONException) {
+                                e.printStackTrace()
+                            }
+                        }
+
+                        spinnerPerformance?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item, TableRisk.tableRiskDropDownList())
+                        spinnerPerformance?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                            }
+
+                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
+
+                                rvPerformanceAndRisk?.layoutManager = LinearLayoutManager(context)
+                                rvPerformanceAndRisk?.adapter = TimeSeriesAdapter(
+                                    context, arrRiskMeasureAllList, position, false
+                                )
+
+                            }
+                        }
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
     }
 
     override fun onDestroy() {

@@ -3,17 +3,12 @@ package com.jarvis.app.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.VolleyError
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.EntryXComparator
 import com.jarvis.app.R
 import com.jarvis.app.custom.MyMarkerView
@@ -23,13 +18,10 @@ import java.util.*
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.LargeValueFormatter
 import com.jarvis.app.adapter.AssetAdapter
-import com.jarvis.app.custom.CustomValueFormatter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.double
 import com.jarvis.app.extension.obj
-import com.jarvis.app.extension.string
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
@@ -37,8 +29,6 @@ import com.jarvis.app.model.Cumulative
 import com.jarvis.app.model.Matching
 import com.jarvis.app.model.ValueKey
 import com.jarvis.app.utils.JSONUtil
-import kotlinx.android.synthetic.main.fragment_duration_match.view.*
-import kotlinx.android.synthetic.main.fragment_time_series.*
 import org.json.JSONException
 import org.json.JSONObject
 import kotlin.collections.ArrayList
@@ -283,8 +273,10 @@ class DurationMatchFragment : BaseFragment() {
                         val obj     = data.obj("liability_item_dict")
                         val total   = data.double("total").toFloat()
                         tvLiabilitiesTotal?.text = String.format("%.2f", total)
-                        mTotal += total
-                        tvTotal?.text = String.format("%.2f", mTotal)
+
+                        val surplus = total - mTotal
+                        mTotal = surplus
+                        tvSurplus?.text = String.format("%.2f", mTotal)
 
                         val iter: Iterator<String> = obj.keys()
                         while (iter.hasNext()) {

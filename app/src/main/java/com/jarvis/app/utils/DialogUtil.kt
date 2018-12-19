@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.row_dialog.view.*
 import kotlinx.android.synthetic.main.row_home_list.view.*
 
 object DialogUtil {
-    fun showCustomListDialog(context: Context, title:String, list:List<ValueKey>?){
+    fun showCustomListDialog(context: Context, title:String, subTitle:String?,  list:List<ValueKey>?){
         val alert = AlertDialog.Builder(context)
         val dView = LayoutInflater.from(context).inflate(R.layout.dialog_list_detail, null)
         alert.setView(dView)
@@ -25,6 +25,31 @@ object DialogUtil {
         dView.rvDialogList?.adapter = DialogListAdapter(context, list)
 
         dView.tvDialogTitle?.text = title
+
+        if (subTitle != null){
+            dView.tvDialogSubTitle?.visibility = View.VISIBLE
+            dView.tvDialogSubTitle?.text = subTitle
+        }else{
+            dView.tvDialogSubTitle?.visibility = View.GONE
+        }
+
+        val dialog = alert.create()
+
+        dView.imgCloseDialog?.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    fun showCustomListDialog(context: Context, title:String, list:List<ValueKey>?){
+        val alert = AlertDialog.Builder(context)
+        val dView = LayoutInflater.from(context).inflate(R.layout.dialog_list_detail, null)
+        alert.setView(dView)
+        dView.rvDialogList?.layoutManager = LinearLayoutManager(context)
+        dView.rvDialogList?.adapter = DialogListAdapter(context, list)
+        dView.tvDialogTitle?.text = title
+
         val dialog = alert.create()
 
         dView.imgCloseDialog?.setOnClickListener {
@@ -59,10 +84,11 @@ object DialogUtil {
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             fun bindItem(i: Int) {
                 if (i % 2 == 1){
-                    itemView.llRowDialog?.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                    itemView.llRowDialog?.setBackgroundColor(Color.parseColor("#F4F9F9"))
                 }else{
-                    itemView.llRowDialog?.setBackgroundColor(Color.parseColor("#E2EEEA"))
+                    itemView.llRowDialog?.setBackgroundColor(Color.parseColor("#EEF4F3"))
                 }
+
                 itemView.tvDialogKey?.text = data!![i].key
                 itemView.tvDialogValue?.text = data!![i].value
             }

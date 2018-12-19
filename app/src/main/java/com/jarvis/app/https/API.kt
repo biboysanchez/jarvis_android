@@ -20,7 +20,9 @@ object API {
     const val performanceAttribute  = "$baseUrl/api/get-pm-perf-attrib"
 
     //Detail View
-    const val liquidityProfile     = "$baseUrl/api/get-pm-liquidity-profile"
+    const val liquidityProfile      = "$baseUrl/api/get-pm-liquidity-profile"
+    const val riskMeasurement       = "$baseUrl/api/get-pm-performance-and-risk"
+    const val leasedLiquid          = "$baseUrl/api/get-pm-lease-liquidity"
 
     //Asset and Liabilities
     const val assetMatching        = "$baseUrl/api/get-asset-liability-matching"

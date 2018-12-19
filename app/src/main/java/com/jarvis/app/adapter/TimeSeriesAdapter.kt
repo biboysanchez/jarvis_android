@@ -1,4 +1,4 @@
-package com.jarvis.app.adapter.home
+package com.jarvis.app.adapter
 
 import android.content.Context
 import android.graphics.Color
@@ -8,22 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.dataholder.Constant
-import com.jarvis.app.model.Table1
-import com.jarvis.app.model.Table2
-import com.jarvis.app.model.Table3
-import com.jarvis.app.model.ValueKey
+import com.jarvis.app.model.*
 import com.jarvis.app.utils.DialogUtil
 import kotlinx.android.synthetic.main.row_home_list.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder> {
+class TimeSeriesAdapter : RecyclerView.Adapter<TimeSeriesAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: ArrayList<Table3>? = ArrayList()
+    private var data: ArrayList<TableRisk>? = ArrayList()
     private var selected = 0
     private var isAll = false
 
-    constructor(mContext: Context?, data: ArrayList<Table3>?, selected:Int, isAll:Boolean) : super() {
+    constructor(mContext: Context?, data: ArrayList<TableRisk>?, selected:Int, isAll:Boolean) : super() {
         this.mContext = mContext
         this.data = data
         this.selected = selected
@@ -56,11 +53,19 @@ class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder> {
             val obj = data?.get(position)
 
             val list:List<ValueKey> = Arrays.asList(
-                ValueKey(Table3.table3DropDownList()[0], obj?.national!!),
-                ValueKey(Table3.table3DropDownList()[1], obj.avgCost.toString()),
-                ValueKey(Table3.table3DropDownList()[2], obj.currentPrice.toString()),
-                ValueKey(Table3.table3DropDownList()[3], obj.unrealized.toString()),
-                ValueKey(Table3.table3DropDownList()[4], obj.riskContribution.toString())
+                ValueKey(TableRisk.tableRiskDropDownList()[0], obj?.aum.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[1], obj?.yr3Ar.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[2], obj?.ytdAr.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[3], obj?.targetAr.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[4], obj?.y3Rr.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[5], obj?.ytdRr.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[6], obj?.targetRr.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[7], obj?.portfolioSr.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[8], obj?.bmkSr.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[9], obj?.varRc.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[10], obj?.varPercentRc.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[11], obj?.infoRatio.toString()),
+                ValueKey(TableRisk.tableRiskDropDownList()[12], obj?.beta.toString())
             )
 
             if (position % 2 == 1){
@@ -68,12 +73,13 @@ class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder> {
             }else{
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
-
-            itemView.tvRowTable1Name?.text = obj.securities
+            itemView.tvRowTable1Name?.text = obj?.group
             itemView.tvRowTable1Value?.text = list[selected].value
+            itemView.tvRowTable1SubTitle?.visibility = View.VISIBLE
+            itemView.tvRowTable1SubTitle?.text = obj?.id
 
             itemView.llBgRow?.setOnClickListener {
-                DialogUtil.showCustomListDialog(mContext!!, obj.securities, list)
+                DialogUtil.showCustomListDialog(mContext!!, obj!!.group, obj.id, list)
             }
         }
     }

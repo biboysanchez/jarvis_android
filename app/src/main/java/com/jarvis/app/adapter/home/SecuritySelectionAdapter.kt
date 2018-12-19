@@ -65,10 +65,11 @@ class SecuritySelectionAdapter : RecyclerView.Adapter<SecuritySelectionAdapter.V
             )
 
             if (position % 2 == 1){
-                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#F4F9F9"))
             }else{
-                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#E2EEEA"))
+                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
+
             itemView.tvRowTable1Name?.text = obj.company
             itemView.tvRowTable1Value?.text = list[selected].value
             itemView.llBgRow?.setOnClickListener {

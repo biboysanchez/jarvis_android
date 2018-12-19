@@ -14,6 +14,7 @@ import com.jarvis.app.model.SideMenu
 import kotlinx.android.synthetic.main.layout_top_10.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_cash_placement.view.*
+import kotlinx.android.synthetic.main.row_duration.view.*
 import kotlinx.android.synthetic.main.row_home_list.view.*
 import kotlinx.android.synthetic.main.row_progress.view.*
 import kotlinx.android.synthetic.main.section_parent.view.*
@@ -44,9 +45,9 @@ class CashPlacementAdapter : RecyclerView.Adapter<CashPlacementAdapter.ViewHolde
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItem(i: Int) {
             if (i % 2 == 1){
-                itemView.llRowCashPlacement?.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                itemView.llRowCashPlacement?.setBackgroundColor(Color.parseColor("#F4F9F9"))
             }else{
-                itemView.llRowCashPlacement?.setBackgroundColor(Color.parseColor("#E2EEEA"))
+                itemView.llRowCashPlacement?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
         }
 

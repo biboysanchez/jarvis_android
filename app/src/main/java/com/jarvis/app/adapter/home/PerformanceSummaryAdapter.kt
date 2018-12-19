@@ -65,9 +65,9 @@ class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter
             itemView.tvRowTable1Value?.text = list[selected].value
 
             if (position % 2 == 1){
-                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#F4F9F9"))
             }else{
-                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#E2EEEA"))
+                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
             itemView.llBgRow?.setOnClickListener {
                 DialogUtil.showCustomListDialog(mContext!!, obj.portFolio, list)

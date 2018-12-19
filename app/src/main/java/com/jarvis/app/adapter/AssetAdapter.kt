@@ -41,9 +41,9 @@ class AssetAdapter : RecyclerView.Adapter<AssetAdapter.ViewHolder> {
             itemView.tvRowAssetValue?.text = String.format("%.2f", value)
 
             if (i % 2 == 1){
-                itemView.llRowAsset?.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                itemView.llRowAsset?.setBackgroundColor(Color.parseColor("#F4F9F9"))
             }else{
-                itemView.llRowAsset?.setBackgroundColor(Color.parseColor("#E2EEEA"))
+                itemView.llRowAsset?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
         }
     }

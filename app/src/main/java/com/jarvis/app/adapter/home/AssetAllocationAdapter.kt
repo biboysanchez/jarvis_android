@@ -47,10 +47,11 @@ class AssetAllocationAdapter : RecyclerView.Adapter<AssetAllocationAdapter.ViewH
             val obj = data?.get(position)
 
             if (position % 2 == 1){
-                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#F4F9F9"))
             }else{
-                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#E2EEEA"))
+                itemView.llBgRow?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
+
             itemView.tvRowTable1Name?.text = obj?.assetClassSector
             itemView.tvRowTable1Value?.text = obj?.portfolio
 
