@@ -1,5 +1,6 @@
 package com.jarvis.app.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -7,9 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.android.volley.VolleyError
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.jarvis.app.R
-import com.jarvis.app.R.id.rvSelection
 import com.jarvis.app.adapter.CashFlowAdapter
 import com.jarvis.app.adapter.CashPlacementAdapter
 import com.jarvis.app.extension.arr
@@ -20,7 +25,6 @@ import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.CashPlacement
 import com.jarvis.app.model.ValueKey
 import com.jarvis.app.utils.JSONUtil
-import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.layout_cash_flow_summary.*
 import kotlinx.android.synthetic.main.layout_cash_movement.*
@@ -33,6 +37,8 @@ import kotlin.collections.ArrayList
 class CashPositionFragment : BaseFragment() {
     var arrCashFlow: ArrayList<ValueKey>? = ArrayList()
     var arrCashPlacement:ArrayList<CashPlacement>? = ArrayList()
+    var arrWeek: ArrayList<String>? = ArrayList()
+    var arrCashMovement:ArrayList<ValueKey>? = ArrayList()
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -52,7 +58,6 @@ class CashPositionFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         refreshAll()
-        setSpinner()
         tvShowAllCashPlacement?.setOnClickListener {
             mActivity?.viewModel?.fragmentTag = "Cash Movement Detail"
             mActivity?.addFragment(CashPlacementDetailFragment.newInstance(arrCashPlacement!!), CashPlacementDetailFragment.TAG)
@@ -66,6 +71,7 @@ class CashPositionFragment : BaseFragment() {
     fun refreshAll(){
         getCashPosition()
         getCashPlacement()
+        getCashMovementWeek()
     }
 
     private fun getCashPosition(){
@@ -126,18 +132,161 @@ class CashPositionFragment : BaseFragment() {
         })
     }
 
+    private fun getCashMovementWeek(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.cashMovementWeek, params, object : ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        arrWeek = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("weeks_list")
+                        for (i in 0 until arr.length()){
+                            arrWeek?.add(arr.getString(i))
+                        }
+                        setSpinner()
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
     private fun setSpinner(){
-        spinnerCashMovement?.adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, Arrays.asList(
-            "Week 1 - Sep 2018", "Week 2 - Sep 2018", "Week 3 - Sep 2018", "Week 4 - Sep 2018"))
+        spinnerCashMovement?.adapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, arrWeek!!)
         spinnerCashMovement?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9E9E9E"))
+                getCashMovement(arrWeek?.get(position)!!)
             }
         }
-        Util.changeTextColor(spinnerCashMovement, "#9E9E9E")
     }
+
+    private fun getCashMovement(week:String){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        params["week"]      = week
+        ApiRequest.postNoUI(context!!, API.cashMovement, params, object : ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        arrCashMovement = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("cashflow_list")
+                        for (i in 0 until arr.length()){
+                            val obj = arr.getJSONObject(i)
+                            arrCashMovement?.add(ValueKey(obj.string("label"), obj.string("value")))
+                        }
+
+                        setBarChartNegative(arrCashMovement!!)
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
+    fun setBarChartNegative(arrCashMovement: ArrayList<ValueKey>) {
+        barChartNegative?.setBackgroundColor(Color.WHITE)
+        barChartNegative?.extraTopOffset = -30f
+        barChartNegative?.extraBottomOffset = 10f
+        barChartNegative?.extraLeftOffset = 70f
+        barChartNegative?.extraRightOffset = 70f
+
+        barChartNegative?.setDrawBarShadow(false)
+        barChartNegative?.setDrawValueAboveBar(true)
+        barChartNegative?.description?.isEnabled = false
+
+        // scaling can now only be done on x- and y-axis separately
+        barChartNegative?.setPinchZoom(false)
+
+        barChartNegative?.setDrawGridBackground(false)
+
+        val xAxis = barChartNegative?.xAxis
+        xAxis?.position = XAxis.XAxisPosition.BOTTOM
+        xAxis?.setDrawGridLines(false)
+        xAxis?.setDrawAxisLine(false)
+        xAxis?.textColor = Color.LTGRAY
+        xAxis?.textSize = 13f
+        xAxis?.labelCount = 5
+        xAxis?.setCenterAxisLabels(true)
+        xAxis?.granularity = 1f
+
+        val left = barChartNegative?.axisLeft
+        left?.setDrawLabels(false)
+        left?.spaceTop = 25f
+        left?.spaceBottom = 25f
+        left?.setDrawAxisLine(false)
+        left?.setDrawGridLines(false)
+        left?.setDrawZeroLine(true) // draw a zero line
+        left?.zeroLineColor = Color.GRAY
+        left?.zeroLineWidth = 0.7f
+        barChartNegative?.axisRight?.isEnabled = false
+        barChartNegative?.legend?.isEnabled = false
+
+        val data = java.util.ArrayList<Data>()
+        data.add(Data(0f, -224.1f))
+        data.add(Data(1f, 238.5f))
+        data.add(Data(2f, 1280.1f))
+        data.add(Data(3f, -442.3f))
+        data.add(Data(4f, -2280.1f))
+        setData(data)
+    }
+
+    private fun setData(dataList: List<Data>) {
+        val values = java.util.ArrayList<BarEntry>()
+        val colors = java.util.ArrayList<Int>()
+
+        for (i in dataList.indices) {
+            val d = dataList[i]
+            val entry = BarEntry(d.xValue, d.yValue)
+            values.add(entry)
+
+            // specific colors
+            if (d.yValue >= 0)
+                colors.add(Color.parseColor("#E8781A"))
+            else
+                colors.add(Color.parseColor("#21C6B7"))
+        }
+
+        val set: BarDataSet
+
+        if (barChartNegative?.data != null && barChartNegative?.data!!.dataSetCount > 0) {
+            set = barChartNegative?.data!!.getDataSetByIndex(0) as BarDataSet
+            set.values = values
+            barChartNegative?.data!!.notifyDataChanged()
+            barChartNegative?.notifyDataSetChanged()
+        } else {
+            set = BarDataSet(values, "Values")
+            set.colors = colors
+            set.setValueTextColors(colors)
+
+            val data = BarData(set)
+            data.setValueTextSize(13f)
+            data.barWidth = 0.8f
+
+            barChartNegative?.data = data
+            barChartNegative?.invalidate()
+        }
+    }
+
+    /**
+     * Demo class representing data.
+     */
+    private inner class Data internal constructor(
+        internal val xValue: Float,
+        internal val yValue: Float
+    )
 
     override fun onDestroy() {
         super.onDestroy()

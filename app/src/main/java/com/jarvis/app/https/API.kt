@@ -32,4 +32,6 @@ object API {
 
     const val cashPosition         = "$baseUrl/api/get-asset-liability-cashflow-summary"
     const val cashPlacement        = "$baseUrl/api/get-asset-liability-cash-placement-yield"
+    const val cashMovementWeek     = "$baseUrl/api/get-asset-liability-cash-movement-week"
+    const val cashMovement         = "$baseUrl/api/get-asset-liability-cash-movement"
 }
