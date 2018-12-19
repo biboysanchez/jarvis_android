@@ -37,6 +37,9 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
+import android.support.design.widget.BottomSheetDialogFragment
+import com.jarvis.app.utils.CustomBottomSheet
+
 
 class HomeFragment : Fragment() {
     private var arrPortfolioList:ArrayList<String>? = ArrayList()
@@ -104,6 +107,11 @@ class HomeFragment : Fragment() {
             mActivity?.viewModel?.fragmentTag = "Top 10 Position"
             mActivity?.viewModel?.list = tableTopTen
             mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
+        }
+
+        imgMenuSummary?.setOnClickListener {
+            val bottomSheetDialogFragment = CustomBottomSheet()
+            bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
         }
     }
 

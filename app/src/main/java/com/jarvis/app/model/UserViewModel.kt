@@ -9,4 +9,6 @@ class UserViewModel :ViewModel() {
     var fragmentTag = ""
     var list:List<Any>? = ArrayList()
     var sAdapter:ArrayAdapter<String>? = null
+
+    var sortPerformanceSummary = 0
 }
