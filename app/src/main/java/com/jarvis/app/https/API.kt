@@ -29,4 +29,7 @@ object API {
     const val cumulativeSurplus    = "$baseUrl/api/get-al-cumu-surplus-gap"
     const val assets               = "$baseUrl/api/get-al-asset-breakdown"
     const val liabilities          = "$baseUrl/api/get-al-asset-liability-breakdown"
+
+    const val cashPosition         = "$baseUrl/api/get-asset-liability-cashflow-summary"
+    const val cashPlacement        = "$baseUrl/api/get-asset-liability-cash-placement-yield"
 }

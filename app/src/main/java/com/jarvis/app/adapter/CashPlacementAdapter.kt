@@ -1,5 +1,6 @@
 package com.jarvis.app.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.support.v4.content.ContextCompat
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
+import com.jarvis.app.model.CashPlacement
 import com.jarvis.app.model.SideMenu
 import kotlinx.android.synthetic.main.layout_top_10.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
@@ -22,11 +24,13 @@ import kotlinx.android.synthetic.main.section_second.view.*
 
 class CashPlacementAdapter : RecyclerView.Adapter<CashPlacementAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: List<String>? = ArrayList()
+    private var data: List<CashPlacement>? = ArrayList()
+    private var isAll = false
 
-    constructor(mContext: Context?, data: List<String>?) : super() {
+    constructor(mContext: Context?, data: List<CashPlacement>?, isAll:Boolean) : super() {
         this.mContext = mContext
         this.data = data
+        this.isAll = isAll
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): CashPlacementAdapter.ViewHolder {
@@ -35,7 +39,11 @@ class CashPlacementAdapter : RecyclerView.Adapter<CashPlacementAdapter.ViewHolde
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return if (isAll){
+            data?.size!!
+        }else{
+            5
+        }
     }
 
     override fun onBindViewHolder(p0: CashPlacementAdapter.ViewHolder, p1: Int) {
@@ -43,7 +51,16 @@ class CashPlacementAdapter : RecyclerView.Adapter<CashPlacementAdapter.ViewHolde
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun bindItem(i: Int) {
+            val placement = data!![i]
+            val percent = (placement.avgYield * 100).toFloat()
+            val mYield = String.format("%.2f", percent)
+
+            itemView.tvRowAsset?.text = placement.bank
+            itemView.tvRowAmount?.text = String.format("%.2f", placement.amount.toFloat())
+            itemView.tvRowYield?.text = "$mYield%"
+
             if (i % 2 == 1){
                 itemView.llRowCashPlacement?.setBackgroundColor(Color.parseColor("#F4F9F9"))
             }else{
