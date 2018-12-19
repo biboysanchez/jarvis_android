@@ -3,6 +3,7 @@ package com.jarvis.app.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -181,9 +182,12 @@ class CashPositionFragment : BaseFragment() {
                         val arr = JSONObject(response).obj("message_data").arr("cashflow_list")
                         for (i in 0 until arr.length()){
                             val obj = arr.getJSONObject(i)
-                            arrCashMovement?.add(ValueKey(obj.string("label"), obj.string("value")))
+                            val keyValue = ValueKey(obj.string("label"), obj.string("value"))
+                            arrCashMovement?.add(keyValue)
+                            Log.i(TAG, "ValueKey: ${keyValue.key} value:${keyValue.value}")
                         }
 
+                        barChartNegative?.invalidate()
                         setBarChartNegative(arrCashMovement!!)
                     }catch (e: JSONException){
                         e.printStackTrace()
@@ -196,38 +200,31 @@ class CashPositionFragment : BaseFragment() {
         })
     }
 
-    fun setBarChartNegative(arrCashMovement: ArrayList<ValueKey>) {
-        barChartNegative?.setBackgroundColor(Color.WHITE)
-        barChartNegative?.extraTopOffset = -30f
-        barChartNegative?.extraBottomOffset = 10f
-        barChartNegative?.extraLeftOffset = 70f
-        barChartNegative?.extraRightOffset = 70f
+    fun setBarChartNegative(mArrCashMovement: ArrayList<ValueKey>) {
+        barChartNegative?.extraBottomOffset = 5f
 
-        barChartNegative?.setDrawBarShadow(false)
         barChartNegative?.setDrawValueAboveBar(true)
         barChartNegative?.description?.isEnabled = false
 
         // scaling can now only be done on x- and y-axis separately
         barChartNegative?.setPinchZoom(false)
-
         barChartNegative?.setDrawGridBackground(false)
 
         val xAxis = barChartNegative?.xAxis
         xAxis?.position = XAxis.XAxisPosition.BOTTOM
         xAxis?.setDrawGridLines(false)
         xAxis?.setDrawAxisLine(false)
-        xAxis?.textColor = Color.LTGRAY
         xAxis?.textSize = 13f
-        xAxis?.labelCount = 5
+        xAxis?.labelCount = mArrCashMovement.size
         xAxis?.setCenterAxisLabels(true)
-        xAxis?.granularity = 1f
+       // xAxis?.granularity = 1f
 
         val left = barChartNegative?.axisLeft
         left?.setDrawLabels(false)
         left?.spaceTop = 25f
         left?.spaceBottom = 25f
-        left?.setDrawAxisLine(false)
-        left?.setDrawGridLines(false)
+        left?.setDrawAxisLine(true)
+        left?.setDrawGridLines(true)
         left?.setDrawZeroLine(true) // draw a zero line
         left?.zeroLineColor = Color.GRAY
         left?.zeroLineWidth = 0.7f
@@ -235,11 +232,10 @@ class CashPositionFragment : BaseFragment() {
         barChartNegative?.legend?.isEnabled = false
 
         val data = java.util.ArrayList<Data>()
-        data.add(Data(0f, -224.1f))
-        data.add(Data(1f, 238.5f))
-        data.add(Data(2f, 1280.1f))
-        data.add(Data(3f, -442.3f))
-        data.add(Data(4f, -2280.1f))
+        for (i in 0 until mArrCashMovement.size){
+            data.add(Data(i.toFloat(), mArrCashMovement[i].value.toFloat()))
+        }
+
         setData(data)
     }
 
@@ -260,7 +256,6 @@ class CashPositionFragment : BaseFragment() {
         }
 
         val set: BarDataSet
-
         if (barChartNegative?.data != null && barChartNegative?.data!!.dataSetCount > 0) {
             set = barChartNegative?.data!!.getDataSetByIndex(0) as BarDataSet
             set.values = values
@@ -274,8 +269,10 @@ class CashPositionFragment : BaseFragment() {
             val data = BarData(set)
             data.setValueTextSize(13f)
             data.barWidth = 0.8f
-
+            barChartNegative?.animateY(1500)
             barChartNegative?.data = data
+            barChartNegative?.data?.notifyDataChanged()
+            barChartNegative?.notifyDataSetChanged()
             barChartNegative?.invalidate()
         }
     }
