@@ -3,12 +3,14 @@ package com.jarvis.app.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.VolleyError
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
@@ -23,16 +25,33 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.LargeValueFormatter
 import com.jarvis.app.adapter.AssetAdapter
+import com.jarvis.app.custom.CustomValueFormatter
+import com.jarvis.app.extension.arr
+import com.jarvis.app.extension.double
+import com.jarvis.app.extension.obj
+import com.jarvis.app.extension.string
+import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
+import com.jarvis.app.model.Cumulative
 import com.jarvis.app.model.Matching
+import com.jarvis.app.model.ValueKey
 import com.jarvis.app.utils.JSONUtil
+import kotlinx.android.synthetic.main.fragment_duration_match.view.*
+import kotlinx.android.synthetic.main.fragment_time_series.*
 import org.json.JSONException
+import org.json.JSONObject
 import kotlin.collections.ArrayList
 
 
 class DurationMatchFragment : BaseFragment() {
-    private var arrMatch :ArrayList<Matching>? = ArrayList()
+    private var arrMatch :ArrayList<Matching>?          = ArrayList()
+    private var arrCumulative: ArrayList<Cumulative>?   = ArrayList()
+    private var arrBarTitle:ArrayList<String>?          = ArrayList()
+    private var arrCumulativeTitle:ArrayList<String>?   = ArrayList()
+    private var arrAssetKeys:ArrayList<ValueKey>?       = ArrayList()
+    private var arrLiabilitesKeys:ArrayList<ValueKey>?  = ArrayList()
+    private var mTotal = 0f
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -40,20 +59,25 @@ class DurationMatchFragment : BaseFragment() {
 
     companion object {
         val TAG = "DurationMatchFragment"
+        var instance:DurationMatchFragment? = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        instance = this
         return inflater.inflate(R.layout.fragment_duration_match, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvBlankTitle?.text = mActivity?.viewModel!!.title
-        setBarChart()
 
-       // setAssetList()
-       // setLiabilityList()
+        refreshAll()
+    }
+
+    fun refreshAll(){
         setAssetLiabilityMatching()
+        setCumulativeSurplus()
+        setAssetList()
     }
 
     private fun setAssetLiabilityMatching(){
@@ -64,6 +88,14 @@ class DurationMatchFragment : BaseFragment() {
                 if (JSONUtil.isSuccess(context!!, response)){
                     try {
                         arrMatch = ArrayList()
+                        arrBarTitle = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("asset_liability_list")
+                        for (i in 0 until arr.length()){
+                            val match = Matching(arr.getJSONObject(i))
+                            arrBarTitle?.add(match.month)
+                            arrMatch?.add(match)
+                        }
+                        barChartData()
                     }catch (e: JSONException){
                         e.printStackTrace()
                     }
@@ -74,34 +106,7 @@ class DurationMatchFragment : BaseFragment() {
         })
     }
 
-    private fun setBarChart(){
-        barChartAsset?.description?.isEnabled = false
 
-        // if more than 60 entries are displayed in the chart, no values will be
-        // drawn
-        barChartAsset?.setMaxVisibleValueCount(8)
-
-        // scaling can now only be done on x- and y-axis separately
-        barChartAsset?.setPinchZoom(false)
-
-        barChartAsset?.setDrawBarShadow(false)
-        barChartAsset?.setDrawGridBackground(false)
-        barChartAsset?.setNoDataText("Loading...")
-
-        val xAxis = barChartAsset?.xAxis
-        xAxis?.position = XAxis.XAxisPosition.BOTTOM
-        xAxis?.setDrawGridLines(false)
-
-        barChartAsset?.axisLeft?.setDrawGridLines(true)
-
-        // setting data
-        barChartData()
-        setLineChart()
-
-        // add a nice and smooth animation
-        barChartAsset?.animateY(1500)
-        barChartAsset?.legend?.isEnabled = false
-    }
 
     private fun barChartData(){
         val groupSpace = 0.08f
@@ -109,144 +114,205 @@ class DurationMatchFragment : BaseFragment() {
         val barWidth = 0.1f // x4 DataSet
         // (0.2 + 0.03) * 4 + 0.08 = 1.00 -> interval per "group"
 
-        val groupCount = 4
-        val startYear = 1980
-        val endYear = startYear + groupCount
-
+        val groupCount = arrMatch!!.size
         val values1 = ArrayList<BarEntry>()
         val values2 = ArrayList<BarEntry>()
-
-        val randomMultiplier = 50f
-
-        for (i in startYear until endYear) {
-            values1.add(BarEntry(i.toFloat(), (Math.random() * randomMultiplier).toFloat()))
-            values2.add(BarEntry(i.toFloat(), (Math.random() * randomMultiplier).toFloat()))
+        for (i in 0 until groupCount){
+            val match = arrMatch!![i]
+            values1.add(BarEntry(i.toFloat(),  match.assets.toFloat()))
+            values2.add(BarEntry(i.toFloat(), match.liabilities.toFloat()))
         }
 
-        val set1: BarDataSet
-        val set2: BarDataSet
-
+        var set1: BarDataSet? = null
+        var set2: BarDataSet? = null
         if (barChartAsset?.data != null && barChartAsset?.data?.dataSetCount!! > 0) {
-            set1 = barChartAsset.data.getDataSetByIndex(0) as (BarDataSet)
-            set2 = barChartAsset.data.getDataSetByIndex(1) as (BarDataSet)
+            set1 = barChartAsset?.data!!.getDataSetByIndex(0) as (BarDataSet)
+            set2 = barChartAsset?.data!!.getDataSetByIndex(1) as (BarDataSet)
             set1.values = values1
             set2.values = values2
-            barChartAsset.data.notifyDataChanged()
-            barChartAsset.notifyDataSetChanged()
+            barChartAsset?.data?.notifyDataChanged()
+            barChartAsset?.notifyDataSetChanged()
         } else {
-            // create 4 DataSets
-            set1 = BarDataSet(values1, "Asset")
+            set1 = BarDataSet(values1, "Assets")
             set1.color = Color.parseColor("#21C6B7")
 
-            set2 = BarDataSet(values2, "Liability")
+            set2 = BarDataSet(values2, "Liabilities")
             set2.color = Color.parseColor("#F3B62C")
-
             val data = BarData(set1, set2)
-            data.setValueFormatter(LargeValueFormatter())
             barChartAsset?.data = data
         }
 
-        // specify the width each bar should have
+         val xAxis = barChartAsset?.xAxis
+         xAxis?.valueFormatter =  ValueFormatter(arrBarTitle)
+        xAxis?.granularity = 1F
+
+        val yAxisRight = barChartAsset?.axisRight
+        yAxisRight?.isEnabled = false
+
         barChartAsset?.barData?.barWidth = barWidth
-
-        // restrict the x-axis range
-        barChartAsset?.xAxis?.axisMinimum = startYear.toFloat()
-
-
-        // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
-        barChartAsset?.xAxis?.axisMaximum = startYear + barChartAsset.barData.getGroupWidth(groupSpace, barSpace) * groupCount
-        barChartAsset?.groupBars(startYear.toFloat(), groupSpace, barSpace)
-
+        barChartAsset?.xAxis?.axisMinimum = 0f
+        barChartAsset?.xAxis?.axisMaximum =  barChartAsset?.barData?.getGroupWidth(groupSpace, barSpace)!! * groupCount
+        barChartAsset?.groupBars(0f, groupSpace, barSpace)
+        barChartAsset?.animateY(1500)
         barChartAsset?.description = null
+        barChartAsset?.setExtraOffsets(0f,0f,0f,20f)
         barChartAsset?.axisLeft?.setDrawLabels(true)
+        barChartAsset?.xAxis?.setDrawLabels(true)
+        barChartAsset?.xAxis?.setDrawGridLines(false)
+        barChartAsset?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
+        barChartAsset?.legend?.isEnabled = true
         barChartAsset?.axisRight?.setDrawLabels(false)
-        barChartAsset?.xAxis?.setDrawLabels(false)
-        barChartAsset?.legend?.isEnabled = false
         barChartAsset?.invalidate()
     }
 
-    private fun setLineChart(){
-        //lineChartSurplus?.setOnChartValueSelectedListener(context)
-        lineChartSurplus?.setDrawGridBackground(false)
-
-        // no description text
-        lineChartSurplus?.description?.isEnabled = false
-
-        // enable touch gestures
-        lineChartSurplus?.setTouchEnabled(true)
-
-        // enable scaling and dragging
-        lineChartSurplus?.isDragEnabled = false
-        lineChartSurplus?.setScaleEnabled(true)
-
-        // if disabled, scaling can be done on x- and y-axis separately
-        lineChartSurplus?.setPinchZoom(false)
-        lineChartSurplus?.setDrawMarkers(true)
-
-        // create a custom MarkerView (extend MarkerView) and specify the layout
-        // to use for it
-        val mv = MyMarkerView(context, R.layout.custom_marker_view)
-        mv.chartView = lineChartSurplus // For bounds control
-        lineChartSurplus?.marker = mv // Set the marker to the chart
-
-        val xl = lineChartSurplus?.xAxis
-        xl?.setAvoidFirstLastClipping(true)
-        xl?.axisMinimum = 0f
-
-        val leftAxis = lineChartSurplus?.axisLeft
-        leftAxis?.isInverted = false
-        leftAxis?.axisMinimum = 0f
-        leftAxis?.axisMinimum = 0f // this replaces setStartAtZero(true)
-
-        val rightAxis = lineChartSurplus?.axisRight
-        rightAxis?.axisMinimum = 0f
-        rightAxis?.isEnabled = true
-
-
-        // get the legend (only possible after setting data)
-        val l = lineChartSurplus?.legend
-
-        // modify the legend ...
-        l?.form = Legend.LegendForm.LINE
-
-        // don't forget to refresh the drawing
-        lineChartSurplus?.invalidate()
-
-        // add data
-        lineChartData()
+    private fun setCumulativeSurplus(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.cumulativeSurplus, params, object : ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        arrCumulative = ArrayList()
+                        arrCumulativeTitle = ArrayList()
+                        val arr = JSONObject(response).obj("message_data").arr("cumulative_surp_list")
+                        for (i in 0 until arr.length()){
+                            val cum = Cumulative(arr.getJSONObject(i))
+                            arrCumulativeTitle?.add(cum.month)
+                            arrCumulative?.add(cum)
+                        }
+                        lineChartData()
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
     }
 
     private fun lineChartData(){
         val entries = ArrayList<Entry>()
-        entries.add(Entry(10f, 42f))
-        entries.add(Entry(20f, 71.5f))
-        entries.add(Entry(30f, 9.3f))
-        entries.add(Entry(40f, 33f))
+        for (i in 0 until arrCumulative!!.size){
+            entries.add(Entry(i.toFloat(), arrCumulative!![i].value.toFloat()))
+        }
 
-        // sort by x-value
+        val mv = MyMarkerView(context, R.layout.custom_marker_view)
+        mv.chartView = lineChartSurplus
+        lineChartSurplus?.marker = mv
+
         Collections.sort(entries, EntryXComparator())
+        val set = LineDataSet(entries, "DataSet 1")
+        set.lineWidth = 2f
+        set.circleRadius = 4f
+        set.circleHoleColor = Color.parseColor("#21C6B7")
+        set.color = Color.parseColor("#21C6B7")
+        set.setCircleColor(Color.parseColor("#21C6B7"))
+        val data = LineData(set)
 
-        // create a dataset and give it a type
-        val set1 = LineDataSet(entries, "DataSet 1")
-        set1.lineWidth = 3f
-        set1.circleRadius = 4f
+        val xAxis = lineChartSurplus?.xAxis
+        xAxis?.valueFormatter = ValueFormatter(arrCumulativeTitle)
+        xAxis?.granularity = 1f
 
-        // create a data object with the data sets
-        val data = LineData(set1)
+        lineChartSurplus?.animateY(1500)
+        lineChartSurplus?.setDrawMarkers(true)
 
+        val yAxisRight = lineChartSurplus?.axisRight
+        yAxisRight?.isEnabled = false
+
+        lineChartSurplus?.xAxis?.axisMinimum = -0.1f
+        lineChartSurplus?.xAxis?.setDrawGridLines(false)
+        lineChartSurplus?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
+        lineChartSurplus?.axisRight?.setDrawLabels(false)
+        lineChartSurplus?.description?.isEnabled = false
         lineChartSurplus?.legend?.isEnabled = false
-        // set data
         lineChartSurplus?.data = data
         lineChartSurplus?.invalidate()
     }
 
     private fun setAssetList(){
-        rvAssetLiability?.layoutManager = LinearLayoutManager(context)
-        rvAssetLiability?.adapter = AssetAdapter(context, null)
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.assets, params, object : ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        mTotal = 0f
+                        arrAssetKeys = ArrayList()
+                        val data    = JSONObject(response).obj("message_data")
+                        val obj     = data.obj("asset_item_dict")
+                        val total   = data.double("total").toFloat()
+                        mTotal      = total
+                        tvAssetsTotal?.text = String.format("%.2f", total)
+                        setLiabilityList()
+                        val iter: Iterator<String> = obj.keys()
+                        while (iter.hasNext()) {
+                            val key = iter.next()
+                            try {
+                                val keyValue = ValueKey(key, obj.getString(key))
+                                arrAssetKeys?.add(keyValue)
+                                if (arrAssetKeys!!.isNotEmpty()){
+                                    rvAssetLiability?.layoutManager = LinearLayoutManager(context)
+                                    rvAssetLiability?.adapter = AssetAdapter(context, arrAssetKeys)
+                                }
+                            } catch (e: JSONException) {
+                                e.printStackTrace()
+                            }
+                        }
+
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+
     }
 
     private fun setLiabilityList(){
-        rvLiability?.layoutManager = LinearLayoutManager(context)
-        rvLiability?.adapter = AssetAdapter(context, null)
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.liabilities, params, object : ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        arrLiabilitesKeys = ArrayList()
+                        val data    = JSONObject(response).obj("message_data")
+                        val obj     = data.obj("liability_item_dict")
+                        val total   = data.double("total").toFloat()
+                        tvLiabilitiesTotal?.text = String.format("%.2f", total)
+                        mTotal += total
+                        tvTotal?.text = String.format("%.2f", mTotal)
+
+                        val iter: Iterator<String> = obj.keys()
+                        while (iter.hasNext()) {
+                            val key = iter.next()
+                            try {
+                                val keyValue = ValueKey(key, obj.getString(key))
+                                arrLiabilitesKeys?.add(keyValue)
+                                if (arrLiabilitesKeys!!.isNotEmpty()){
+                                    rvLiability?.layoutManager = LinearLayoutManager(context)
+                                    rvLiability?.adapter = AssetAdapter(context, arrLiabilitesKeys)
+                                }
+                            } catch (e: JSONException) {
+                                e.printStackTrace()
+                            }
+                        }
+
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        instance = null
     }
 }

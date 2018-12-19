@@ -42,7 +42,8 @@
                   app:layout_constraintEnd_toEndOf="parent"
                   android:id="@+id/view"/>
 
-            <FrameLayout
+            <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChartAsset"
                     android:layout_marginStart="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="16dp"
@@ -51,20 +52,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/view"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="0dp"
-                    android:layout_height="200dp">
-                <com.github.mikephil.charting.charts.BarChart
-                        android:layout_marginBottom="24dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/barChartAsset"/>
-
-                <LinearLayout
-                        android:layout_gravity="bottom"
-                        android:layout_width="match_parent"
-                        android:layout_height="24dp">
-                </LinearLayout>
-            </FrameLayout>
-
+                    android:layout_height="240dp"/>
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -200,6 +188,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/tvAssetsTotal"
                         android:gravity="end"
                         android:textStyle="bold"
                         android:textColor="@color/gray_600"
@@ -273,6 +262,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/tvLiabilitiesTotal"
                         android:gravity="end"
                         android:textStyle="bold"
                         android:textColor="@color/gray_600"
@@ -308,6 +298,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/tvTotal"
                         android:textSize="16sp"
                         android:gravity="end"
                         android:textStyle="bold"

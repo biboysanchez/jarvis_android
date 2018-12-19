@@ -113,7 +113,13 @@ class TimeSeriesFragment : BaseFragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
                 selectedPerformance = position
-                setRecyclerView()
+                rvPerformanceAttribute?.layoutManager = LinearLayoutManager(context)
+                rvPerformanceAttribute?.adapter = PerformanceAttributeAdapter(
+                    context,
+                    arrPerformance,
+                    selectedPerformance,
+                    true
+                )
             }
         }
         getPortfolioDropDown()

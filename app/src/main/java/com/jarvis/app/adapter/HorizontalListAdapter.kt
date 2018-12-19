@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
+import com.jarvis.app.fragment.DurationMatchFragment
 import com.jarvis.app.fragment.HomeFragment
 import com.jarvis.app.fragment.PerformanceDetailFragment
 import com.jarvis.app.fragment.TimeSeriesFragment
@@ -65,7 +66,7 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
                 HomeFragment.instance?.refreshAll()
                 PerformanceDetailFragment.instance?.refreshAll()
                 TimeSeriesFragment.instance?.refreshAll()
-
+                DurationMatchFragment.instance?.refreshAll()
                 notifyDataSetChanged()
             }
         }
