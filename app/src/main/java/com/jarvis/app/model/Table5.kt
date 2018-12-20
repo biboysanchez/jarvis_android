@@ -18,7 +18,7 @@ class Table5 (json:JSONObject) {
 
     companion object {
         fun table5DropdownList():List<String>{
-            return Arrays.asList("Level Id 1", "Level Id 2", "Saham", "Target", "JCI Index")
+            return Arrays.asList("Saham", "Target", "JCI Index")
         }
     }
 }
