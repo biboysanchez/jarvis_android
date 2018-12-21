@@ -37,6 +37,63 @@ class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter
             1 -> {
                 data = data?.sortedByDescending { it.portFolio }
             }
+
+            2 -> {
+                when (selected){
+                    0 -> {
+                        data = data?.sortedByDescending { it.aum }
+                    }
+
+                    1 -> {
+                        data = data?.sortedByDescending { it.realized }
+                    }
+
+                    2 -> {
+                        data = data?.sortedByDescending { it.target }
+                    }
+
+                    3 -> {
+                        data = data?.sortedByDescending { it.informationRatio }
+                    }
+
+                    4 -> {
+                        data = data?.sortedByDescending { it.yield }
+                    }
+
+                    else -> {
+                        data = data?.sortedByDescending { it.varM }
+                    }
+                }
+
+            }
+
+            else ->{
+                when (selected){
+                    0 -> {
+                        data = data?.sortedWith(compareBy  { it.aum })
+                    }
+
+                    1 -> {
+                        data = data?.sortedWith(compareBy  { it.realized })
+                    }
+
+                    2 -> {
+                        data = data?.sortedWith(compareBy  { it.target })
+                    }
+
+                    3 -> {
+                        data = data?.sortedWith(compareBy  { it.informationRatio })
+                    }
+
+                    4 -> {
+                        data = data?.sortedWith(compareBy  { it.yield })
+                    }
+
+                    else -> {
+                        data = data?.sortedWith(compareBy  { it.varM })
+                    }
+                }
+            }
         }
 
         notifyDataSetChanged()
@@ -68,12 +125,12 @@ class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter
             val obj = data?.get(position)
 
             val list:List<ValueKey> = Arrays.asList(
-                ValueKey(Table1.table1DropdownList()[0], obj?.aum!!),
-                ValueKey(Table1.table1DropdownList()[1], obj.realized),
-                ValueKey(Table1.table1DropdownList()[2], obj.target),
-                ValueKey(Table1.table1DropdownList()[3], obj.informationRatio),
-                ValueKey(Table1.table1DropdownList()[4], obj.yield),
-                ValueKey(Table1.table1DropdownList()[5], obj.varM)
+                ValueKey(Table1.table1DropdownList()[0], obj?.aum!!.toString()),
+                ValueKey(Table1.table1DropdownList()[1], obj.realized.toString()),
+                ValueKey(Table1.table1DropdownList()[2], obj.target.toString()),
+                ValueKey(Table1.table1DropdownList()[3], obj.informationRatio.toString()),
+                ValueKey(Table1.table1DropdownList()[4], obj.yield.toString()),
+                ValueKey(Table1.table1DropdownList()[5], obj.varM.toString())
             )
 
             itemView.tvRowTable1Name?.text = obj.portFolio
@@ -84,6 +141,8 @@ class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter
             }else{
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
+
+
             itemView.llBgRow?.setOnClickListener {
                 DialogUtil.showCustomListDialog(mContext!!, obj.portFolio, list)
             }
