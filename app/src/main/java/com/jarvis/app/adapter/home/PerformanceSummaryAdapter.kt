@@ -16,15 +16,30 @@ import java.util.*
 
 class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: ArrayList<Table1>? = ArrayList()
+    private var data: List<Table1>? = ArrayList()
     private var selected = 0
     private var isAll = false
 
-    constructor(mContext: Context?, data: ArrayList<Table1>?, selected:Int, isAll:Boolean?) : super() {
+    constructor(mContext: Context?, data: List<Table1>?, selected:Int, isAll:Boolean?) : super() {
         this.mContext = mContext
         this.data = data
         this.selected = selected
         this.isAll = isAll!!
+    }
+
+
+    fun sortPerformance(sorter: Int){
+        when(sorter){
+            0 -> {
+                data =  data?.sortedWith(compareBy { it.portFolio})!!
+            }
+
+            1 -> {
+                data = data?.sortedByDescending { it.portFolio }
+            }
+        }
+
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {

@@ -18,6 +18,12 @@ import java.util.logging.Handler
 
 class CustomBottomSheet : BottomSheetDialogFragment() {
     var selectedIndex = 0
+    var mCalback:SorterCallback? = null
+
+
+    interface SorterCallback{
+        fun onSortSelected(selectedSorted:Int)
+    }
 
     override fun setupDialog(dialog: Dialog?, style: Int) {
         val contentView = View.inflate(context, R.layout.bottom_sheet, null)
@@ -64,8 +70,9 @@ class CustomBottomSheet : BottomSheetDialogFragment() {
 
                 itemView.llBottomSheet?.setOnClickListener {
                     selectedIndex = position
+                    this@CustomBottomSheet.mCalback?.onSortSelected(selectedIndex)
                     notifyDataSetChanged()
-                    //this@CustomBottomSheet.dismiss()
+                    this@CustomBottomSheet.dismiss()
                 }
 
                 if (position == selectedIndex){

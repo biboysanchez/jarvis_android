@@ -37,7 +37,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
-import android.support.design.widget.BottomSheetDialogFragment
 import com.jarvis.app.utils.CustomBottomSheet
 
 
@@ -51,6 +50,8 @@ class HomeFragment : Fragment() {
     private var tablePerformance:ArrayList<Table1>? = ArrayList()
     private var tableSecurities:ArrayList<Table2>? = ArrayList()
     private var tableTopTen:ArrayList<Table3>? = ArrayList()
+
+    private var adapterPerformace:PerformanceSummaryAdapter? = null
 
     private var underWeightList:ArrayList<Table4>? = ArrayList()
     private var overWeightList:ArrayList<Table4>?  = ArrayList()
@@ -67,6 +68,7 @@ class HomeFragment : Fragment() {
     private var selectedSecurities  = 0
     private var selectedTopTen      = 0
     private var selectedWeight      = 0
+
 
     companion object {
         val TAG = "HomeFragment"
@@ -111,6 +113,14 @@ class HomeFragment : Fragment() {
 
         imgMenuSummary?.setOnClickListener {
             val bottomSheetDialogFragment = CustomBottomSheet()
+            bottomSheetDialogFragment.selectedIndex = mActivity?.sortPerformance!!
+            bottomSheetDialogFragment.mCalback = object : CustomBottomSheet.SorterCallback{
+                override fun onSortSelected(selectedSorted: Int) {
+                    mActivity?.sortPerformance = selectedSorted
+                    setPerformanceAdapter(selectedPerformance, selectedSorted)
+                }
+
+            }
             bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
         }
     }
@@ -141,13 +151,7 @@ class HomeFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
                 selectedPerformance = position
-                rvPerformance?.layoutManager = LinearLayoutManager(context)
-                rvPerformance?.adapter = PerformanceSummaryAdapter(
-                    context,
-                    tablePerformance,
-                    selectedPerformance,
-                     false
-                )
+                setPerformanceAdapter(selectedPerformance, mActivity?.sortPerformance!!)
             }
         }
 
@@ -210,6 +214,19 @@ class HomeFragment : Fragment() {
                 rvDecision?.adapter?.notifyDataSetChanged()
             }
         }
+    }
+
+    private fun setPerformanceAdapter(selPerformance:Int, sorter:Int){
+        rvPerformance?.layoutManager = LinearLayoutManager(context)
+        adapterPerformace= PerformanceSummaryAdapter(
+            context,
+            tablePerformance,
+            selPerformance,
+            false
+        )
+
+        adapterPerformace?.sortPerformance(sorter)
+        rvPerformance?.adapter = adapterPerformace
     }
 
 
@@ -416,21 +433,12 @@ class HomeFragment : Fragment() {
                                 tablePerformance?.add(performance)
                             }
 
-                            rvPerformance?.layoutManager = LinearLayoutManager(context)
-                            rvPerformance?.adapter = PerformanceSummaryAdapter(
-                                context,
-                                tablePerformance,
-                                selectedPerformance,
-                                false
-                            )
+                            setPerformanceAdapter(selectedPerformance, mActivity?.sortPerformance!!)
+
                         }else{
-                            rvPerformance?.adapter = PerformanceSummaryAdapter(
-                                context,
-                                tablePerformance,
-                                selectedPerformance,
-                                false
-                            )
+                            setPerformanceAdapter(selectedPerformance, mActivity?.sortPerformance!!)
                         }
+
                     }catch (e:JSONException){
                         e.printStackTrace()
                     }
@@ -579,6 +587,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
