@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
     var selectedCategory2 = ""
 
     var sortPerformance = 0
+    var sortTopTen = 0
+
     private var arrCompanyList:ArrayList<Company>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {

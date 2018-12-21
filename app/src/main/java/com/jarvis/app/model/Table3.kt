@@ -8,9 +8,9 @@ import java.util.*
 
 class Table3 (json:JSONObject) {
     val securities       = json.string("securities")
-    val national         = json.string("notional")
-    val avgCost          = json.int("avg_cost")
-    val currentPrice     = json.int("current_price")
+    val national         = json.string("notional").replace(",","").trim().toDouble()
+    val avgCost          = json.double("avg_cost")
+    val currentPrice     = json.double("current_price")
     val unrealized       = json.double("unrealized")
     val riskContribution = json.double("risk_contribution")
 

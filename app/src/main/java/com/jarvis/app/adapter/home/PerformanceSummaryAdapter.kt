@@ -20,6 +20,7 @@ class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter
     private var selected = 0
     private var isAll = false
 
+
     constructor(mContext: Context?, data: List<Table1>?, selected:Int, isAll:Boolean?) : super() {
         this.mContext = mContext
         this.data = data

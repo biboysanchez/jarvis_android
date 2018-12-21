@@ -51,7 +51,8 @@ class HomeFragment : Fragment() {
     private var tableSecurities:ArrayList<Table2>? = ArrayList()
     private var tableTopTen:ArrayList<Table3>? = ArrayList()
 
-    private var adapterPerformace:PerformanceSummaryAdapter? = null
+    private var adapterPerformance:PerformanceSummaryAdapter? = null
+    private var adapterTopTen:TopTenAdapter? = null
 
     private var underWeightList:ArrayList<Table4>? = ArrayList()
     private var overWeightList:ArrayList<Table4>?  = ArrayList()
@@ -62,7 +63,7 @@ class HomeFragment : Fragment() {
 
     private var summaryArrayAdapter:ArrayAdapter<String>? = null
     private var securityAdapter:ArrayAdapter<String>? = null
-    private var top10Apdater:ArrayAdapter<String>? = null
+    private var top10Adapter:ArrayAdapter<String>? = null
 
     private var selectedPerformance = 0
     private var selectedSecurities  = 0
@@ -105,7 +106,7 @@ class HomeFragment : Fragment() {
         }
 
         tvShowAllPosition?.setOnClickListener {
-            mActivity?.viewModel?.sAdapter = top10Apdater
+            mActivity?.viewModel?.sAdapter = top10Adapter
             mActivity?.viewModel?.fragmentTag = "Top 10 Position"
             mActivity?.viewModel?.list = tableTopTen
             mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
@@ -118,6 +119,19 @@ class HomeFragment : Fragment() {
                 override fun onSortSelected(selectedSorted: Int) {
                     mActivity?.sortPerformance = selectedSorted
                     setPerformanceAdapter(selectedPerformance, selectedSorted)
+                }
+
+            }
+            bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
+        }
+
+        imgMenuPosition?.setOnClickListener {
+            val bottomSheetDialogFragment = CustomBottomSheet()
+            bottomSheetDialogFragment.selectedIndex = mActivity?.sortTopTen!!
+            bottomSheetDialogFragment.mCalback = object : CustomBottomSheet.SorterCallback{
+                override fun onSortSelected(selectedSorted: Int) {
+                    mActivity?.sortTopTen = selectedSorted
+                    setTopTenAdapter(selectedTopTen, selectedSorted)
                 }
 
             }
@@ -176,9 +190,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-        top10Apdater = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
+        top10Adapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
             Table3.table3DropDownList())
-        spinnerPosition?.adapter = top10Apdater
+        spinnerPosition?.adapter = top10Adapter
         spinnerPosition?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -186,13 +200,8 @@ class HomeFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
                 selectedTopTen = position
-                rvPosition?.layoutManager = LinearLayoutManager(context)
-                rvPosition?.adapter = TopTenAdapter(
-                    context,
-                    tableTopTen,
-                    selectedTopTen,
-                    false
-                )
+                setTopTenAdapter(selectedTopTen, mActivity?.sortTopTen!!)
+
             }
         }
 
@@ -218,15 +227,28 @@ class HomeFragment : Fragment() {
 
     private fun setPerformanceAdapter(selPerformance:Int, sorter:Int){
         rvPerformance?.layoutManager = LinearLayoutManager(context)
-        adapterPerformace= PerformanceSummaryAdapter(
+        adapterPerformance= PerformanceSummaryAdapter(
             context,
             tablePerformance,
             selPerformance,
             false
         )
 
-        adapterPerformace?.sortPerformance(sorter)
-        rvPerformance?.adapter = adapterPerformace
+        adapterPerformance?.sortPerformance(sorter)
+        rvPerformance?.adapter = adapterPerformance
+    }
+
+
+    private fun setTopTenAdapter(selAdapter:Int, sorter: Int){
+        rvPosition?.layoutManager = LinearLayoutManager(context)
+        adapterTopTen = TopTenAdapter(
+            context,
+            tableTopTen,
+            selAdapter,
+            false
+        )
+        adapterTopTen?.sortPerformance(sorter)
+        rvPosition?.adapter = adapterTopTen
     }
 
 
@@ -512,20 +534,9 @@ class HomeFragment : Fragment() {
                                 tableTopTen?.add(topTen)
                             }
 
-                            rvPosition?.layoutManager = LinearLayoutManager(context)
-                            rvPosition?.adapter = TopTenAdapter(
-                                context,
-                                tableTopTen,
-                                selectedTopTen,
-                                false
-                            )
+                            setTopTenAdapter(selectedTopTen, mActivity?.sortTopTen!!)
                         }else{
-                            rvPosition?.adapter = TopTenAdapter(
-                                context,
-                                tableTopTen,
-                                selectedTopTen,
-                                false
-                            )
+                            setTopTenAdapter(selectedTopTen, mActivity?.sortTopTen!!)
                         }
                     }catch (e:JSONException){
                         e.printStackTrace()
