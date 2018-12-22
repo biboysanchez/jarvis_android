@@ -225,7 +225,7 @@ class DurationMatchFragment : BaseFragment() {
         params["company"]   = mActivity?.selectedCompany!!
         ApiRequest.postNoUI(context!!, API.assets, params, object : ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
-                if (JSONUtil.isSuccess(context!!, response)){
+                try {
                     try {
                         mTotal = 0f
                         arrAssetKeys = ArrayList()
@@ -253,6 +253,8 @@ class DurationMatchFragment : BaseFragment() {
                     }catch (e: JSONException){
                         e.printStackTrace()
                     }
+                }catch (e:JSONException){
+                    e.printStackTrace()
                 }
             }
             override fun didURLFailed(error: VolleyError?) {

@@ -34,6 +34,7 @@ import com.jarvis.app.utils.JSONUtil
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     var sortAssetAllocation = 0
     var sortLease           = 0
     var sortRiskManagement  = 0
+    var summaryList         = ArrayList<String>()
     var sortPerformanceAtt  = 0
 
     private var arrCompanyList:ArrayList<Company>? = ArrayList()

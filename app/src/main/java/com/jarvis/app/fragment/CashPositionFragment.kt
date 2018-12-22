@@ -141,9 +141,11 @@ class CashPositionFragment : BaseFragment() {
                 if (JSONUtil.isSuccess(context!!, response)){
                     try {
                         arrWeek = ArrayList()
+                        mActivity?.summaryList = ArrayList()
                         val arr = JSONObject(response).obj("message_data").arr("weeks_list")
                         for (i in 0 until arr.length()){
                             arrWeek?.add(arr.getString(i))
+                            mActivity?.summaryList?.add(arr.getString(i))
                         }
                         setSpinner()
                     }catch (e: JSONException){
@@ -198,6 +200,11 @@ class CashPositionFragment : BaseFragment() {
             override fun didURLFailed(error: VolleyError?) {
             }
         })
+
+        tvShowAllDecision?.setOnClickListener {
+            mActivity?.viewModel?.fragmentTag = "Cash Movement Details"
+            mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
+        }
     }
 
     fun setBarChartNegative(mArrCashMovement: ArrayList<ValueKey>) {
