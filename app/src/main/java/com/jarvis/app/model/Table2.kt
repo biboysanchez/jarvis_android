@@ -14,10 +14,13 @@ class Table2 (json:JSONObject) {
     val amountIc        = json.int("amount_ic")
     val ttm             = json.int("ttm")
     val range           = json.string("range")
+    val splitedRange    = json.string("range").substring(0, range.indexOf("-")).toFloat()
     val amountReal      = json.int("amount_real")
     val avgPrice        = json.double("avg_price")
     val percentage      = json.int("percentage")
     var strPercentage   = json.string("str_percentage")
+
+
 
     companion object {
         fun table2DropDownList() : List<String>{

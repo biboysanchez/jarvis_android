@@ -3,6 +3,7 @@ package com.jarvis.app.adapter.home
 import android.content.Context
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,7 @@ class SecuritySelectionAdapter : RecyclerView.Adapter<SecuritySelectionAdapter.V
                     }
 
                     3 -> {
-                        data = data?.sortedByDescending { it.range }
+                        data = data?.sortedByDescending { it.splitedRange }
                     }
 
                     4 -> {
@@ -78,11 +79,11 @@ class SecuritySelectionAdapter : RecyclerView.Adapter<SecuritySelectionAdapter.V
                     }
 
                     3 -> {
-                        data = data?.sortedWith(compareBy { it.range })
+                        data = data?.sortedWith(compareBy { it.splitedRange })
                     }
 
                     4 -> {
-                        data = data?.sortedWith(compareBy { it.amountReal })
+                        data = data?.sortedWith(compareBy { it.amountReal})
                     }
 
                     5 -> {
@@ -140,6 +141,9 @@ class SecuritySelectionAdapter : RecyclerView.Adapter<SecuritySelectionAdapter.V
             }else{
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
+
+           // val parted = obj.range.split("-")[0]
+           // Log.i("TAG", "splited string $parted")
 
             itemView.tvRowTable1Name?.text = obj.company
             itemView.tvRowTable1Value?.text = list[selected].value
