@@ -19,8 +19,6 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.jarvis.app.R
 import com.jarvis.app.adapter.LeaseAdapter
 import com.jarvis.app.adapter.TimeSeriesAdapter
-import com.jarvis.app.adapter.home.ListDetailsFragment
-import com.jarvis.app.adapter.home.PerformanceAttributeAdapter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.helpers.ValueFormatter

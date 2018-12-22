@@ -32,6 +32,7 @@
                     android:layout_height="38dp"/>
         </FrameLayout>
         <ImageView
+                android:id="@+id/imgSortAll"
                 android:clickable="true"
                 android:focusable="true"
                 android:contentDescription="@null"
