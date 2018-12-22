@@ -16,14 +16,38 @@ import kotlin.collections.ArrayList
 
 class AssetAllocationAdapter : RecyclerView.Adapter<AssetAllocationAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: ArrayList<Table4>? = ArrayList()
+    private var data: List<Table4>? = ArrayList()
     private var selected = 0
 
-    constructor(mContext: Context?, data: ArrayList<Table4>?, selected:Int) : super() {
+    constructor(mContext: Context?, data: List<Table4>?, selected: Int) : super() {
         this.mContext = mContext
         this.data = data
         this.selected = selected
     }
+
+    fun sortAssetAllocation(sorter: Int) {
+        when (sorter) {
+            0 -> {
+                data = data?.sortedWith(compareBy { it.assetClassSector })
+            }
+
+            1 -> {
+                data = data?.sortedByDescending { it.assetClassSector }
+            }
+
+            2 -> {
+                data = data?.sortedWith(compareBy { it.portfolio })
+
+            }
+
+            else -> {
+                data = data?.sortedByDescending { it.portfolio }
+            }
+
+        }
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_home_list, p0, false)
@@ -31,9 +55,9 @@ class AssetAllocationAdapter : RecyclerView.Adapter<AssetAllocationAdapter.ViewH
     }
 
     override fun getItemCount(): Int {
-        return if (data?.size!! > 4){
+        return if (data?.size!! > 4) {
             5
-        }else{
+        } else {
             data?.size!!
         }
     }
@@ -46,23 +70,23 @@ class AssetAllocationAdapter : RecyclerView.Adapter<AssetAllocationAdapter.ViewH
         fun bindItem(position: Int) {
             val obj = data?.get(position)
 
-            if (position % 2 == 1){
+            if (position % 2 == 1) {
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#F4F9F9"))
-            }else{
+            } else {
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#EEF4F3"))
             }
 
             itemView.tvRowTable1Name?.text = obj?.assetClassSector
             itemView.tvRowTable1Value?.text = obj?.portfolio
 
-            val list:List<ValueKey> = Arrays.asList(
+            val list: List<ValueKey> = Arrays.asList(
                 ValueKey("Decision date", obj?.decisionDate!!),
                 ValueKey("Asset class sector", obj.assetClassSector),
                 ValueKey("Action", obj.action)
             )
 
             itemView.llBgRow?.setOnClickListener {
-               DialogUtil.showCustomListDialog(mContext!!, obj.assetClassSector, list)
+                DialogUtil.showCustomListDialog(mContext!!, obj.assetClassSector, list)
             }
         }
     }

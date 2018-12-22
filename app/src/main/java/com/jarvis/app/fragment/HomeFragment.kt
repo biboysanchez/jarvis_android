@@ -54,6 +54,8 @@ class HomeFragment : Fragment() {
     private var adapterPerformance:PerformanceSummaryAdapter? = null
     private var adapterTopTen:TopTenAdapter? = null
     private var adapterSecurity:SecuritySelectionAdapter? = null
+    private var adapterAllocation:AssetAllocationAdapter? = null
+
     private var underWeightList:ArrayList<Table4>? = ArrayList()
     private var overWeightList:ArrayList<Table4>?  = ArrayList()
 
@@ -150,6 +152,20 @@ class HomeFragment : Fragment() {
             }
             bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
         }
+
+        imgMenuDecision?.setOnClickListener {
+            val bottomSheetDialogFragment = CustomBottomSheet()
+            bottomSheetDialogFragment.selectedIndex = mActivity?.sortAssetAllocation!!
+            bottomSheetDialogFragment.mCalback = object : CustomBottomSheet.SorterCallback{
+                override fun onSortSelected(selectedSorted: Int) {
+                    mActivity?.sortAssetAllocation = selectedSorted
+                    setAssetAllocation(selectedWeight, selectedSorted)
+                }
+
+            }
+            bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
+
+        }
     }
 
     /**
@@ -221,13 +237,7 @@ class HomeFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
                 selectedWeight = position
-                rvDecision?.layoutManager = LinearLayoutManager(context)
-                if (selectedWeight == 0){
-                    rvDecision?.adapter = AssetAllocationAdapter(context, underWeightList, selectedWeight)
-                }else{
-                    rvDecision?.adapter = AssetAllocationAdapter(context, overWeightList, selectedWeight)
-                }
-                rvDecision?.adapter?.notifyDataSetChanged()
+                setAssetAllocation(selectedWeight, mActivity?.sortAssetAllocation!!)
             }
         }
     }
@@ -271,6 +281,17 @@ class HomeFragment : Fragment() {
         rvSelection?.adapter = adapterSecurity
     }
 
+    private fun setAssetAllocation(spinnerIndex:Int, sortIndex:Int){
+        rvDecision?.layoutManager = LinearLayoutManager(context)
+        if (spinnerIndex == 0){
+            adapterAllocation =  AssetAllocationAdapter(context, underWeightList, selectedWeight)
+        }else{
+            adapterAllocation = AssetAllocationAdapter(context, overWeightList, selectedWeight)
+        }
+
+        adapterAllocation?.sortAssetAllocation(sortIndex)
+        rvDecision?.adapter = adapterAllocation
+    }
 
     /**
      * 1st API call get all available week list
@@ -578,18 +599,9 @@ class HomeFragment : Fragment() {
                                 underWeightList?.add(underweight)
                             }
 
-                            rvDecision?.layoutManager = LinearLayoutManager(context)
-                            rvDecision?.adapter = AssetAllocationAdapter(
-                                context,
-                                underWeightList,
-                                selectedWeight
-                            )
+                            setAssetAllocation(selectedWeight, mActivity?.sortAssetAllocation!!)
                         }else{
-                            rvDecision?.adapter = AssetAllocationAdapter(
-                                context,
-                                underWeightList,
-                                selectedWeight
-                            )
+                            setAssetAllocation(selectedWeight, mActivity?.sortAssetAllocation!!)
                         }
 
                         if (arrOverWeight.length() > 0){
