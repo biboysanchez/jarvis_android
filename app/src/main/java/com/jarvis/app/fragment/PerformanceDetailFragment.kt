@@ -29,6 +29,7 @@ import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.PerformanceDetail
 import com.jarvis.app.model.Table6
 import com.jarvis.app.model.TableRisk
+import com.jarvis.app.utils.CustomBottomSheet
 import com.jarvis.app.utils.JSONUtil
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_performance_detail.*
@@ -51,6 +52,7 @@ class PerformanceDetailFragment: BaseFragment() {
     private var selectedLease = 0
     private var arrLease:ArrayList<Table6>? = ArrayList()
     private var leaseArrayAdapter:ArrayAdapter<String>? = null
+    private var leaseAdapter:LeaseAdapter? = null
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -104,13 +106,7 @@ class PerformanceDetailFragment: BaseFragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
                 selectedLease = position
-                rvLiquidProfile?.layoutManager = LinearLayoutManager(context)
-                rvLiquidProfile?.adapter = LeaseAdapter(
-                    context,
-                    arrLease,
-                    selectedLease,
-                    false
-                )
+                setLeaseAdapter(mActivity?.sortLease!!)
             }
         }
 
@@ -119,6 +115,20 @@ class PerformanceDetailFragment: BaseFragment() {
             mActivity?.viewModel?.fragmentTag = "Lease Liquid Securities"
             mActivity?.viewModel?.list = arrLease
             mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
+        }
+
+        imgLiquidProfile?.setOnClickListener {
+            val bottomSheetDialogFragment = CustomBottomSheet()
+            bottomSheetDialogFragment.selectedIndex = mActivity?.sortLease!!
+            bottomSheetDialogFragment.mCalback = object : CustomBottomSheet.SorterCallback{
+                override fun onSortSelected(selectedSorted: Int) {
+                    mActivity?.sortLease = selectedSorted
+                    setLeaseAdapter(selectedSorted)
+                }
+
+            }
+            bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
+
         }
     }
 
@@ -328,14 +338,7 @@ class PerformanceDetailFragment: BaseFragment() {
                             val mObj = Table6(arr.getJSONObject(i))
                             arrLease?.add(mObj)
                         }
-
-                        rvLiquidProfile?.layoutManager = LinearLayoutManager(context)
-                        rvLiquidProfile?.adapter = LeaseAdapter(
-                            context,
-                            arrLease,
-                            selectedLease,
-                            false
-                        )
+                        setLeaseAdapter( mActivity?.sortLease!!)
                     }catch (e: JSONException){
                         e.printStackTrace()
                     }
@@ -344,6 +347,19 @@ class PerformanceDetailFragment: BaseFragment() {
             override fun didURLFailed(error: VolleyError?) {
             }
         })
+    }
+
+    private fun setLeaseAdapter(sorter:Int){
+        rvLiquidProfile?.layoutManager = LinearLayoutManager(context)
+        leaseAdapter = LeaseAdapter(
+            context,
+            arrLease,
+            selectedLease,
+            false
+        )
+
+        rvLiquidProfile?.adapter = leaseAdapter
+        leaseAdapter?.sortLeaseLiquidity(sorter)
     }
 
     override fun onDestroy() {

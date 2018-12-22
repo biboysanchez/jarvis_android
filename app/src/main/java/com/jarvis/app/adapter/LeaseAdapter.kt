@@ -18,16 +18,64 @@ import java.util.*
 
 class LeaseAdapter : RecyclerView.Adapter<LeaseAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: ArrayList<Table6>? = ArrayList()
+    private var data: List<Table6>? = ArrayList()
     private var selected = 0
     private var isAll = false
 
-    constructor(mContext: Context?, data: ArrayList<Table6>?, selected:Int, isAll:Boolean?) : super() {
+    constructor(mContext: Context?, data: List<Table6>?, selected:Int, isAll:Boolean?) : super() {
         this.mContext = mContext
         this.data = data
         this.selected = selected
         this.isAll = isAll!!
     }
+
+    fun sortLeaseLiquidity(sorter: Int) {
+        when (sorter) {
+            0 -> {
+                data = data?.sortedWith(compareBy {it.securities})
+            }
+
+            1 -> {
+                data = data?.sortedByDescending { it.securities }
+            }
+
+            2 -> {
+                data = when (selected) {
+                    0 -> {
+                        data?.sortedByDescending { it.estDays }
+                    }
+
+                    1 -> {
+                        data?.sortedByDescending { it.estTransactions }
+                    }
+
+                    else -> {
+                        data?.sortedByDescending { it.bidAskCost }
+                    }
+                }
+
+            }
+
+            else -> {
+                data = when (selected) {
+                    0 -> {
+                        data?.sortedWith(compareBy { it.estDays })
+                    }
+
+                    1 -> {
+                        data?.sortedWith(compareBy { it.estTransactions })
+                    }
+
+                    else -> {
+                        data?.sortedWith(compareBy { it.bidAskCost })
+                    }
+                }
+            }
+        }
+
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_home_list, p0, false)
