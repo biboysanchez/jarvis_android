@@ -7,26 +7,154 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
-import com.jarvis.app.dataholder.Constant
 import com.jarvis.app.model.*
 import com.jarvis.app.utils.DialogUtil
 import kotlinx.android.synthetic.main.row_home_list.view.*
-import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
 
 class TimeSeriesAdapter : RecyclerView.Adapter<TimeSeriesAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: ArrayList<TableRisk>? = ArrayList()
+    private var data: List<TableRisk>? = ArrayList()
     private var selected = 0
     private var isAll = false
 
-    constructor(mContext: Context?, data: ArrayList<TableRisk>?, selected:Int, isAll:Boolean) : super() {
+    constructor(mContext: Context?, data: List<TableRisk>?, selected:Int, isAll:Boolean) : super() {
         this.mContext = mContext
         this.data = data
         this.selected = selected
         this.isAll = isAll
     }
+
+    fun sortPerformanceAndRisk(sorter: Int) {
+        when (sorter) {
+            0 -> {
+                data = data?.sortedWith(compareBy {it.group})
+            }
+
+            1 -> {
+                data = data?.sortedByDescending { it.group }
+            }
+
+            2 -> {
+                data = when (selected) {
+                    0 -> {
+                        data?.sortedByDescending { it.aum }
+                    }
+
+                    1 -> {
+                        data?.sortedByDescending { it.yr3Ar }
+                    }
+
+                    2 -> {
+                        data?.sortedByDescending { it.ytdAr }
+                    }
+
+                    3 -> {
+                        data?.sortedByDescending { it.targetAr }
+                    }
+
+                    4 -> {
+                        data?.sortedByDescending { it.y3Rr }
+                    }
+
+                    5 -> {
+                        data?.sortedByDescending { it.ytdRr }
+                    }
+
+                    6 -> {
+                        data?.sortedByDescending { it.targetRr }
+                    }
+
+                    7 -> {
+                        data?.sortedByDescending { it.portfolioSr }
+                    }
+
+                    8 -> {
+                        data?.sortedByDescending { it.bmkSr }
+                    }
+
+                    9 -> {
+                        data?.sortedByDescending { it.varRc }
+                    }
+
+                    10 -> {
+                        data?.sortedByDescending { it.varPercentRc }
+                    }
+
+                    11 -> {
+                        data?.sortedByDescending { it.infoRatio }
+                    }
+
+                    else -> {
+                        data?.sortedByDescending { it.beta }
+                    }
+                }
+
+            }
+
+            else -> {
+                data = when (selected) {
+
+                    0 -> {
+                        data?.sortedWith(compareBy { it.aum })
+                    }
+
+                    1 -> {
+                        data?.sortedWith(compareBy { it.yr3Ar })
+                    }
+
+                    2 -> {
+                        data?.sortedWith(compareBy { it.ytdAr })
+                    }
+
+                    3 -> {
+                        data?.sortedWith(compareBy { it.targetAr })
+                    }
+
+                    4 -> {
+                        data?.sortedWith(compareBy { it.y3Rr })
+                    }
+
+                    5 -> {
+                        data?.sortedWith(compareBy { it.ytdRr })
+                    }
+
+                    6 -> {
+                        data?.sortedWith(compareBy { it.targetRr })
+                    }
+
+                    7 -> {
+                        data?.sortedWith(compareBy { it.portfolioSr })
+                    }
+
+                    8 -> {
+                        data?.sortedWith(compareBy { it.bmkSr })
+                    }
+
+                    9 -> {
+                        data?.sortedWith(compareBy { it.varRc })
+                    }
+
+                    10 -> {
+                        data?.sortedWith(compareBy { it.varPercentRc })
+                    }
+
+                    11 -> {
+                        data?.sortedWith(compareBy { it.infoRatio })
+                    }
+
+                    else -> {
+                        data?.sortedWith(compareBy { it.beta })
+                    }
+
+                }
+            }
+        }
+
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_home_list, p0, false)
