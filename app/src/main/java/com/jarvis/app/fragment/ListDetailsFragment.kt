@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.fragment_list_all.*
 import java.util.ArrayList
 
 class ListDetailsFragment : BaseFragment() {
+    var mSorter:Int = 0
+    var mSelected:Int = 0
 
     override fun setTitle(): String {
         return mActivity?.viewModel?.fragmentTag!!
@@ -34,20 +36,20 @@ class ListDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sortAll(0)
+        setRecyclerView()
         isShowBack(true)
 
         imgSortAll?.setOnClickListener {
             val bottomSheetDialogFragment = CustomBottomSheet()
-            bottomSheetDialogFragment.selectedIndex = mActivity?.sortAll!!
+            bottomSheetDialogFragment.selectedIndex = mSorter
             bottomSheetDialogFragment.mCalback = object : CustomBottomSheet.SorterCallback{
                 override fun onSortSelected(selectedSorted: Int) {
-                    sortAll(selectedSorted)
+                    mSorter = selectedSorted
+                    sortAll(mSorter, selectedSorted)
                 }
 
             }
             bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
-
         }
     }
 
@@ -60,105 +62,57 @@ class ListDetailsFragment : BaseFragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-
-
+                mSelected = position
+                sortAll(mSorter, mSelected)
             }
         }
     }
 
-    private fun sortAll(sorter:Int){
+    private fun sortAll(sorter:Int, selectedItem:Int){
         when(mActivity?.viewModel?.fragmentTag){
             "Performance Summary" -> {
+                val adapter = PerformanceSummaryAdapter(
+                    context,
+                    mActivity?.viewModel?.list as ArrayList<Table1>?,
+                    selectedItem,
+                    true
+                )
 
-                spinnerList?.adapter = mActivity?.viewModel?.sAdapter
-                spinnerList?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
-
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                        rvListDetails?.layoutManager = LinearLayoutManager(context)
-
-                        val adapter = PerformanceSummaryAdapter(
-                            context,
-                            mActivity?.viewModel?.list as ArrayList<Table1>?,
-                            position,
-                            true
-                        )
-
-                        adapter.sortPerformance(sorter)
-                        rvListDetails?.adapter = adapter
-
-                    }
-                }
+                adapter.sortPerformance(sorter)
+                rvListDetails?.adapter = adapter
             }
 
             "Securities Selection" -> {
-                spinnerList?.adapter = mActivity?.viewModel?.sAdapter
-                spinnerList?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                        rvListDetails?.layoutManager = LinearLayoutManager(context)
+                val adapter = SecuritySelectionAdapter(
+                    context,
+                    mActivity?.viewModel?.list as ArrayList<Table2>?,
+                    selectedItem,
+                    true
+                )
 
-                        val adapter = SecuritySelectionAdapter(
-                            context,
-                            mActivity?.viewModel?.list as ArrayList<Table2>?,
-                            position,
-                            true
-                        )
-
-                        adapter.sortSecurity(sorter)
-                        rvListDetails?.adapter = adapter
-                    }
-                }
+                adapter.sortSecurity(sorter)
+                rvListDetails?.adapter = adapter
             }
 
             "Lease Liquid Securities" -> {
-                spinnerList?.adapter = mActivity?.viewModel?.sAdapter
-                spinnerList?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                        rvListDetails?.layoutManager = LinearLayoutManager(context)
-                        rvListDetails?.adapter = LeaseAdapter(
-                            context,
-                            mActivity?.viewModel?.list as ArrayList<Table6>?,
-                            position,
-                            true
-                        )
-
-                        val adapter = LeaseAdapter(context,
-                            mActivity?.viewModel?.list as ArrayList<Table6>?, 0, true)
-                        adapter.sortLeaseLiquidity(sorter)
-                        rvListDetails?.adapter = adapter
-                    }
-                }
+                val adapter = LeaseAdapter(context,
+                    mActivity?.viewModel?.list as ArrayList<Table6>?,
+                    selectedItem, true)
+                adapter.sortLeaseLiquidity(sorter)
+                rvListDetails?.adapter = adapter
             }
 
             //Top 10 Position
             else -> {
-                spinnerList?.adapter = mActivity?.viewModel?.sAdapter
-                spinnerList?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                        rvListDetails?.layoutManager = LinearLayoutManager(context)
-                        val adapter = TopTenAdapter(
-                            context,
-                            mActivity?.viewModel?.list as ArrayList<Table3>?,
-                            position,
-                            true
-                        )
+                val adapter = TopTenAdapter(
+                    context,
+                    mActivity?.viewModel?.list as ArrayList<Table3>?,
+                    selectedItem,
+                    true
+                )
 
-                        adapter.sortPerformance(sorter)
-                        rvListDetails?.adapter = adapter
-
-                    }
-                }
+                adapter.sortPerformance(sorter)
+                rvListDetails?.adapter = adapter
             }
         }
     }

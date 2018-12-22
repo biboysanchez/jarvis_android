@@ -55,8 +55,6 @@ class MainActivity : AppCompatActivity() {
     var sortLease           = 0
     var sortRiskManagement  = 0
     var sortPerformanceAtt  = 0
-    var sortAll             = 0
-
 
     private var arrCompanyList:ArrayList<Company>? = ArrayList()
 
