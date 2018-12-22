@@ -2,6 +2,7 @@ package com.jarvis.app.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ class ListDetailsFragment : BaseFragment() {
     var mSorter:Int = 0
     var mSelected:Int = 0
     var arrCashMovement:ArrayList<ValueKey>? = null
+    var adapterCashMovement:CashSummaryAdapter? = null
 
     override fun setTitle(): String {
         return mActivity?.viewModel?.fragmentTag!!
@@ -66,7 +68,6 @@ class ListDetailsFragment : BaseFragment() {
     }
 
     private fun setRecyclerView(){
-
         if (mActivity?.viewModel?.fragmentTag == "Cash Movement Details"){
             spinnerList?.adapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
                 mActivity?.summaryList)
@@ -93,7 +94,6 @@ class ListDetailsFragment : BaseFragment() {
                 }
             }
         }
-
 
     }
 
@@ -142,6 +142,11 @@ class ListDetailsFragment : BaseFragment() {
                 adapter.sortPerformance(sorter)
                 rvListDetails?.adapter = adapter
             }
+
+            "Cash Movement Details" -> {
+                Log.i(TAG, "Sorter: $sorter")
+                adapterCashMovement?.sortCashSummary(sorter)
+            }
         }
     }
 
@@ -163,8 +168,9 @@ class ListDetailsFragment : BaseFragment() {
                         }
 
                         rvListDetails?.layoutManager = LinearLayoutManager(context)
-                        val adapter = CashSummaryAdapter(context, arrCashMovement)
-                        rvListDetails?.adapter = adapter
+                        adapterCashMovement = CashSummaryAdapter(context, arrCashMovement)
+                        rvListDetails?.adapter = adapterCashMovement
+                        adapterCashMovement?.sortCashSummary(mSorter)
                     }catch (e: JSONException){
                         e.printStackTrace()
                     }

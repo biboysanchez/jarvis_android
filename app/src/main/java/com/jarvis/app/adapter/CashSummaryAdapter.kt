@@ -20,6 +20,29 @@ class CashSummaryAdapter : RecyclerView.Adapter<CashSummaryAdapter.ViewHolder> {
         this.data = data
     }
 
+    fun sortCashSummary(sorter: Int) {
+        when (sorter) {
+            0 -> {
+                data = data?.sortedWith(compareBy {it.key})
+            }
+
+            1 -> {
+                data = data?.sortedByDescending { it.key }
+            }
+
+            2 -> {
+                data?.sortedByDescending { it.value }
+            }
+
+            else -> {
+                data?.sortedWith(compareBy { it.value })
+            }
+        }
+
+        notifyDataSetChanged()
+    }
+
+
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): CashSummaryAdapter.ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_duration, p0, false)
         return ViewHolder(view)
@@ -38,7 +61,7 @@ class CashSummaryAdapter : RecyclerView.Adapter<CashSummaryAdapter.ViewHolder> {
             val asset = data?.get(i)
             val value = asset?.value?.toFloat()
             itemView.tvRowAssetName?.text = asset?.key
-            itemView.tvRowAssetValue?.text = String.format("%.2f", value)
+            itemView.tvRowAssetValue?.text = value.toString()
 
             if (i % 2 == 1){
                 itemView.llRowAsset?.setBackgroundColor(Color.parseColor("#F4F9F9"))
