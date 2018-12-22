@@ -41,6 +41,7 @@ import com.jarvis.app.model.Portfolio
 import com.jarvis.app.model.Table3
 import com.jarvis.app.model.Table5
 import com.jarvis.app.utils.ColorUtil
+import com.jarvis.app.utils.CustomBottomSheet
 import com.jarvis.app.utils.Util
 import kotlin.Comparator
 
@@ -54,6 +55,8 @@ class TimeSeriesFragment : BaseFragment() {
     private var arrPerformance:ArrayList<Table5> = ArrayList()
     private var performanceAdapter:ArrayAdapter<String>? = null
     private var selectedPerformance = 0
+    private var sortPerformanceAttribute = 0
+    private var adapterPerformanceAtt:PerformanceAttributeAdapter? = null
 
     var portfolio:String = ""
 
@@ -77,6 +80,32 @@ class TimeSeriesFragment : BaseFragment() {
         getData()
         setPerformanceAttribute()
         setSpinner()
+
+        imgMenuDecision?.setOnClickListener {
+            val bottomSheetDialogFragment = CustomBottomSheet()
+            bottomSheetDialogFragment.selectedIndex = mActivity?.sortPerformanceAtt!!
+            bottomSheetDialogFragment.mCalback = object : CustomBottomSheet.SorterCallback{
+                override fun onSortSelected(selectedSorted: Int) {
+                    mActivity?.sortPerformanceAtt = selectedSorted
+                    sortPerformanceAttribute(selectedSorted)
+                }
+
+            }
+            bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
+        }
+    }
+
+    private fun sortPerformanceAttribute(sorter:Int){
+        rvPerformanceAttribute?.layoutManager = LinearLayoutManager(context)
+        adapterPerformanceAtt = PerformanceAttributeAdapter(
+            context,
+            arrPerformance,
+            selectedPerformance,
+            true
+        )
+
+        rvPerformanceAttribute?.adapter = adapterPerformanceAtt
+        adapterPerformanceAtt?.sortPerformanceAttribute(sorter)
     }
 
     private fun setSpinner(){
@@ -113,13 +142,7 @@ class TimeSeriesFragment : BaseFragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
                 selectedPerformance = position
-                rvPerformanceAttribute?.layoutManager = LinearLayoutManager(context)
-                rvPerformanceAttribute?.adapter = PerformanceAttributeAdapter(
-                    context,
-                    arrPerformance,
-                    selectedPerformance,
-                    true
-                )
+                sortPerformanceAttribute(mActivity?.sortPerformanceAtt!!)
             }
         }
         getPortfolioDropDown()
@@ -214,7 +237,7 @@ class TimeSeriesFragment : BaseFragment() {
                             val perf = Table5(array.getJSONObject(i))
                             arrPerformance.add(perf)
                         }
-                        setRecyclerView()
+                        sortPerformanceAttribute(mActivity?.sortPerformanceAtt!!)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -223,16 +246,6 @@ class TimeSeriesFragment : BaseFragment() {
             override fun didURLFailed(error: VolleyError?) {
             }
         })
-    }
-
-    private fun setRecyclerView(){
-        rvPerformanceAttribute?.layoutManager = LinearLayoutManager(context)
-        rvPerformanceAttribute?.adapter = PerformanceAttributeAdapter(
-            context,
-            arrPerformance,
-            selectedPerformance,
-            true
-        )
     }
 
     private fun returnLineChart(arrayList: ArrayList<Benchmark>){

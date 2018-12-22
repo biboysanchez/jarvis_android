@@ -17,16 +17,66 @@ import java.util.*
 
 class PerformanceAttributeAdapter : RecyclerView.Adapter<PerformanceAttributeAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: ArrayList<Table5>? = ArrayList()
+    private var data: List<Table5>? = ArrayList()
     private var selected = 0
     private var isAll = false
 
-    constructor(mContext: Context?, data: ArrayList<Table5>?, selected:Int, isAll:Boolean?) : super() {
+    constructor(mContext: Context?, data: List<Table5>?, selected:Int, isAll:Boolean?) : super() {
         this.mContext = mContext
         this.data = data
         this.selected = selected
         this.isAll = isAll!!
     }
+
+    fun sortPerformanceAttribute(sorter: Int) {
+
+        when (sorter) {
+            0 -> {
+                data = data?.sortedWith(compareBy { it.matrix })!!
+            }
+
+            1 -> {
+                data = data?.sortedByDescending { it.matrix }
+            }
+
+            2 -> {
+                data = when (selected) {
+
+                    0 -> {
+                        data?.sortedByDescending { it.saham }
+                    }
+
+                    1 -> {
+                        data?.sortedByDescending { it.target }
+                    }
+
+                    else -> {
+                        data?.sortedByDescending { it.jciIndex }
+                    }
+
+                }
+            }
+
+            else -> {
+                data = when (selected) {
+                    0 -> {
+                        data?.sortedWith(compareBy { it.saham })
+                    }
+
+                    1 -> {
+                        data?.sortedWith(compareBy { it.target })
+                    }
+
+                    else -> {
+                        data?.sortedWith(compareBy { it.jciIndex })
+                    }
+                }
+            }
+        }
+
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_home_list, p0, false)
