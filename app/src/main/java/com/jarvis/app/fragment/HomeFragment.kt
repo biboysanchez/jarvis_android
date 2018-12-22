@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
 
     private var adapterPerformance:PerformanceSummaryAdapter? = null
     private var adapterTopTen:TopTenAdapter? = null
-
+    private var adapterSecurity:SecuritySelectionAdapter? = null
     private var underWeightList:ArrayList<Table4>? = ArrayList()
     private var overWeightList:ArrayList<Table4>?  = ArrayList()
 
@@ -137,6 +137,19 @@ class HomeFragment : Fragment() {
             }
             bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
         }
+
+        imgMenuSelection?.setOnClickListener {
+            val bottomSheetDialogFragment = CustomBottomSheet()
+            bottomSheetDialogFragment.selectedIndex = mActivity?.sortSecurity!!
+            bottomSheetDialogFragment.mCalback = object : CustomBottomSheet.SorterCallback{
+                override fun onSortSelected(selectedSorted: Int) {
+                    mActivity?.sortSecurity = selectedSorted
+                    setSecurities(selectedSecurities, selectedSorted)
+                }
+
+            }
+            bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
+        }
     }
 
     /**
@@ -180,13 +193,7 @@ class HomeFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
                 selectedSecurities = position
-                rvSelection?.layoutManager = LinearLayoutManager(context)
-                rvSelection?.adapter = SecuritySelectionAdapter(
-                    context,
-                    tableSecurities,
-                    selectedSecurities,
-                    false
-                )
+                setSecurities(selectedSecurities, mActivity?.sortSecurity!!)
             }
         }
 
@@ -249,6 +256,19 @@ class HomeFragment : Fragment() {
         )
         adapterTopTen?.sortPerformance(sorter)
         rvPosition?.adapter = adapterTopTen
+    }
+
+    private fun setSecurities(selSecurity:Int, sorter:Int){
+        rvSelection?.layoutManager = LinearLayoutManager(context)
+        adapterSecurity = SecuritySelectionAdapter(
+            context,
+            tableSecurities,
+            selSecurity,
+            false
+        )
+
+        adapterSecurity?.sortSecurity(sorter)
+        rvSelection?.adapter = adapterSecurity
     }
 
 
@@ -490,20 +510,10 @@ class HomeFragment : Fragment() {
                                 tableSecurities?.add(security)
                             }
 
-                            rvSelection?.layoutManager = LinearLayoutManager(context)
-                            rvSelection?.adapter = SecuritySelectionAdapter(
-                                context,
-                                tableSecurities,
-                                selectedSecurities,
-                                false
-                            )
+                            setSecurities(selectedSecurities, mActivity!!.sortSecurity)
+
                         }else{
-                            rvSelection?.adapter = SecuritySelectionAdapter(
-                                context,
-                                tableSecurities,
-                                selectedSecurities,
-                                false
-                            )
+                            setSecurities(selectedSecurities, mActivity!!.sortSecurity)
                         }
                     }catch (e:JSONException){
                         e.printStackTrace()

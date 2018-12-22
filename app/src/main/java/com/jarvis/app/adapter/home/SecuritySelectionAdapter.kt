@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
-import com.jarvis.app.dataholder.Constant
-import com.jarvis.app.model.Table1
 import com.jarvis.app.model.Table2
 import com.jarvis.app.model.ValueKey
 import com.jarvis.app.utils.DialogUtil
@@ -18,16 +16,89 @@ import kotlin.collections.ArrayList
 
 class SecuritySelectionAdapter : RecyclerView.Adapter<SecuritySelectionAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: ArrayList<Table2>? = ArrayList()
+    private var data: List<Table2>? = ArrayList()
     private var selected = 0
     private var isAll = false
 
-    constructor(mContext: Context?, data: ArrayList<Table2>?, selected:Int, isAll:Boolean) : super() {
+    constructor(mContext: Context?, data: List<Table2>?, selected:Int, isAll:Boolean) : super() {
         this.mContext = mContext
         this.data = data
         this.selected = selected
         this.isAll = isAll
     }
+
+    fun sortSecurity(sorter: Int) {
+        when (sorter) {
+            0 -> {
+                data = data?.sortedWith(compareBy {it.company})
+            }
+
+            1 -> {
+                data = data?.sortedByDescending { it.company }
+            }
+
+            2 -> {
+                when (selected) {
+                    1 -> {
+                        data = data?.sortedByDescending { it.amountIc }
+                    }
+
+                    2 -> {
+                        data = data?.sortedByDescending { it.ttm }
+                    }
+
+                    3 -> {
+                        data = data?.sortedByDescending { it.range }
+                    }
+
+                    4 -> {
+                        data = data?.sortedByDescending { it.amountReal}
+                    }
+
+                    5 -> {
+                        data = data?.sortedByDescending { it.avgPrice}
+                    }
+
+                    6 -> {
+                        data = data?.sortedByDescending { it.percentage}
+                    }
+
+                }
+
+            }
+
+            else -> {
+                when (selected) {
+                    1 -> {
+                        data = data?.sortedWith(compareBy { it.amountIc })
+                    }
+
+                    2 -> {
+                        data = data?.sortedWith(compareBy { it.ttm })
+                    }
+
+                    3 -> {
+                        data = data?.sortedWith(compareBy { it.range })
+                    }
+
+                    4 -> {
+                        data = data?.sortedWith(compareBy { it.amountReal })
+                    }
+
+                    5 -> {
+                        data = data?.sortedWith(compareBy { it.avgPrice})
+                    }
+
+                    6 -> {
+                        data = data?.sortedWith(compareBy { it.percentage})
+                    }
+                }
+            }
+        }
+
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_home_list, p0, false)

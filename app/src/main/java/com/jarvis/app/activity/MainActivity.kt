@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     var sortPerformance = 0
     var sortTopTen = 0
+    var sortSecurity = 0
 
     private var arrCompanyList:ArrayList<Company>? = ArrayList()
 
