@@ -41,18 +41,19 @@ class MainActivity : AppCompatActivity() {
     var fm:FragmentManager? = null
     private var lastIndex = 0
     var viewModel:UserViewModel? = null
-    var mainTitle = "Portfolio Overview"
+    var mainTitle           = "Portfolio Overview"
 
-    var selectedCompany = ""
-    var selectedWeek = ""
-    var selectedCategory1 = ""
-    var selectedCategory2 = ""
+    var selectedCompany     = ""
+    var selectedWeek        = ""
+    var selectedCategory1   = ""
+    var selectedCategory2   = ""
 
-    var sortPerformance = 0
-    var sortTopTen = 0
-    var sortSecurity = 0
+    var sortPerformance     = 0
+    var sortTopTen          = 0
+    var sortSecurity        = 0
     var sortAssetAllocation = 0
-    var sortLease = 0
+    var sortLease           = 0
+    var sortRiskManagement  = 0
 
 
     private var arrCompanyList:ArrayList<Company>? = ArrayList()

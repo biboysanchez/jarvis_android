@@ -50,9 +50,14 @@ class PerformanceDetailFragment: BaseFragment() {
     private val arrPortfolioList = Arrays.asList("Danamas Saham", "Simas Saham Bertumbuh")
     private var selectedPortfolio = ""
     private var selectedLease = 0
+    private var selectedPerformance = 0
+
+
     private var arrLease:ArrayList<Table6>? = ArrayList()
     private var leaseArrayAdapter:ArrayAdapter<String>? = null
+
     private var leaseAdapter:LeaseAdapter? = null
+    private var performanceRiskAdapter:TimeSeriesAdapter? = null
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -124,6 +129,20 @@ class PerformanceDetailFragment: BaseFragment() {
                 override fun onSortSelected(selectedSorted: Int) {
                     mActivity?.sortLease = selectedSorted
                     setLeaseAdapter(selectedSorted)
+                }
+
+            }
+            bottomSheetDialogFragment.show(mActivity?.supportFragmentManager, bottomSheetDialogFragment.tag)
+
+        }
+
+        imgMenuDecision?.setOnClickListener {
+            val bottomSheetDialogFragment = CustomBottomSheet()
+            bottomSheetDialogFragment.selectedIndex = mActivity?.sortRiskManagement!!
+            bottomSheetDialogFragment.mCalback = object : CustomBottomSheet.SorterCallback{
+                override fun onSortSelected(selectedSorted: Int) {
+                    mActivity?.sortRiskManagement = selectedSorted
+                    setPerformance(selectedSorted)
                 }
 
             }
@@ -306,12 +325,8 @@ class PerformanceDetailFragment: BaseFragment() {
 
                             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#757575"))
-
-                                rvPerformanceAndRisk?.layoutManager = LinearLayoutManager(context)
-                                rvPerformanceAndRisk?.adapter = TimeSeriesAdapter(
-                                    context, arrRiskMeasureAllList, position, false
-                                )
-
+                                selectedPerformance = position
+                                setPerformance(mActivity?.sortRiskManagement!!)
                             }
                         }
                     }catch (e: JSONException){
@@ -360,6 +375,17 @@ class PerformanceDetailFragment: BaseFragment() {
 
         rvLiquidProfile?.adapter = leaseAdapter
         leaseAdapter?.sortLeaseLiquidity(sorter)
+    }
+
+
+    private fun setPerformance(sorter:Int){
+        rvPerformanceAndRisk?.layoutManager = LinearLayoutManager(context)
+        performanceRiskAdapter = TimeSeriesAdapter(
+            context, arrRiskMeasureAllList, selectedPerformance, false
+        )
+
+        rvPerformanceAndRisk?.adapter = performanceRiskAdapter
+        performanceRiskAdapter?.sortPerformanceAndRisk(sorter)
     }
 
     override fun onDestroy() {
