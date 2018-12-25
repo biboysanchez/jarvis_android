@@ -108,8 +108,12 @@ class LeaseAdapter : RecyclerView.Adapter<LeaseAdapter.ViewHolder> {
                 ValueKey(Table6.table6DropdownList()[2], obj?.bidAskCost.toString())
             )
 
-            itemView.tvRowTable1Name?.text = obj?.securities
-            itemView.tvRowTable1Value?.text = list[selected].value
+            try {
+                itemView.tvRowTable1Name?.text = obj?.securities
+                itemView.tvRowTable1Value?.text = list[selected].value
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
 
             if (position % 2 == 1){
                 itemView.llBgRow?.setBackgroundColor(Color.parseColor("#F4F9F9"))

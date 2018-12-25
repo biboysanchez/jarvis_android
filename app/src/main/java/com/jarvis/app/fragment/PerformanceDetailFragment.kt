@@ -246,7 +246,6 @@ class PerformanceDetailFragment: BaseFragment() {
           // arr?.sortWith(Comparator { o1, o2 -> o1?.saham!!.compareTo(o2!!.saham) })
             for (z in 0 until arr!!.size){
                 val performanceDetail = arr[z]
-
                 if (performanceDetail.portfolio == "Danamas Saham"){
                     values2.add(BarEntry(i.toFloat(), performanceDetail.saham.toFloat()))
                     title2 = performanceDetail.portfolio
