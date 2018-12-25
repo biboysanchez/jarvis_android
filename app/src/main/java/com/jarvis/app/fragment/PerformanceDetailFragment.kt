@@ -3,6 +3,7 @@ package com.jarvis.app.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +16,18 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.jarvis.app.R
 import com.jarvis.app.adapter.LeaseAdapter
 import com.jarvis.app.adapter.TimeSeriesAdapter
+import com.jarvis.app.custom.MarkerLiquidProfile
+import com.jarvis.app.custom.MyMarkerView
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
+import com.jarvis.app.extension.toast
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
@@ -29,6 +36,7 @@ import com.jarvis.app.model.Table6
 import com.jarvis.app.model.TableRisk
 import com.jarvis.app.utils.CustomBottomSheet
 import com.jarvis.app.utils.JSONUtil
+import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_performance_detail.*
 import org.json.JSONException
@@ -258,6 +266,28 @@ class PerformanceDetailFragment: BaseFragment() {
                 }
             }
         }
+
+        val mv = MarkerLiquidProfile(context,R.layout.custom_marker_liquid_profile)
+        mv.chartView = barChartLiquidity
+        barChartLiquidity?.marker = mv
+        val tvTop = mv.findViewById<TextView>(R.id.tvTop)
+        val tvSub = mv.findViewById<TextView>(R.id.tvBottom)
+        barChartLiquidity?.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+            override fun onNothingSelected() {
+            }
+            override fun onValueSelected(e: Entry?, h: Highlight?) {
+                val index = h?.x
+                val d = arrLiquidProfile?.get(index?.toInt()!!)
+                for (z in 0 until d!!.size) {
+                    val performanceDetail = d[z]
+                    if (performanceDetail.portfolio == "Danamas Saham"){
+                        tvSub.text = performanceDetail.saham.toString()
+                    }else{
+                        tvTop.text = performanceDetail.saham.toString()
+                    }
+                }
+            }
+        })
 
         val xAxis = barChartLiquidity?.xAxis
         xAxis?.granularity = 1f
