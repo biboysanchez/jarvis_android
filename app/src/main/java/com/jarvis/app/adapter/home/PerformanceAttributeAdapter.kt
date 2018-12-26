@@ -104,9 +104,9 @@ class PerformanceAttributeAdapter : RecyclerView.Adapter<PerformanceAttributeAda
             val obj = data?.get(position)
 
             val list:List<ValueKey> = Arrays.asList(
-                ValueKey(Table5.table5DropdownList()[0], obj?.saham.toString()),
-                ValueKey(Table5.table5DropdownList()[1], obj?.target.toString()),
-                ValueKey(Table5.table5DropdownList()[2], obj?.jciIndex.toString())
+                ValueKey(Table5.table5DropdownList()[0], String.format("%.2f", obj?.saham?.toFloat())),
+                ValueKey(Table5.table5DropdownList()[1], String.format("%.2f", obj?.target?.toFloat())),
+                ValueKey(Table5.table5DropdownList()[2], String.format("%.2f", obj?.jciIndex?.toFloat()))
             )
 
             itemView.tvRowTable1Name?.text = obj?.matrix

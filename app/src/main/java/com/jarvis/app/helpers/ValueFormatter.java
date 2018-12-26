@@ -6,10 +6,10 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import java.util.ArrayList;
 
 public class ValueFormatter implements IAxisValueFormatter {
-    private ArrayList<String> mValues;
+    private ArrayList<String> mValues = new ArrayList<>();
 
     public ValueFormatter(ArrayList<String> values) {
-        this.mValues = values;
+        this.mValues.addAll(values);
     }
 
     public ValueFormatter() {

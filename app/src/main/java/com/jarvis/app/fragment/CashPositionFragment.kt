@@ -208,7 +208,7 @@ class CashPositionFragment : BaseFragment() {
     }
 
     fun setBarChartNegative(mArrCashMovement: ArrayList<ValueKey>) {
-        barChartNegative?.extraBottomOffset = 5f
+        barChartNegative?.extraBottomOffset = 6f
 
         barChartNegative?.setDrawValueAboveBar(true)
         barChartNegative?.description?.isEnabled = false
@@ -224,7 +224,7 @@ class CashPositionFragment : BaseFragment() {
         xAxis?.textSize = 13f
         xAxis?.labelCount = mArrCashMovement.size
         xAxis?.setCenterAxisLabels(true)
-       // xAxis?.granularity = 1f
+        xAxis?.granularity = 1f
 
         val left = barChartNegative?.axisLeft
         left?.setDrawLabels(false)
@@ -240,7 +240,7 @@ class CashPositionFragment : BaseFragment() {
 
         val data = java.util.ArrayList<Data>()
         for (i in 0 until mArrCashMovement.size){
-            data.add(Data(i.toFloat(), mArrCashMovement[i].value.toFloat()))
+            data.add(Data(i.toFloat()+1f, mArrCashMovement[i].value.toFloat()))
         }
 
         setData(data)

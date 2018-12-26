@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="70dp"
     android:layout_height="40dp"
-    android:background="@drawable/marker2"
+    android:background="@drawable/img_bubble"
     tools:ignore="Overdraw">
 
     <TextView
@@ -16,7 +16,6 @@
         android:layout_marginRight="5dp"
         android:text=""
         android:textSize="12sp"
-        android:textColor="@android:color/white"
         android:ellipsize="end"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmall" />

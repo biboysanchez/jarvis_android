@@ -103,9 +103,9 @@ class LeaseAdapter : RecyclerView.Adapter<LeaseAdapter.ViewHolder> {
             val obj = data?.get(position)
 
             val list:List<ValueKey> = Arrays.asList(
-                ValueKey(Table6.table6DropdownList()[0], obj?.estDays.toString()),
-                ValueKey(Table6.table6DropdownList()[1], obj?.estTransactions.toString()),
-                ValueKey(Table6.table6DropdownList()[2], obj?.bidAskCost.toString())
+                ValueKey(Table6.table6DropdownList()[0], String.format("%.2f", obj?.estDays?.toFloat())),
+                ValueKey(Table6.table6DropdownList()[1], String.format("%.2f", obj?.estTransactions?.toFloat())),
+                ValueKey(Table6.table6DropdownList()[2], String.format("%.2f", obj?.bidAskCost?.toFloat()))
             )
 
             try {

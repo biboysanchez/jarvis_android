@@ -120,11 +120,11 @@ class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder> {
             val obj = data?.get(position)
 
             val list:List<ValueKey> = Arrays.asList(
-                ValueKey(Table3.table3DropDownList()[0], obj?.national!!.toString()),
-                ValueKey(Table3.table3DropDownList()[1], obj.avgCost.toString()),
-                ValueKey(Table3.table3DropDownList()[2], obj.currentPrice.toString()),
-                ValueKey(Table3.table3DropDownList()[3], obj.unrealized.toString()),
-                ValueKey(Table3.table3DropDownList()[4], obj.riskContribution.toString())
+                ValueKey(Table3.table3DropDownList()[0], String.format("%.2f", obj?.national!!.toFloat())),
+                ValueKey(Table3.table3DropDownList()[1], String.format("%.2f", obj.avgCost.toFloat())),
+                ValueKey(Table3.table3DropDownList()[2], String.format("%.2f", obj.currentPrice.toFloat())),
+                ValueKey(Table3.table3DropDownList()[3], String.format("%.2f", obj.unrealized.toFloat())),
+                ValueKey(Table3.table3DropDownList()[4], String.format("%.2f", obj.riskContribution.toFloat()))
             )
 
             if (position % 2 == 1){

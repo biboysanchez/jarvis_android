@@ -3,10 +3,12 @@ package com.jarvis.app.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.VolleyError
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.EntryXComparator
@@ -18,7 +20,10 @@ import java.util.*
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.jarvis.app.R.id.*
 import com.jarvis.app.adapter.AssetAdapter
+import com.jarvis.app.custom.LabelFormatter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.double
 import com.jarvis.app.extension.obj
@@ -37,7 +42,7 @@ import kotlin.collections.ArrayList
 class DurationMatchFragment : BaseFragment() {
     private var arrMatch :ArrayList<Matching>?          = ArrayList()
     private var arrCumulative: ArrayList<Cumulative>?   = ArrayList()
-    private var arrBarTitle:ArrayList<String>?          = ArrayList()
+    private var arrBarTitle:ArrayList<String>           = ArrayList()
     private var arrCumulativeTitle:ArrayList<String>?   = ArrayList()
     private var arrAssetKeys:ArrayList<ValueKey>?       = ArrayList()
     private var arrLiabilitesKeys:ArrayList<ValueKey>?  = ArrayList()
@@ -82,7 +87,7 @@ class DurationMatchFragment : BaseFragment() {
                         val arr = JSONObject(response).obj("message_data").arr("asset_liability_list")
                         for (i in 0 until arr.length()){
                             val match = Matching(arr.getJSONObject(i))
-                            arrBarTitle?.add(match.month)
+                            arrBarTitle.add(match.month)
                             arrMatch?.add(match)
                         }
                         barChartData()
@@ -96,17 +101,11 @@ class DurationMatchFragment : BaseFragment() {
         })
     }
 
-
-
     private fun barChartData(){
-        val groupSpace = 0.08f
-        val barSpace = 0.01f // x4 DataSet
-        val barWidth = 0.1f // x4 DataSet
-        // (0.2 + 0.03) * 4 + 0.08 = 1.00 -> interval per "group"
-
         val groupCount = arrMatch!!.size
         val values1 = ArrayList<BarEntry>()
         val values2 = ArrayList<BarEntry>()
+
         for (i in 0 until groupCount){
             val match = arrMatch!![i]
             values1.add(BarEntry(i.toFloat(),  match.assets.toFloat()))
@@ -132,27 +131,46 @@ class DurationMatchFragment : BaseFragment() {
             barChartAsset?.data = data
         }
 
-         val xAxis = barChartAsset?.xAxis
-         xAxis?.valueFormatter =  ValueFormatter(arrBarTitle)
-        xAxis?.granularity = 1F
-
         val yAxisRight = barChartAsset?.axisRight
         yAxisRight?.isEnabled = false
 
+        val n = arrBarTitle.size
+        val groupSpace = calcGroupSpace(n)
+        val barSpace = calcBarSpace(n)
+        val barWidth = calcBarWith(n)
+
         barChartAsset?.barData?.barWidth = barWidth
-        barChartAsset?.xAxis?.axisMinimum = 0f
-        barChartAsset?.xAxis?.axisMaximum =  barChartAsset?.barData?.getGroupWidth(groupSpace, barSpace)!! * groupCount
-        barChartAsset?.groupBars(0f, groupSpace, barSpace)
         barChartAsset?.animateY(1500)
         barChartAsset?.description = null
         barChartAsset?.setExtraOffsets(0f,0f,0f,20f)
         barChartAsset?.axisLeft?.setDrawLabels(true)
-        barChartAsset?.xAxis?.setDrawLabels(true)
-        barChartAsset?.xAxis?.setDrawGridLines(false)
-        barChartAsset?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
-        barChartAsset?.legend?.isEnabled = true
         barChartAsset?.axisRight?.setDrawLabels(false)
+
+        val xAxis = barChartAsset?.xAxis
+        xAxis?.position = XAxis.XAxisPosition.BOTTOM
+        xAxis?.labelCount = arrBarTitle.size
+        xAxis?.setCenterAxisLabels(true)
+       // xAxis?.granularity = 1f
+      // xAxis?.isGranularityEnabled = true
+        xAxis?.setDrawGridLines(false)
+        xAxis?.valueFormatter = LabelFormatter(arrBarTitle)
+        barChartAsset?.legend?.isEnabled = true
+        xAxis?.axisMinimum = 0f
+        xAxis?.axisMaximum =  barChartAsset?.barData?.getGroupWidth(groupSpace, barSpace)!! * arrBarTitle.size
+        barChartAsset?.groupBars(0f, groupSpace, barSpace)
         barChartAsset?.invalidate()
+    }
+
+    private fun calcBarWith(n: Int): Float {
+        return 20/(23*n +8f)
+    }
+
+    private fun calcBarSpace(n: Int): Float {
+        return 3/(23*n +8f)
+    }
+
+    private fun calcGroupSpace(n: Int): Float {
+        return 8/(23*n +8f)
     }
 
     private fun setCumulativeSurplus(){
@@ -188,7 +206,7 @@ class DurationMatchFragment : BaseFragment() {
         }
 
         val mv = MyMarkerView(context, R.layout.custom_marker_view)
-        mv.chartView = lineChartSurplus
+        mv.chartView = lineChartSurplus!!
         lineChartSurplus?.marker = mv
 
         Collections.sort(entries, EntryXComparator())
@@ -217,7 +235,14 @@ class DurationMatchFragment : BaseFragment() {
         lineChartSurplus?.description?.isEnabled = false
         lineChartSurplus?.legend?.isEnabled = false
         lineChartSurplus?.data = data
-        lineChartSurplus?.invalidate()
+
+        val sets = lineChartSurplus.data.dataSets
+        for (iSet in sets) {
+            val mset = iSet as LineDataSet
+            mset.setDrawValues(!mset.isDrawValuesEnabled)
+        }
+
+        lineChartSurplus.invalidate()
     }
 
     private fun setAssetList(){
@@ -233,7 +258,7 @@ class DurationMatchFragment : BaseFragment() {
                         val obj     = data.obj("asset_item_dict")
                         val total   = data.double("total").toFloat()
                         mTotal      = total
-                        tvAssetsTotal?.text = String.format("%.2f", total)
+                        tvAssetsTotal.text = String.format("%.2f", total)
                         setLiabilityList()
                         val iter: Iterator<String> = obj.keys()
                         while (iter.hasNext()) {
@@ -242,8 +267,8 @@ class DurationMatchFragment : BaseFragment() {
                                 val keyValue = ValueKey(key, obj.getString(key))
                                 arrAssetKeys?.add(keyValue)
                                 if (arrAssetKeys!!.isNotEmpty()){
-                                    rvAssetLiability?.layoutManager = LinearLayoutManager(context)
-                                    rvAssetLiability?.adapter = AssetAdapter(context, arrAssetKeys)
+                                    rvAssetLiability.layoutManager = LinearLayoutManager(context)
+                                    rvAssetLiability.adapter = AssetAdapter(context, arrAssetKeys)
                                 }
                             } catch (e: JSONException) {
                                 e.printStackTrace()
@@ -274,11 +299,11 @@ class DurationMatchFragment : BaseFragment() {
                         val data    = JSONObject(response).obj("message_data")
                         val obj     = data.obj("liability_item_dict")
                         val total   = data.double("total").toFloat()
-                        tvLiabilitiesTotal?.text = String.format("%.2f", total)
+                        tvLiabilitiesTotal.text = String.format("%.2f", total)
 
                         val surplus = total - mTotal
                         mTotal = surplus
-                        tvSurplus?.text = String.format("%.2f", mTotal)
+                        tvSurplus.text = String.format("%.2f", mTotal)
 
                         val iter: Iterator<String> = obj.keys()
                         while (iter.hasNext()) {
@@ -287,8 +312,8 @@ class DurationMatchFragment : BaseFragment() {
                                 val keyValue = ValueKey(key, obj.getString(key))
                                 arrLiabilitesKeys?.add(keyValue)
                                 if (arrLiabilitesKeys!!.isNotEmpty()){
-                                    rvLiability?.layoutManager = LinearLayoutManager(context)
-                                    rvLiability?.adapter = AssetAdapter(context, arrLiabilitesKeys)
+                                    rvLiability.layoutManager = LinearLayoutManager(context)
+                                    rvLiability.adapter = AssetAdapter(context, arrLiabilitesKeys)
                                 }
                             } catch (e: JSONException) {
                                 e.printStackTrace()

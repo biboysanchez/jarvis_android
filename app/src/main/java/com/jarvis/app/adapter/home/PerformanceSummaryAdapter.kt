@@ -126,12 +126,12 @@ class PerformanceSummaryAdapter : RecyclerView.Adapter<PerformanceSummaryAdapter
             val obj = data?.get(position)
 
             val list:List<ValueKey> = Arrays.asList(
-                ValueKey(Table1.table1DropdownList()[0], obj?.aum!!.toString()),
-                ValueKey(Table1.table1DropdownList()[1], obj.realized.toString()),
-                ValueKey(Table1.table1DropdownList()[2], obj.target.toString()),
-                ValueKey(Table1.table1DropdownList()[3], obj.informationRatio.toString()),
-                ValueKey(Table1.table1DropdownList()[4], obj.yield.toString()),
-                ValueKey(Table1.table1DropdownList()[5], obj.varM.toString())
+                ValueKey(Table1.table1DropdownList()[0],  String.format("%.2f", obj?.aum!!.toFloat())),
+                ValueKey(Table1.table1DropdownList()[1], String.format("%.2f", obj.realized)),
+                ValueKey(Table1.table1DropdownList()[2], String.format("%.2f", obj.target)),
+                ValueKey(Table1.table1DropdownList()[3], String.format("%.2f", obj.informationRatio)),
+                ValueKey(Table1.table1DropdownList()[4], String.format("%.2f", obj.yield)),
+                ValueKey(Table1.table1DropdownList()[5], String.format("%.2f", obj.varM))
             )
 
             itemView.tvRowTable1Name?.text = obj.portFolio

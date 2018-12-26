@@ -36,6 +36,7 @@ import com.jarvis.app.adapter.home.PerformanceAttributeAdapter
 import com.jarvis.app.adapter.home.TopTenAdapter
 import com.jarvis.app.custom.CustomMarkerView
 import com.jarvis.app.custom.CustomValueFormatter
+import com.jarvis.app.custom.PortfolioMarkerView
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.model.Portfolio
 import com.jarvis.app.model.Table3
@@ -353,7 +354,7 @@ class TimeSeriesFragment : BaseFragment() {
                             val entries = ArrayList<Entry>()
                             for (a in 0 until arr.length()) {
                                 val portfolio = Portfolio(arr.getJSONObject(a))
-                                portfolio.dateLong = Util.getDateMillisFromString(portfolio.date.toString())
+                                portfolio.dateLong = Util.getDateMillisFromString(portfolio.date)
                                 arrayList.add(portfolio)
                                arrayList.sortWith(Comparator { o1, o2 -> o1?.dateLong!!.compareTo(o2!!.dateLong) })
                             }
@@ -406,6 +407,12 @@ class TimeSeriesFragment : BaseFragment() {
                         portfolioLineChart?.description = null
                         portfolioLineChart?.axisRight?.setDrawLabels(false)
                         portfolioLineChart?.setDrawGridBackground(true)
+                        portfolioLineChart?.setDrawMarkers(true)
+
+                        val mv = PortfolioMarkerView(context, keys, R.layout.custom_marker_portfolio_view)
+                        mv.chartView = portfolioLineChart
+                        portfolioLineChart?.marker = mv
+
                         portfolioLineChart?.setGridBackgroundColor(Color.parseColor("#F4F9F9"))
                         portfolioLineChart?.data = data
                         portfolioLineChart?.invalidate()

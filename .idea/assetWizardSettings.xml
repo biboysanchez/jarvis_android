@@ -28,10 +28,13 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="717f7d" />
-                            <entry key="outputName" value="ic_check_gray" />
+                            <entry key="height" value="101" />
+                            <entry key="outputName" value="ic_bubble_with_shadow" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Pardz\Downloads\jarvis_logo.svg" />
+                            <entry key="sourceFile" value="C:\Users\Pardz\Downloads\Rectangle 6.svg" />
+                            <entry key="width" value="180" />
                           </map>
                         </option>
                       </PersistentState>

@@ -182,19 +182,19 @@ class TimeSeriesAdapter : RecyclerView.Adapter<TimeSeriesAdapter.ViewHolder> {
             val obj = data?.get(position)
 
             val list:List<ValueKey> = Arrays.asList(
-                ValueKey(TableRisk.tableRiskDropDownList()[0], obj?.aum.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[1], obj?.yr3Ar.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[2], obj?.ytdAr.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[3], obj?.targetAr.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[4], obj?.y3Rr.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[5], obj?.ytdRr.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[6], obj?.targetRr.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[7], obj?.portfolioSr.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[8], obj?.bmkSr.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[9], obj?.varRc.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[10], obj?.varPercentRc.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[11], obj?.infoRatio.toString()),
-                ValueKey(TableRisk.tableRiskDropDownList()[12], obj?.beta.toString())
+                ValueKey(TableRisk.tableRiskDropDownList()[0], String.format("%.2f", obj?.aum?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[1], String.format("%.2f", obj?.yr3Ar?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[2], String.format("%.2f", obj?.ytdAr?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[3], String.format("%.2f", obj?.targetAr?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[4], String.format("%.2f", obj?.y3Rr?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[5], String.format("%.2f", obj?.ytdRr?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[6], String.format("%.2f", obj?.targetRr?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[7], String.format("%.2f", obj?.portfolioSr?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[8], String.format("%.2f", obj?.bmkSr?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[9], String.format("%.2f", obj?.varRc?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[10], String.format("%.2f", obj?.varPercentRc?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[11], String.format("%.2f", obj?.infoRatio?.toFloat())),
+                ValueKey(TableRisk.tableRiskDropDownList()[12], String.format("%.2f", obj?.beta?.toFloat()))
             )
 
             if (position % 2 == 1){

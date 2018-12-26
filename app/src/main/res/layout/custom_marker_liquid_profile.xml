@@ -3,12 +3,9 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp"
+        android:padding="8dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/marker2"
-        android:backgroundTint="#FFFFFF"
+        android:background="@drawable/img_bubble"
         tools:ignore="Overdraw">
     <View
             android:background="#F3B62C"
