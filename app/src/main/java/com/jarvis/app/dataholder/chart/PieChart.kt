@@ -23,6 +23,9 @@ import com.github.mikephil.charting.utils.MPPointF
 import com.jarvis.app.R
 import java.util.ArrayList
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.jarvis.app.R.id.barChartAsset
+import com.jarvis.app.custom.AssetLiabilityMarkerView
+import com.jarvis.app.custom.PieMarkerView
 import com.jarvis.app.extension.toast
 import com.jarvis.app.model.Pie
 import com.jarvis.app.model.PieModel
@@ -71,16 +74,11 @@ class PieChart {
         l?.xOffset = 20f
         chart?.setDrawEntryLabels(false)
         chart?.legend?.isEnabled = false
-        chart?.setOnChartValueSelectedListener(object :OnChartValueSelectedListener{
-            override fun onNothingSelected() {
-            }
-            override fun onValueSelected(e: Entry?, h: Highlight?) {
-                val index = h?.x
-                val d = data?.get(index!!.toInt())
-                val label = "${d?.item} [${d?.percentage}%] ${Util.priceFormat(d?.portofolio!!.toFloat()).replace(".00","")} B"
-                context?.toast(label)
-            }
-        })
+
+        chart?.setDrawMarkers(true)
+        val mv = PieMarkerView(context, data, R.layout.custom_marker_pie_view)
+        mv.chartView = chart
+        chart?.marker = mv
        setData()
     }
 

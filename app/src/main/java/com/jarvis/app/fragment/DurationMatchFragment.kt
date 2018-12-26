@@ -164,7 +164,9 @@ class DurationMatchFragment : BaseFragment() {
         val xAxis = barChartAsset?.xAxis
         xAxis?.position = XAxis.XAxisPosition.BOTTOM
         xAxis?.valueFormatter = LabelFormatter(arrBarTitle)
+       // xAxis?.setCenterAxisLabels(true)
         xAxis?.setLabelCount(arrBarTitle.size, true)
+
         xAxis?.setDrawGridLines(false)
         barChartAsset?.legend?.isEnabled = true
         xAxis?.axisMinimum = 0f

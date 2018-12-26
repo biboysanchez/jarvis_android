@@ -404,9 +404,9 @@ class HomeFragment : Fragment() {
         params["category"]  = mActivity?.selectedCategory1!!
         params["company"]   = mActivity?.selectedCompany!!
         params["week_id"]   = mActivity?.selectedWeek!!
-        ApiRequest.postNoUI(context!!, API.pieAssetClass, params, object :ApiRequest.URLCallback{
+        ApiRequest.post(mActivity!!, API.pieAssetClass, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
-                if (JSONUtil.isSuccess(context!!, response)){
+                if (JSONUtil.isSuccess(mActivity!!, response)){
                     try {
                         arrPieTop = ArrayList()
                         val arr = JSONObject(response).obj("message_data").arr("asset_class_list")
