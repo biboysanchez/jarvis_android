@@ -280,9 +280,9 @@ class PerformanceDetailFragment: BaseFragment() {
                 for (z in 0 until d!!.size) {
                     val performanceDetail = d[z]
                     if (performanceDetail.portfolio == "Danamas Saham"){
-                        tvSub.text = performanceDetail.saham.toString()
+                        tvSub.text = String.format("%.0f%s", (performanceDetail.saham*100), "%")
                     }else{
-                        tvTop.text = performanceDetail.saham.toString()
+                        tvTop.text = String.format("%.0f%s", (performanceDetail.saham*100), "%")
                     }
                 }
             }

@@ -13,7 +13,6 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.EntryXComparator
 import com.jarvis.app.R
-import com.jarvis.app.custom.MyMarkerView
 import kotlinx.android.synthetic.main.fragment_blank.*
 import kotlinx.android.synthetic.main.fragment_duration_match.*
 import java.util.*
@@ -23,7 +22,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.jarvis.app.R.id.*
 import com.jarvis.app.adapter.AssetAdapter
-import com.jarvis.app.custom.LabelFormatter
+import com.jarvis.app.custom.*
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.double
 import com.jarvis.app.extension.obj
@@ -34,6 +33,7 @@ import com.jarvis.app.model.Cumulative
 import com.jarvis.app.model.Matching
 import com.jarvis.app.model.ValueKey
 import com.jarvis.app.utils.JSONUtil
+import kotlinx.android.synthetic.main.fragment_duration_match.view.*
 import org.json.JSONException
 import org.json.JSONObject
 import kotlin.collections.ArrayList
@@ -46,6 +46,7 @@ class DurationMatchFragment : BaseFragment() {
     private var arrCumulativeTitle:ArrayList<String>?   = ArrayList()
     private var arrAssetKeys:ArrayList<ValueKey>?       = ArrayList()
     private var arrLiabilitesKeys:ArrayList<ValueKey>?  = ArrayList()
+    private var arrAssetLiability:ArrayList<String>     = ArrayList()
     private var mTotal = 0f
 
     override fun setTitle(): String {
@@ -119,14 +120,24 @@ class DurationMatchFragment : BaseFragment() {
             set2 = barChartAsset?.data!!.getDataSetByIndex(1) as (BarDataSet)
             set1.values = values1
             set2.values = values2
+
+            set1.setDrawValues(false)
+            set2.setDrawValues(false)
             barChartAsset?.data?.notifyDataChanged()
             barChartAsset?.notifyDataSetChanged()
         } else {
-            set1 = BarDataSet(values1, "Assets")
+            arrAssetLiability = ArrayList()
+            arrAssetLiability.add("Asset")
+            arrAssetLiability.add("Liability")
+
+            set1 = BarDataSet(values1, "Asset")
             set1.color = Color.parseColor("#21C6B7")
 
-            set2 = BarDataSet(values2, "Liabilities")
+            set2 = BarDataSet(values2, "Liability")
             set2.color = Color.parseColor("#F3B62C")
+
+            set1.setDrawValues(false)
+            set2.setDrawValues(false)
             val data = BarData(set1, set2)
             barChartAsset?.data = data
         }
@@ -146,17 +157,19 @@ class DurationMatchFragment : BaseFragment() {
         barChartAsset?.axisLeft?.setDrawLabels(true)
         barChartAsset?.axisRight?.setDrawLabels(false)
 
+        val mv = AssetLiabilityMarkerView(context, arrAssetLiability, R.layout.custom_marker_portfolio_view)
+        mv.chartView = barChartAsset
+        barChartAsset?.marker = mv
+
         val xAxis = barChartAsset?.xAxis
         xAxis?.position = XAxis.XAxisPosition.BOTTOM
-        xAxis?.labelCount = arrBarTitle.size
-        xAxis?.setCenterAxisLabels(true)
-       // xAxis?.granularity = 1f
-      // xAxis?.isGranularityEnabled = true
-        xAxis?.setDrawGridLines(false)
         xAxis?.valueFormatter = LabelFormatter(arrBarTitle)
+        xAxis?.setLabelCount(arrBarTitle.size, true)
+        xAxis?.setDrawGridLines(false)
         barChartAsset?.legend?.isEnabled = true
         xAxis?.axisMinimum = 0f
         xAxis?.axisMaximum =  barChartAsset?.barData?.getGroupWidth(groupSpace, barSpace)!! * arrBarTitle.size
+
         barChartAsset?.groupBars(0f, groupSpace, barSpace)
         barChartAsset?.invalidate()
     }
