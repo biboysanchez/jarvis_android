@@ -129,8 +129,14 @@ class MainActivity : AppCompatActivity() {
 
         when (page) {
             0 -> {
-
+                //Default
+                //Portfolio view
             }
+
+            2 -> {
+                addFragmentNoAnim(ResearchFragment(), ResearchFragment.TAG)
+            }
+
             10 -> {
                 addFragmentNoAnim(CashPositionFragment(), CashPositionFragment.TAG)
             }

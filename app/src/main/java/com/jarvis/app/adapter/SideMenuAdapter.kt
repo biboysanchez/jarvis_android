@@ -69,7 +69,6 @@ class SideMenuAdapter : RecyclerView.Adapter<SideMenuAdapter.ViewHolder> {
                                 clickedIndex("$i$a".toInt(), menu.list!![a])
                             }
                             itemView.llChild?.addView(v)
-
                         }
                     }
                 }
