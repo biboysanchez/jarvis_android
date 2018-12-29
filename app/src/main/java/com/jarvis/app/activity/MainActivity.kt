@@ -135,6 +135,7 @@ class MainActivity : AppCompatActivity() {
 
             2 -> {
                 addFragmentNoAnim(ResearchFragment(), ResearchFragment.TAG)
+                viewModel!!.title = "Currency Sensitivity"
             }
 
             10 -> {

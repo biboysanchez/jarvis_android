@@ -38,4 +38,21 @@
         <item name="DialogSpotColor">@color/colorPrimary</item>
         <item name="DialogSpotCount">5</item>
     </style>
+
+    <style name="StackBarAsset" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorButtonNormal">#1A998E</item>
+        <item name="colorControlActivated">#1A998E</item>
+        <item name="colorControlHighlight">#21C6B7</item>
+        <item name="android:progressDrawable">@drawable/progress_two</item>
+        <item name="android:minWidth">200dp</item>
+    </style>
+
+    <style name="StackBarLiabilities" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorButtonNormal">#F3B62C</item>
+        <item name="colorControlActivated">#E8781A</item>
+        <item name="colorControlHighlight">#F3B62C</item>
+        <item name="android:progressDrawable">@drawable/progress_two</item>
+        <item name="android:minWidth">200dp</item>
+    </style>
+
 </resources>

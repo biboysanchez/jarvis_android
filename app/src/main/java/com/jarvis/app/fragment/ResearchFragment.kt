@@ -2,21 +2,20 @@ package com.jarvis.app.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.jarvis.app.R
+import com.jarvis.app.adapter.BalanceSheetAdapter
+import com.jarvis.app.adapter.BalanceSheetLiabilitiesAdapter
 import com.jarvis.app.custom.MyMarkerView
-import com.jarvis.app.custom.PortfolioMarkerView
-import com.jarvis.app.utils.ColorUtil
 import kotlinx.android.synthetic.main.fragment_blank.*
 import kotlinx.android.synthetic.main.fragment_research.*
-import kotlinx.android.synthetic.main.fragment_time_series.*
 
 class ResearchFragment : BaseFragment() {
     override fun setTitle(): String {
@@ -36,6 +35,8 @@ class ResearchFragment : BaseFragment() {
         mActivity?.isShowCompany(true)
         tvBlankTitle?.text = mActivity?.viewModel!!.title
         setLineChart()
+        setBalanceSheetAsset()
+        setBalanceSheetLiabilities()
     }
 
     override fun onDestroyView() {
@@ -86,5 +87,15 @@ class ResearchFragment : BaseFragment() {
         val data =  LineData(dataSet)
         lineChartCurrency?.data = data
         lineChartCurrency?.invalidate()
+    }
+
+    private fun setBalanceSheetAsset(){
+        rvBalanceSheetAsset?.layoutManager = LinearLayoutManager(context)
+        rvBalanceSheetAsset?.adapter = BalanceSheetAdapter(context)
+    }
+
+    private fun setBalanceSheetLiabilities(){
+        rvBalanceLiabilities?.layoutManager = LinearLayoutManager(context)
+        rvBalanceLiabilities?.adapter = BalanceSheetLiabilitiesAdapter(context)
     }
 }

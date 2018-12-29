@@ -10,8 +10,8 @@
         android:focusable="true">
 
     <LinearLayout
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:paddingBottom="12dp"
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
@@ -152,24 +152,122 @@
                       app:layout_constraintEnd_toEndOf="parent"
                       android:id="@+id/viewBalance"/>
 
-                <FrameLayout
-                        android:padding="8dp"
-                        android:background="@drawable/card_view"
-                        android:layout_width="0dp"
-                        android:layout_height="38dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/viewBalance"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:id="@+id/frameLayoutBalance" app:layout_constraintEnd_toEndOf="parent">
-                </FrameLayout>
+                <View android:layout_width="0dp"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"
+                      app:layout_constraintEnd_toEndOf="@+id/tvHeaderBalance"
+                      android:id="@+id/viewBalance2"
+                      android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/view7"
+                      app:layout_constraintStart_toStartOf="@+id/rvBalanceSheetAsset"/>
 
+                <android.support.v7.widget.RecyclerView
+                        android:padding="4dp"
+                        android:text="Current"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rvBalanceSheetAsset"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="12dp" app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="12dp"/>
+
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="Asset"
+                        android:layout_width="0dp"
+                        app:layout_constraintStart_toStartOf="@+id/tvHeaderBalance"
+                        android:id="@+id/textView10" android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/viewBalance"/>
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="Liabilities"
+                        android:layout_width="0dp"
+                        android:id="@+id/textView13"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/viewBalance2"
+                        android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/viewBalance2"/>
+                <View
+                        android:background="@color/colorPrimaryDark"
+                        android:layout_width="18dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/view7"
+                        app:layout_constraintStart_toStartOf="@+id/textView10"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@+id/rvBalanceSheetAsset"
+                />
+                <View
+                        android:background="@color/orange"
+                        android:layout_width="18dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/view6"
+                        app:layout_constraintStart_toStartOf="@+id/textView10"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@+id/rvBalanceLiabilities"
+                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="24dp"/>
+                <View
+                        android:background="@color/colorPrimary"
+                        android:layout_width="18dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/view8"
+                        app:layout_constraintStart_toEndOf="@+id/textView11" android:layout_marginStart="32dp"
+                        app:layout_constraintTop_toTopOf="@+id/view7"
+                        app:layout_constraintBottom_toBottomOf="@+id/view7"/>
+                <View
+                        android:background="@color/orange2"
+                        android:layout_width="18dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/view9"
+                        app:layout_constraintStart_toEndOf="@+id/textView14"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintTop_toTopOf="@+id/view6"
+                        app:layout_constraintBottom_toBottomOf="@+id/view6"/>
+                <TextView
+                        android:textSize="12sp"
+                        android:text="IDR Exposure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView11" android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@+id/view7"
+                        app:layout_constraintTop_toTopOf="@+id/view7"
+                        app:layout_constraintBottom_toBottomOf="@+id/view7"/>
+                <TextView
+                        android:textSize="12sp"
+                        android:text="IDR Exposure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView14"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@+id/view6"
+                        app:layout_constraintTop_toTopOf="@+id/view6"
+                        app:layout_constraintBottom_toBottomOf="@+id/view6"/>
+                <TextView
+                        android:textSize="12sp"
+                        android:text="USD Exposure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView12"
+                        app:layout_constraintStart_toEndOf="@+id/view8" android:layout_marginStart="8dp"
+                        app:layout_constraintTop_toTopOf="@+id/view8"
+                        app:layout_constraintBottom_toBottomOf="@+id/view8"/>
+                <TextView
+                        android:textSize="12sp"
+                        android:text="USD Exposure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView15"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@+id/view9"
+                        app:layout_constraintTop_toTopOf="@+id/view9"
+                        app:layout_constraintBottom_toBottomOf="@+id/view9"/>
+                <android.support.v7.widget.RecyclerView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/rvBalanceSheetAsset"
+                        app:layout_constraintEnd_toEndOf="@+id/rvBalanceSheetAsset"
+                        android:id="@+id/rvBalanceLiabilities"
+                        app:layout_constraintTop_toBottomOf="@+id/textView13"/>
 
             </android.support.constraint.ConstraintLayout>
-
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-
 </LinearLayout>
