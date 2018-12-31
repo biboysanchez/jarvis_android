@@ -11,8 +11,9 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.jarvis.app.R
-import com.jarvis.app.adapter.BalanceSheetAdapter
+import com.jarvis.app.adapter.BalanceSheetAssetAdapter
 import com.jarvis.app.adapter.BalanceSheetLiabilitiesAdapter
+import com.jarvis.app.adapter.IncomeStatementAdapter
 import com.jarvis.app.custom.MyMarkerView
 import kotlinx.android.synthetic.main.fragment_blank.*
 import kotlinx.android.synthetic.main.fragment_research.*
@@ -34,9 +35,15 @@ class ResearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mActivity?.isShowCompany(true)
         tvBlankTitle?.text = mActivity?.viewModel!!.title
+
+        drawAll()
+    }
+
+    private fun drawAll(){
         setLineChart()
         setBalanceSheetAsset()
         setBalanceSheetLiabilities()
+        setIncomeStatementSensitivity()
     }
 
     override fun onDestroyView() {
@@ -91,11 +98,16 @@ class ResearchFragment : BaseFragment() {
 
     private fun setBalanceSheetAsset(){
         rvBalanceSheetAsset?.layoutManager = LinearLayoutManager(context)
-        rvBalanceSheetAsset?.adapter = BalanceSheetAdapter(context)
+        rvBalanceSheetAsset?.adapter = BalanceSheetAssetAdapter(context)
     }
 
     private fun setBalanceSheetLiabilities(){
         rvBalanceLiabilities?.layoutManager = LinearLayoutManager(context)
         rvBalanceLiabilities?.adapter = BalanceSheetLiabilitiesAdapter(context)
+    }
+
+    private fun setIncomeStatementSensitivity(){
+        rvIncomeStatement?.layoutManager = LinearLayoutManager(context)
+        rvIncomeStatement?.adapter = IncomeStatementAdapter(context)
     }
 }

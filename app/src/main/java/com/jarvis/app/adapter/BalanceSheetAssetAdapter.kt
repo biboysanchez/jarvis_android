@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import com.jarvis.app.R
 import kotlinx.android.synthetic.main.row_balance_sheet_asset.view.*
 
-class BalanceSheetAdapter : RecyclerView.Adapter<BalanceSheetAdapter.ViewHolder> {
+class BalanceSheetAssetAdapter : RecyclerView.Adapter<BalanceSheetAssetAdapter.ViewHolder> {
     private var mContext:Context? = null
 
     constructor(mContext: Context?) : super() {
         this.mContext = mContext
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): BalanceSheetAdapter.ViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): BalanceSheetAssetAdapter.ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_balance_sheet_asset, p0, false)
         return ViewHolder(view)
     }
@@ -24,7 +24,7 @@ class BalanceSheetAdapter : RecyclerView.Adapter<BalanceSheetAdapter.ViewHolder>
         return 2
     }
 
-    override fun onBindViewHolder(p0: BalanceSheetAdapter.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(p0: BalanceSheetAssetAdapter.ViewHolder, p1: Int) {
         p0.bindItem(p1)
     }
 

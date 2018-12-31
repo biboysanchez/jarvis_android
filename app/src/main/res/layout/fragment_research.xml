@@ -124,7 +124,6 @@
 
                 </com.github.mikephil.charting.charts.LineChart>
             </android.support.constraint.ConstraintLayout>
-
             <android.support.constraint.ConstraintLayout
                     android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
@@ -267,6 +266,155 @@
                         android:id="@+id/rvBalanceLiabilities"
                         app:layout_constraintTop_toBottomOf="@+id/textView13"/>
 
+            </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_white"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp">
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="Summary Exposure"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/tvHeaderPerformanceAttribute"
+                        android:layout_width="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"/>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      android:id="@+id/view3"
+                      app:layout_constraintHorizontal_bias="0.0"
+                      android:layout_marginTop="8dp"
+                      app:layout_constraintTop_toBottomOf="@+id/tvHeaderPerformanceAttribute"/>
+
+                <FrameLayout
+                        android:background="@drawable/card_view"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        app:layout_constraintEnd_toEndOf="@+id/tvHeaderPerformanceAttribute"
+                        app:layout_constraintTop_toBottomOf="@+id/view3"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toEndOf="@+id/flSearch" android:id="@+id/frameLayout5"
+                >
+                </FrameLayout>
+                <FrameLayout
+                        android:background="@drawable/card_view"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@+id/view3"
+                        app:layout_constraintStart_toStartOf="@+id/tvHeaderPerformanceAttribute"
+                        android:id="@+id/flSearch"
+                        app:layout_constraintEnd_toStartOf="@+id/frameLayout5" android:layout_marginEnd="12dp">
+                </FrameLayout>
+
+
+                <FrameLayout
+                        android:background="@drawable/card_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/flSearch"
+                        android:id="@+id/frameLayoutPerformance"
+                        app:layout_constraintStart_toStartOf="@+id/tvHeaderPerformanceAttribute"
+                        app:layout_constraintEnd_toStartOf="@+id/imgMenuDecision" android:layout_marginTop="8dp">
+                    <Spinner
+                            android:id="@+id/spinnerPerformance"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="0dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"/>
+                </FrameLayout>
+
+                <ImageView
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@null"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_sort"
+                        android:background="@drawable/rec_hallow_primary"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:id="@+id/imgMenuDecision"
+                        app:layout_constraintStart_toEndOf="@+id/frameLayoutPerformance"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintTop_toTopOf="@+id/frameLayoutPerformance"
+                        app:layout_constraintBottom_toBottomOf="@+id/frameLayoutPerformance"/>
+                <android.support.v7.widget.RecyclerView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/frameLayoutPerformance"
+                        app:layout_constraintStart_toStartOf="@+id/frameLayoutPerformance"
+                        app:layout_constraintEnd_toEndOf="@+id/imgMenuDecision"
+                        android:id="@+id/rvPerformanceAttribute" app:layout_constraintHorizontal_bias="0.0"
+                />
+
+                <TextView
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:background="@drawable/rec_hallow_primary"
+                        android:text="Show All"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvShowAllCashPlacement"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/rvPerformanceAttribute"
+                        app:layout_constraintEnd_toEndOf="@+id/rvPerformanceAttribute"
+                        app:layout_constraintStart_toStartOf="@+id/rvPerformanceAttribute"
+                        android:layout_marginTop="8dp"/>
+
+            </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_white"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp">
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="Income Statement Sensitivity"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp" android:id="@+id/textView17"/>
+
+                <View android:layout_width="0dp"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      android:id="@+id/view4"
+                      app:layout_constraintHorizontal_bias="0.0"
+                      android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView17"/>
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvIncomeStatement"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@+id/view4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="12dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="24dp"/>
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

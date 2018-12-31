@@ -33,9 +33,7 @@ import com.jarvis.app.model.UserViewModel
 import com.jarvis.app.utils.JSONUtil
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
 import kotlin.collections.ArrayList
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toggle:ActionBarDrawerToggle
@@ -43,12 +41,10 @@ class MainActivity : AppCompatActivity() {
     private var lastIndex = 0
     var viewModel:UserViewModel? = null
     var mainTitle           = "Portfolio Overview"
-
     var selectedCompany     = ""
     var selectedWeek        = ""
     var selectedCategory1   = ""
     var selectedCategory2   = ""
-
     var sortPerformance     = 0
     var sortTopTen          = 0
     var sortSecurity        = 0
@@ -59,7 +55,6 @@ class MainActivity : AppCompatActivity() {
     var sortPerformanceAtt  = 0
 
     private var arrCompanyList:ArrayList<Company>? = ArrayList()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -120,7 +115,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         lastIndex = page
-
         for (i in 0 until fm?.backStackEntryCount!!){
             if (i != 0){
                 fm?.popBackStack()
@@ -261,5 +255,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }

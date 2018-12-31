@@ -32,6 +32,6 @@
             android:id="@+id/progressBar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:progressDrawable="@drawable/progress_primary" app:layout_constraintStart_toStartOf="parent"
-    />
+            android:progressDrawable="@drawable/progress_primary"
+            app:layout_constraintStart_toStartOf="parent"/>
 </android.support.constraint.ConstraintLayout>

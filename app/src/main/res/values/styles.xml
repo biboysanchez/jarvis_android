@@ -55,4 +55,20 @@
         <item name="android:minWidth">200dp</item>
     </style>
 
+    <style name="ProgressNegative" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorButtonNormal">#F3B62C</item>
+        <item name="colorControlActivated">#F3B62C</item>
+        <item name="colorControlHighlight">#F3B62C</item>
+        <item name="android:progressDrawable">@drawable/progress_negative</item>
+        <item name="android:minWidth">200dp</item>
+    </style>
+
+    <style name="ProgressPositive" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorButtonNormal">#21C6B7</item>
+        <item name="colorControlActivated">#21C6B7</item>
+        <item name="colorControlHighlight">#21C6B7</item>
+        <item name="android:progressDrawable">@drawable/progress_negative</item>
+        <item name="android:minWidth">200dp</item>
+    </style>
+
 </resources>
