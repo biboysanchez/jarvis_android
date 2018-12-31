@@ -1,12 +1,15 @@
 package com.jarvis.app.fragment
 
+import android.content.Context
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.jarvis.app.R
+import com.jarvis.app.extension.toast
 import com.jarvis.app.fingerprint.FingerPrintHelper
 import com.jarvis.app.fingerprint.FingerprintHandler
 import com.jarvis.app.model.User
@@ -123,6 +126,7 @@ class SettingsFragment: BaseFragment() {
                 mSession?.setIsLogged()
                 mSession?.setUserPin(mPin)
                 dialog.dismiss()
+                context?.toast("Successfully authenticated")
             }
         }
 

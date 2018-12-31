@@ -23,7 +23,13 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         hideStatusBar()
 
-        startFadeInAnimation()
+        if (UserSession(this@SplashActivity).isActive){
+            val intent = Intent(this@SplashActivity, PinActivity::class.java)
+            startActivity(intent)
+            finish()
+        }else{
+            startFadeInAnimation()
+        }
     }
     private fun hideStatusBar() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -35,24 +41,17 @@ class SplashActivity : AppCompatActivity() {
             override fun onAnimationStart(anim: Animation) {}
             override fun onAnimationRepeat(anim: Animation) {}
             override fun onAnimationEnd(anim: Animation) {
+                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this@SplashActivity,
+                    img_logo,
+                    ViewCompat.getTransitionName(img_logo)!!
+                )
+                startActivity(intent, options.toBundle())
+                Handler().postDelayed({
+                    this@SplashActivity.finish()
+                },3000)
 
-                if (UserSession(this@SplashActivity).isActive){
-                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }else{
-                    val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        this@SplashActivity,
-                        img_logo,
-                        ViewCompat.getTransitionName(img_logo)!!
-                    )
-                    startActivity(intent, options.toBundle())
-
-                    Handler().postDelayed({
-                        this@SplashActivity.finish()
-                    },3000)
-                }
             }
         })
         img_logo?.startAnimation(startAnimation)

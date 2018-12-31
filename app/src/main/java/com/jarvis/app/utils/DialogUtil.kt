@@ -2,7 +2,6 @@ package com.jarvis.app.utils
 
 import android.content.Context
 import android.graphics.Color
-import android.os.Build.VERSION_CODES.P
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -10,12 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
-import com.jarvis.app.model.Table1
 import com.jarvis.app.model.ValueKey
+import com.jarvis.app.sessions.UserSession
 import kotlinx.android.synthetic.main.dialog_fingerprint.view.*
 import kotlinx.android.synthetic.main.dialog_list_detail.view.*
 import kotlinx.android.synthetic.main.row_dialog.view.*
-import kotlinx.android.synthetic.main.row_home_list.view.*
 
 object DialogUtil {
     fun showCustomListDialog(context: Context, title:String, subTitle:String?,  list:List<ValueKey>?){
@@ -96,12 +94,13 @@ object DialogUtil {
         }
     }
 
-    fun showFingerPrinOption(context: Context){
+    fun showFingerPrintOption(context: Context){
         val alert = AlertDialog.Builder(context)
         val aView = LayoutInflater.from(context).inflate(R.layout.dialog_fingerprint, null)
         alert.setView(aView)
         val dialog = alert.create()
         aView.btnAlertGotIt?.setOnClickListener {
+            UserSession(context).donShow()
             dialog.dismiss()
         }
         dialog.show()

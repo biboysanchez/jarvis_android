@@ -33,6 +33,7 @@ import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.Company
 import com.jarvis.app.model.UserViewModel
+import com.jarvis.app.sessions.UserSession
 import com.jarvis.app.utils.DialogUtil
 import com.jarvis.app.utils.JSONUtil
 import org.json.JSONException
@@ -78,7 +79,13 @@ class MainActivity : AppCompatActivity() {
         addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
         getCompanyList()
 
-        Handler().postDelayed({DialogUtil.showFingerPrinOption(this)},3000)
+        val mSession = UserSession(this)
+        if (!mSession.isActive){
+            if (!mSession.isShowFingerprintDialog()){
+                return
+            }
+            Handler().postDelayed({DialogUtil.showFingerPrintOption(this)},3000)
+        }
 
         Thread {
             setNavigationList()

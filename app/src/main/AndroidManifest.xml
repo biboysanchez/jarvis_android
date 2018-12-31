@@ -4,7 +4,7 @@
           package="com.jarvis.app">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 
     <application
             android:allowBackup="true"
@@ -29,6 +29,8 @@
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".activity.LoginActivity">
+        </activity>
+        <activity android:name=".activity.PinActivity">
         </activity>
     </application>
 

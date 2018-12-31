@@ -43,6 +43,14 @@ class UserSession(context: Context) {
         editor.putString(USER_TOKEN, token).apply()
     }
 
+    fun donShow(){
+        editor.putBoolean(DONT_SHOW, true).apply()
+    }
+
+    fun isShowFingerprintDialog() : Boolean{
+        return !preferences.getBoolean(DONT_SHOW, false)
+    }
+
     /**
      * Set user id value
      */
@@ -103,5 +111,6 @@ class UserSession(context: Context) {
         const val USER_OBJECT     = "user_object"
         const val FK_USER_ID      = "user_id"
         const val USER_PIN        = "user_pin"
+        const val DONT_SHOW       = "dont_show"
     }
 }
