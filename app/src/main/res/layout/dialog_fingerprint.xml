@@ -60,7 +60,7 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:text="Got it"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/rounded_primary_rad"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
 
