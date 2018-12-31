@@ -1,15 +1,25 @@
 package com.jarvis.app.fragment
 
+import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
+import com.jarvis.app.fingerprint.FingerPrintHelper
+import com.jarvis.app.fingerprint.FingerprintHandler
+import com.jarvis.app.model.User
+import com.jarvis.app.sessions.UserSession
+import kotlinx.android.synthetic.main.dialog_authenticate_fingerprint.view.*
 import kotlinx.android.synthetic.main.dialog_pin.view.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment: BaseFragment() {
+    private var fingerPrintHelper:FingerPrintHelper? = null
+    private var mPin = ""
+    private var mSession:UserSession? = null
+
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
     }
@@ -25,13 +35,40 @@ class SettingsFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configToolBar(true)
+
+        mSession = UserSession(context!!)
+        fingerPrintHelper = FingerPrintHelper(context)
         onCheckedListener()
     }
 
     private fun onCheckedListener(){
+       switchCompat.isChecked = mSession?.isActive!!
+
         switchCompat?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked){
+                if (!fingerPrintHelper!!.isSupported()){
+                    switchCompat?.isChecked = false
+                    return@setOnCheckedChangeListener
+                }
+
+                if (!fingerPrintHelper!!.isPermissionEnabled()){
+                    switchCompat?.isChecked = false
+                    return@setOnCheckedChangeListener
+                }
+
+                if (!fingerPrintHelper!!.hasEnrolledFingerprint()){
+                    switchCompat?.isChecked = false
+                    return@setOnCheckedChangeListener
+                }
+
+                if (!fingerPrintHelper!!.isKeyguardSecure()){
+                    switchCompat?.isChecked = false
+                    return@setOnCheckedChangeListener
+                }
+
                 showPinDialog()
+            }else{
+                mSession?.deAuthorize()
             }
         }
     }
@@ -61,6 +98,32 @@ class SettingsFragment: BaseFragment() {
 
             aView.etDialogVerifyPin?.error = null
             dialog.dismiss()
+
+            mPin = aView.etDialogVerifyPin?.text.toString()
+            showFingerprintAuthentication()
+        }
+
+        dialog.setCancelable(false)
+        dialog.show()
+    }
+
+    private fun showFingerprintAuthentication(){
+        val alert = AlertDialog.Builder(context!!)
+        val aView = LayoutInflater.from(context!!).inflate(R.layout.dialog_authenticate_fingerprint, null)
+        alert.setView(aView)
+
+        val dialog = alert.create()
+        aView.btnCancelAuthentication?.setOnClickListener {
+            switchCompat?.isChecked = false
+            dialog.dismiss()
+        }
+
+        fingerPrintHelper?.fingerprintHandler?.callback = object :FingerprintHandler.AuthenticationCallback{
+            override fun onSuccessCallback(result: FingerprintManager.AuthenticationResult) {
+                mSession?.setIsLogged()
+                mSession?.setUserPin(mPin)
+                dialog.dismiss()
+            }
         }
 
         dialog.setCancelable(false)

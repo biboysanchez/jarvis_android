@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:gravity="center">
+
+    <ImageView
+            android:padding="16dp"
+            android:background="@drawable/round_primary"
+            android:src="@drawable/ic_fingerprint_white"
+            android:layout_width="96dp"
+            android:layout_height="96dp"/>
+
+    <TextView
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:text="Jarvis App"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:textColor="@color/gray_700"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="Touch the fingerprint sensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/btnCancelAuthentication"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:text="Cancel"
+            android:background="@drawable/rounded_primary_rad"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
+</LinearLayout>

@@ -50,13 +50,24 @@ class UserSession(context: Context) {
         editor.putString(FK_USER_ID, userId).apply()
     }
 
+    fun setIsLogged(){
+        editor.putBoolean(USER_LOGGED, true).apply()
+    }
+
+    fun setUserPin(pin: String){
+        editor.putString(USER_PIN, pin).apply()
+    }
+
+    fun pin():String?{
+        return preferences.getString(USER_PIN, "")
+    }
+
     /**
      * Save user object to local data
      */
     fun authorize(userObj: JSONObject){
         try {
             editor.putString(USER_OBJECT, userObj.toString()).apply()
-            editor.putBoolean(USER_LOGGED, true).apply()
         }catch (e: JSONException){
             e.printStackTrace()
         }
@@ -91,5 +102,6 @@ class UserSession(context: Context) {
         const val USER_TOKEN      = "user_token"
         const val USER_OBJECT     = "user_object"
         const val FK_USER_ID      = "user_id"
+        const val USER_PIN        = "user_pin"
     }
 }

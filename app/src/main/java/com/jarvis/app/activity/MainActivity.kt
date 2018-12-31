@@ -1,7 +1,9 @@
 package com.jarvis.app.activity
 
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -262,6 +264,14 @@ class MainActivity : AppCompatActivity() {
                 showBackButton(false)
                 super.onBackPressed()
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK){
+            //val btauthenticate = Intent(applicationContext, FingerPrintMainActivity::class.java)
+           // startActivityForResult(authenticate, 1)
         }
     }
 }

@@ -30,8 +30,10 @@ class FingerPrintHelper  {
     private var fingerprintManager: FingerprintManager? = null
     private var keyguardManager: KeyguardManager? = null
     private var context:Context? = null
+    var fingerprintHandler:FingerprintHandler? = null
 
     private var alertDialog:AlertDialog.Builder? = null
+
     constructor(context: Context?) {
         this.context = context
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -47,7 +49,6 @@ class FingerPrintHelper  {
         fingerprintManager = context?.getSystemService(Context.FINGERPRINT_SERVICE) as FingerprintManager
         alertDialog = AlertDialog.Builder(context!!)
         alertDialog?.setPositiveButton("OK", null)
-
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -98,8 +99,8 @@ class FingerPrintHelper  {
 
             if (initCipher()) {
                 cryptoObject = FingerprintManager.CryptoObject(cipher!!)
-                val helper = FingerprintHandler(context)
-                helper.startAuth(fingerprintManager!!, cryptoObject!!)
+                fingerprintHandler = FingerprintHandler(context)
+                fingerprintHandler?.startAuth(fingerprintManager!!, cryptoObject!!)
             }
         }
         return true
@@ -111,15 +112,11 @@ class FingerPrintHelper  {
         try {
             keyStore = KeyStore.getInstance("AndroidKeyStore")
             keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
-
             keyStore!!.load(
                 null
             )
             keyGenerator!!.init(
-                KeyGenParameterSpec.Builder(
-                    KEY_NAME,
-                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-                )
+                KeyGenParameterSpec.Builder(KEY_NAME, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
                     .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
                     .setUserAuthenticationRequired(true)
                     .setEncryptionPaddings(
@@ -186,7 +183,6 @@ class FingerPrintHelper  {
             throw RuntimeException("Failed to init Cipher", e)
         }
     }
-
 
     private inner class FingerprintException(e: Exception) : Exception(e)
 
