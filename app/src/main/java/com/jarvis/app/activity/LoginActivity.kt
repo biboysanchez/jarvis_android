@@ -24,13 +24,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
-        try {
-            val helper = FingerPrintHelper(this)
-            helper.isSupported()
-
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
+//        try {
+//            val helper = FingerPrintHelper(this)
+//            helper.isSupported()
+//        }catch (e:Exception){
+//            e.printStackTrace()
+//        }
 
         btnLogin?.setOnClickListener {
             checkLoginFields()

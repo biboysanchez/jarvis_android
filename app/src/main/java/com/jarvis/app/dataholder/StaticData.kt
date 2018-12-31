@@ -53,7 +53,8 @@ object StaticData {
         val side4 = SideMenu("Portfolio Construction", R.drawable.ic_portfolio, ArrayList(), false)
         val side5 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic, ArrayList(), false)
         val side6 = SideMenu("Stress Tess", R.drawable.ic_stress, ArrayList(), false)
-        return Arrays.asList(side0, side1, side2, side3, side4, side5, side6)
+        val side7 = SideMenu("Settings", R.drawable.ic_fingerprint_settings, ArrayList(), false)
+        return Arrays.asList(side0, side1, side2, side3, side4, side5, side6, side7)
     }
 
     fun incomeStatements():ArrayList<IncomeStatement>{

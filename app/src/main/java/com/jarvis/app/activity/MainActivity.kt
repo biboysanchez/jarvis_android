@@ -3,6 +3,7 @@ package com.jarvis.app.activity
 import android.animation.ValueAnimator
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -30,6 +31,7 @@ import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.Company
 import com.jarvis.app.model.UserViewModel
+import com.jarvis.app.utils.DialogUtil
 import com.jarvis.app.utils.JSONUtil
 import org.json.JSONException
 import org.json.JSONObject
@@ -73,6 +75,9 @@ class MainActivity : AppCompatActivity() {
         title = mainTitle
         addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
         getCompanyList()
+
+        Handler().postDelayed({DialogUtil.showFingerPrinOption(this)},3000)
+
         Thread {
             setNavigationList()
         }.start()
@@ -130,6 +135,10 @@ class MainActivity : AppCompatActivity() {
             2 -> {
                 addFragmentNoAnim(ResearchFragment(), ResearchFragment.TAG)
                 viewModel!!.title = "Currency Sensitivity"
+            }
+
+            7 -> {
+                addFragmentNoAnim(SettingsFragment(), SettingsFragment.TAG)
             }
 
             10 -> {

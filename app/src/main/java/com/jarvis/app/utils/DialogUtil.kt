@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.model.Table1
 import com.jarvis.app.model.ValueKey
+import kotlinx.android.synthetic.main.dialog_fingerprint.view.*
 import kotlinx.android.synthetic.main.dialog_list_detail.view.*
 import kotlinx.android.synthetic.main.row_dialog.view.*
 import kotlinx.android.synthetic.main.row_home_list.view.*
@@ -93,5 +94,17 @@ object DialogUtil {
                 itemView.tvDialogValue?.text = data!![i].value
             }
         }
+    }
+
+    fun showFingerPrinOption(context: Context){
+        val alert = AlertDialog.Builder(context)
+        val aView = LayoutInflater.from(context).inflate(R.layout.dialog_fingerprint, null)
+        alert.setView(aView)
+        val dialog = alert.create()
+        aView.btnAlertGotIt?.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+        dialog.setCancelable(false)
     }
 }
