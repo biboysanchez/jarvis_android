@@ -1,18 +1,16 @@
 package com.jarvis.app.fragment
 
-import android.content.Context
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.jarvis.app.R
 import com.jarvis.app.extension.toast
 import com.jarvis.app.fingerprint.FingerPrintHelper
 import com.jarvis.app.fingerprint.FingerprintHandler
-import com.jarvis.app.model.User
 import com.jarvis.app.sessions.UserSession
 import kotlinx.android.synthetic.main.dialog_authenticate_fingerprint.view.*
 import kotlinx.android.synthetic.main.dialog_pin.view.*
@@ -37,11 +35,13 @@ class SettingsFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        configToolBar(true)
-
         mSession = UserSession(context!!)
         fingerPrintHelper = FingerPrintHelper(context)
         onCheckedListener()
+
+
+        Handler().postDelayed({mActivity?.showBackButton(true)},500)
+        mActivity?.isShowCompany(true)
     }
 
     private fun onCheckedListener(){
@@ -136,11 +136,8 @@ class SettingsFragment: BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        configToolBar(false)
-    }
-
-    private fun configToolBar(isShow:Boolean){
-        isShowBack(isShow)
-        mActivity?.isShowCompany(isShow)
+        mActivity?.lastIndex = 0
+        mActivity?.showBackButton(false)
+        mActivity?.isShowCompany(false)
     }
 }

@@ -43,7 +43,7 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
     private lateinit var toggle:ActionBarDrawerToggle
     var fm:FragmentManager? = null
-    private var lastIndex = 0
+    var lastIndex = 0
     var viewModel:UserViewModel? = null
     var mainTitle           = "Portfolio Overview"
     var selectedCompany     = ""
@@ -80,16 +80,16 @@ class MainActivity : AppCompatActivity() {
         getCompanyList()
 
         val mSession = UserSession(this)
+        Thread {
+            setNavigationList()
+        }.start()
+
         if (!mSession.isActive){
             if (!mSession.isShowFingerprintDialog()){
                 return
             }
             Handler().postDelayed({DialogUtil.showFingerPrintOption(this)},3000)
         }
-
-        Thread {
-            setNavigationList()
-        }.start()
     }
 
     private fun setNavigationList(){
@@ -262,7 +262,7 @@ class MainActivity : AppCompatActivity() {
             if (fm?.backStackEntryCount!! == 1){
                 finish()
             }else if (fm?.backStackEntryCount!! == 2){
-                if (lastIndex > 0){
+                if (lastIndex > 0 && lastIndex != 7){
                     finish()
                 }else{
                     super.onBackPressed()
