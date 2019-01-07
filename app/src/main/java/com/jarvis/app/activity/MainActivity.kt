@@ -146,6 +146,10 @@ class MainActivity : AppCompatActivity() {
                 viewModel!!.title = "Currency Sensitivity"
             }
 
+            4 -> {
+                addFragmentNoAnim(PortfolioConstructionFragment(), PortfolioConstructionFragment.TAG)
+            }
+
             7 -> {
                 addFragmentNoAnim(SettingsFragment(), SettingsFragment.TAG)
             }

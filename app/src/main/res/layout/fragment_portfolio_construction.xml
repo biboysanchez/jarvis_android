@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/home_bg"
+        android:clickable="true"
+        android:focusable="true">
+
+    <LinearLayout
+            android:padding="8dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        
+        <android.support.constraint.ConstraintLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="@string/watchlist"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvWatchList"
+                    android:layout_width="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:id="@+id/view3"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  android:layout_marginTop="8dp"
+                  app:layout_constraintTop_toBottomOf="@+id/tvWatchList"/>
+
+            <FrameLayout
+                    android:background="@drawable/card_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/view3"
+                    android:id="@+id/frameLayoutPerformance"
+                    app:layout_constraintStart_toStartOf="@+id/tvWatchList"
+                    app:layout_constraintEnd_toStartOf="@+id/imgMenuWatchList">
+                <Spinner
+                        android:id="@+id/spinnerWatchlist"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"/>
+            </FrameLayout>
+
+            <ImageView
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_sort"
+                    android:background="@drawable/rec_hallow_primary"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:id="@+id/imgMenuWatchList"
+                    app:layout_constraintStart_toEndOf="@+id/frameLayoutPerformance"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/view3"/>
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/frameLayoutPerformance"
+                    app:layout_constraintStart_toStartOf="@+id/frameLayoutPerformance"
+                    app:layout_constraintEnd_toEndOf="@+id/imgMenuWatchList"
+                    android:id="@+id/rvWatchList"
+            />
+
+            <TextView
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:background="@drawable/rec_hallow_primary"
+                    android:text="Show All"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvShowAllDecision"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/rvWatchList"
+                    app:layout_constraintStart_toStartOf="@+id/rvWatchList"
+                    app:layout_constraintEnd_toEndOf="@+id/rvWatchList"/>
+
+            <TextView
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:background="@drawable/rec_hallow_primary"
+                    android:text="Show All"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvShowAllWatchList"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/rvWatchList"
+                    app:layout_constraintEnd_toEndOf="@+id/rvWatchList"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/rvWatchList"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_marginTop="12dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="@string/summary_parameters"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvSummaryParams"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:id="@+id/view4"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  android:layout_marginTop="8dp"
+                  app:layout_constraintTop_toBottomOf="@+id/tvSummaryParams"/>
+
+
+            <FrameLayout
+                    android:background="@drawable/card_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/frameLayoutLiquidProfile"
+                    app:layout_constraintStart_toStartOf="@+id/tvSummaryParams"
+                    app:layout_constraintEnd_toStartOf="@+id/imgSummaryParams"
+                    android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/view4">
+                <Spinner
+                        android:id="@+id/spinnerSummaryParams"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"/>
+            </FrameLayout>
+
+            <ImageView
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_sort"
+                    android:background="@drawable/rec_hallow_primary"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:id="@+id/imgSummaryParams"
+                    app:layout_constraintTop_toTopOf="@+id/frameLayoutLiquidProfile"
+                    app:layout_constraintStart_toEndOf="@+id/frameLayoutLiquidProfile"
+            />
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/frameLayoutLiquidProfile"
+                    app:layout_constraintStart_toStartOf="@+id/frameLayoutLiquidProfile"
+                    app:layout_constraintEnd_toEndOf="@+id/tvSummaryParams"
+                    android:id="@+id/rvSummaryParams"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_marginTop="12dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="@string/news_analysis"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvNewsAnalysis"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  android:id="@+id/view5"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  app:layout_constraintTop_toBottomOf="@+id/tvNewsAnalysis" android:layout_marginTop="8dp"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvNewsAnalysis"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/view5" android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/tvNewsAnalysis"
+                    app:layout_constraintStart_toStartOf="@+id/tvNewsAnalysis"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

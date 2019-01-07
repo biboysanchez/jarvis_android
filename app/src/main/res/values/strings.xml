@@ -17,4 +17,7 @@
     <string name="cash_placement_yield"><![CDATA[Cash Placement & Yield]]></string>
     <string name="performance_risk_measurement"><![CDATA[Performance & Risk Measurement]]></string>
     <string name="username">Username</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="summary_parameters">Summary Parameters</string>
+    <string name="news_analysis"><![CDATA[News & Analysis]]></string>
 </resources>
