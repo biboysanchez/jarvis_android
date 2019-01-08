@@ -59,8 +59,11 @@ class LoginActivity : AppCompatActivity() {
         ApiRequest.post(this, API.login, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(this@LoginActivity, response)){
-                    UserSession(this@LoginActivity).authorize(JSONObject(response))
+                    val mSession = UserSession(this@LoginActivity)
+                    mSession.authorize(JSONObject(response))
+                    mSession.setLoggeOut()
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    PinActivity.instance?.finish()
                     finish()
                 }
             }

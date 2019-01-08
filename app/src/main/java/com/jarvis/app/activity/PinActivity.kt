@@ -17,14 +17,25 @@ class PinActivity : AppCompatActivity() {
     private var mSession:UserSession? = null
     private var fingerPrintHelper: FingerPrintHelper? = null
 
+    companion object {
+        var instance:PinActivity? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pin)
+
+        instance = this
 
         mSession = UserSession(this)
         fingerPrintHelper = FingerPrintHelper(this)
         checkFingerPrint()
         onInputChanged()
+
+        tvGoToLogin?.setOnClickListener {
+            val intent = Intent(this@PinActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun checkFingerPrint(){
@@ -76,5 +87,6 @@ class PinActivity : AppCompatActivity() {
         val intent = Intent(this@PinActivity, MainActivity::class.java)
         startActivity(intent)
         finish()
+        instance = null
     }
 }

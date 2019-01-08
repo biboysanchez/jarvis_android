@@ -62,6 +62,10 @@ class UserSession(context: Context) {
         editor.putBoolean(USER_LOGGED, true).apply()
     }
 
+    fun setLoggeOut(){
+        editor.putBoolean(USER_LOGGED, false).apply()
+    }
+
     fun setUserPin(pin: String){
         editor.putString(USER_PIN, pin).apply()
     }
