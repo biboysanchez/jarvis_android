@@ -50,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent, options.toBundle())
                 Handler().postDelayed({
                     this@SplashActivity.finish()
-                },3000)
+                },2000)
 
             }
         })
