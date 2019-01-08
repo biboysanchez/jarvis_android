@@ -49,7 +49,7 @@ class FingerprintHandler : FingerprintManager.AuthenticationCallback {
 
     override fun onAuthenticationFailed() {
        // Toast.makeText(context, "Authentication failed", Toast.LENGTH_LONG).show()
-        callback?.onAuthError("Authentication error")
+        callback?.onAuthError("")
     }
 
     override fun onAuthenticationHelp(

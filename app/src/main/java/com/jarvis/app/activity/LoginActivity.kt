@@ -55,10 +55,7 @@ class LoginActivity : AppCompatActivity() {
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(this@LoginActivity, response)){
                     val mSession = UserSession(this@LoginActivity)
-                    mSession.deAuthorize()
-
                     mSession.authorize(JSONObject(response))
-
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     AuthenticationActivity.instance?.finish()
                     finish()

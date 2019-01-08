@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment: BaseFragment() {
     private var fingerPrintHelper:FingerPrintHelper? = null
-    private var mPin = ""
     private var mSession:UserSession? = null
 
     override fun setTitle(): String {
@@ -39,7 +38,6 @@ class SettingsFragment: BaseFragment() {
         mSession = UserSession(context!!)
         fingerPrintHelper = FingerPrintHelper(context)
         onCheckedListener()
-
 
         Handler().postDelayed({mActivity?.showBackButton(true)},500)
         mActivity?.isShowCompany(true)
@@ -69,46 +67,11 @@ class SettingsFragment: BaseFragment() {
                     switchCompat?.isChecked = false
                     return@setOnCheckedChangeListener
                 }
-
-                showPinDialog()
+                showFingerprintAuthentication()
             }else{
                 mSession?.deAuthorize()
             }
         }
-    }
-
-    private fun showPinDialog(){
-        val alert = AlertDialog.Builder(context!!)
-        val aView = LayoutInflater.from(context!!).inflate(R.layout.dialog_pin, null)
-        alert.setView(aView)
-
-        val dialog = alert.create()
-        aView.btnCancelPin?.setOnClickListener {
-            switchCompat?.isChecked = false
-            dialog.dismiss()
-        }
-
-        aView.tvNextPin?.setOnClickListener {
-            if (aView.etDialogPin?.text.toString().isEmpty() || aView.etDialogPin?.text?.length!! < 6){
-                aView.etDialogPin?.error = "Invalid pin"
-                return@setOnClickListener
-            }
-            aView.etDialogPin?.error = null
-
-            if (aView.etDialogPin?.text.toString() != aView.etDialogVerifyPin?.text.toString()){
-                aView.etDialogVerifyPin?.error = "Pin not match"
-                return@setOnClickListener
-            }
-
-            aView.etDialogVerifyPin?.error = null
-            dialog.dismiss()
-
-            mPin = aView.etDialogVerifyPin?.text.toString()
-            showFingerprintAuthentication()
-        }
-
-        dialog.setCancelable(false)
-        dialog.show()
     }
 
     private fun showFingerprintAuthentication(){
@@ -125,11 +88,11 @@ class SettingsFragment: BaseFragment() {
         fingerPrintHelper?.fingerprintHandler?.callback = object :FingerprintHandler.AuthenticationCallback{
             override fun onAuthError(error: CharSequence) {
                 Log.i(TAG, "error: $error")
+                context?.toast("Authentication failed\n$error")
             }
 
             override fun onSuccessCallback(result: FingerprintManager.AuthenticationResult) {
                 mSession?.setIsLogged()
-                mSession?.setUserPin(mPin)
                 dialog.dismiss()
                 context?.toast("Successfully authenticated")
             }
