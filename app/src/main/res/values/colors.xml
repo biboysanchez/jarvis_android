@@ -22,6 +22,7 @@
     <color name="card_light">#01FFE8</color>
     <color name="orange">#F3B62C</color>
     <color name="orange2">#E8781A</color>
+    <color name="red">#fd3434</color>
 
     <color name="home_bg">#D2E3E4</color>
     <color name="login_bg">#F4F9F9</color>

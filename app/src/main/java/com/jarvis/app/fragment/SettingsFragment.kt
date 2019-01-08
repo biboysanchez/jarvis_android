@@ -4,6 +4,7 @@ import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -122,6 +123,10 @@ class SettingsFragment: BaseFragment() {
         }
 
         fingerPrintHelper?.fingerprintHandler?.callback = object :FingerprintHandler.AuthenticationCallback{
+            override fun onAuthError(error: CharSequence) {
+                Log.i(TAG, "error: $error")
+            }
+
             override fun onSuccessCallback(result: FingerprintManager.AuthenticationResult) {
                 mSession?.setIsLogged()
                 mSession?.setUserPin(mPin)

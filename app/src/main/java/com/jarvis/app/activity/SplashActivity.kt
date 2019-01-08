@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
         hideStatusBar()
 
         if (UserSession(this@SplashActivity).isActive){
-            val intent = Intent(this@SplashActivity, PinActivity::class.java)
+            val intent = Intent(this@SplashActivity, AuthenticationActivity::class.java)
             startActivity(intent)
             finish()
         }else{

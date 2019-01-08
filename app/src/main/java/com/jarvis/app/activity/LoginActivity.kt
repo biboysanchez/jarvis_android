@@ -1,16 +1,11 @@
 package com.jarvis.app.activity
 
 import android.content.Intent
-import android.nfc.Tag
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import com.android.volley.VolleyError
-import com.github.mikephil.charting.utils.Utils.init
 import com.jarvis.app.R
-import com.jarvis.app.fingerprint.FingerPrintHelper
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.sessions.UserSession
@@ -65,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                     mSession.authorize(JSONObject(response))
 
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                    PinActivity.instance?.finish()
+                    AuthenticationActivity.instance?.finish()
                     finish()
                 }
             }

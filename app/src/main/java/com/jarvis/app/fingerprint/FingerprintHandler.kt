@@ -20,6 +20,7 @@ class FingerprintHandler : FingerprintManager.AuthenticationCallback {
 
     interface AuthenticationCallback{
         fun onSuccessCallback(result: FingerprintManager.AuthenticationResult)
+        fun onAuthError(error:CharSequence)
     }
 
     constructor(context: Context?) : super() {
@@ -42,30 +43,21 @@ class FingerprintHandler : FingerprintManager.AuthenticationCallback {
         errMsgId: Int,
         errString: CharSequence
     ) {
-        Toast.makeText(
-            context,
-            "Authentication error\n$errString",
-            Toast.LENGTH_LONG
-        ).show()
+        //Toast.makeText(context, "Authentication error\n$errString", Toast.LENGTH_LONG).show()
+        callback?.onAuthError(errString)
     }
 
     override fun onAuthenticationFailed() {
-        Toast.makeText(
-            context,
-            "Authentication failed",
-            Toast.LENGTH_LONG
-        ).show()
+       // Toast.makeText(context, "Authentication failed", Toast.LENGTH_LONG).show()
+        callback?.onAuthError("Authentication error")
     }
 
     override fun onAuthenticationHelp(
         helpMsgId: Int,
         helpString: CharSequence
     ) {
-        Toast.makeText(
-            context,
-            "Authentication help\n$helpString",
-            Toast.LENGTH_LONG
-        ).show()
+        //Toast.makeText(context, "Authentication help\n$helpString", Toast.LENGTH_LONG).show()
+        callback?.onAuthError(helpString)
     }
 
     override fun onAuthenticationSucceeded(
@@ -73,13 +65,8 @@ class FingerprintHandler : FingerprintManager.AuthenticationCallback {
     ) {
         callback?.onSuccessCallback(result)
         getFingerprintInfo(context!!)
-//        Toast.makeText(
-//            context,
-//            "Success!",
-//            Toast.LENGTH_LONG
-//        ).show()
     }
-//1754129644
+    //1754129644
     //1770906860
     private fun getFingerprintInfo(context: Context) {
         try {
