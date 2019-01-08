@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.se.omapi.Session
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -19,6 +20,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import com.android.volley.VolleyError
+import com.google.firebase.iid.FirebaseInstanceId
 import com.jarvis.app.R
 import com.jarvis.app.adapter.HorizontalListAdapter
 import com.jarvis.app.dataholder.StaticData
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity() {
     var sortRiskManagement  = 0
     var summaryList         = ArrayList<String>()
     var sortPerformanceAtt  = 0
+    var mSession:UserSession? = null
 
     private var arrCompanyList:ArrayList<Company>? = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,18 +77,29 @@ class MainActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
+        mSession = UserSession(this)
+        val token : String?
+        if(mSession?.firebaseToken() != null && mSession?.firebaseToken() != ""){
+            token = mSession?.firebaseToken()
+            Log.d("firebase_token_stored",token)
+        }
+        else{
+            token = FirebaseInstanceId.getInstance().token
+            mSession?.storeFirebaseToken(token)
+            Log.d("firebase_token_new",token)
+        }
+
         viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         title = mainTitle
         addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
         getCompanyList()
 
-        val mSession = UserSession(this)
         Thread {
             setNavigationList()
         }.start()
 
-        if (!mSession.isActive){
-            if (!mSession.isShowFingerprintDialog()){
+        if (!mSession!!.isActive){
+            if (!mSession!!.isShowFingerprintDialog()){
                 return
             }
             Handler().postDelayed({DialogUtil.showFingerPrintOption(this)},3000)
@@ -275,14 +289,6 @@ class MainActivity : AppCompatActivity() {
                 showBackButton(false)
                 super.onBackPressed()
             }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK){
-            //val btauthenticate = Intent(applicationContext, FingerPrintMainActivity::class.java)
-           // startActivityForResult(authenticate, 1)
         }
     }
 }

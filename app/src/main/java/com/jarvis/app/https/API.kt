@@ -34,4 +34,6 @@ object API {
     const val cashPlacement        = "$baseUrl/api/get-asset-liability-cash-placement-yield"
     const val cashMovementWeek     = "$baseUrl/api/get-asset-liability-cash-movement-week"
     const val cashMovement         = "$baseUrl/api/get-asset-liability-cash-movement"
+
+    const val SUBSCRIBE             = "$baseUrl/notification/subscribe"
 }

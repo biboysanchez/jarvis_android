@@ -98,6 +98,19 @@ class UserSession(context: Context) {
         }
     }
 
+    fun storeFirebaseToken(firebase_token : String?){
+        try {
+            editor?.putString(FIREBASE_TOKEN,firebase_token)?.apply()
+        }
+        catch (e : JSONException){
+            e.printStackTrace()
+        }
+    }
+
+    fun firebaseToken() : String? {
+        return preferences.getString(FIREBASE_TOKEN,"")
+    }
+
     /**
      * Clear all user save data
      */
@@ -116,5 +129,6 @@ class UserSession(context: Context) {
         const val FK_USER_ID      = "user_id"
         const val USER_PIN        = "user_pin"
         const val DONT_SHOW       = "dont_show"
+        const val FIREBASE_TOKEN  = "firebase_token"
     }
 }
