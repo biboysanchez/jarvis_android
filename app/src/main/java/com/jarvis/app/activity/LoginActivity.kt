@@ -14,9 +14,15 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
+
+    companion object {
+        var instance:LoginActivity? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        instance = this
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
 //        try {
@@ -57,7 +63,6 @@ class LoginActivity : AppCompatActivity() {
                     val mSession = UserSession(this@LoginActivity)
                     mSession.authorize(JSONObject(response))
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                    AuthenticationActivity.instance?.finish()
                     finish()
                 }
             }
@@ -65,5 +70,20 @@ class LoginActivity : AppCompatActivity() {
             override fun didURLFailed(error: VolleyError?) {
             }
         })
+    }
+
+    override fun onBackPressed() {
+        if (UserSession(this).isActive){
+            val intent = Intent(this@LoginActivity, AuthenticationActivity::class.java)
+            startActivity(intent)
+            finish()
+        }else{
+            super.onBackPressed()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        instance = null
     }
 }

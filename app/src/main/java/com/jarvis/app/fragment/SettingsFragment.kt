@@ -107,5 +107,7 @@ class SettingsFragment: BaseFragment() {
         mActivity?.lastIndex = 0
         mActivity?.showBackButton(false)
         mActivity?.isShowCompany(false)
+
+        fingerPrintHelper = null
     }
 }
