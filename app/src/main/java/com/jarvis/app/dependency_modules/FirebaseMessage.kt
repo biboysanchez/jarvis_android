@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.RingtoneManager
+import android.net.Uri
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -41,10 +42,11 @@ class FirebaseMessage : FirebaseMessagingService(){
             val intent = Intent(this, MainActivity::class.java)
             val pending_intent : PendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT)
             val notification_ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            val bmp = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.img_bubble)
+            val bmp = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.img_notif_big)
+            val sound = Uri.parse("android.resource://" + packageName + "/" + R.raw.notification)
             val notification_compat_builder = NotificationCompat.Builder(this)
                     .setLargeIcon(bmp)
-                    .setSmallIcon(R.drawable.img_bubble)
+                    .setSmallIcon(R.drawable.img_notif_small)
                     .setContentTitle(notif_json.optString("title"))
                     .setContentText(notif_json.optString("body"))
                     .setSound(notification_ringtone)
