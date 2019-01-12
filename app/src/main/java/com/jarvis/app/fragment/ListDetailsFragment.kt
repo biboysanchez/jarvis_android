@@ -150,7 +150,6 @@ class ListDetailsFragment : BaseFragment() {
         }
     }
 
-
     private fun getCashMovement(week:String){
         val params = HashMap<String, String>()
         params["company"]   = mActivity?.selectedCompany!!

@@ -14,7 +14,6 @@ import com.jarvis.app.fingerprint.FingerPrintHelper
 import com.jarvis.app.fingerprint.FingerprintHandler
 import com.jarvis.app.sessions.UserSession
 import kotlinx.android.synthetic.main.dialog_authenticate_fingerprint.view.*
-import kotlinx.android.synthetic.main.dialog_pin.view.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment: BaseFragment() {
@@ -40,7 +39,7 @@ class SettingsFragment: BaseFragment() {
         onCheckedListener()
 
         Handler().postDelayed({mActivity?.showBackButton(true)},500)
-        mActivity?.isShowCompany(true)
+        mActivity?.isHideCompany(true)
     }
 
     private fun onCheckedListener(){
@@ -104,9 +103,9 @@ class SettingsFragment: BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mActivity?.lastIndex = 0
+        mActivity?.lastIndex = "00"
         mActivity?.showBackButton(false)
-        mActivity?.isShowCompany(false)
+        mActivity?.isHideCompany(false)
 
         fingerPrintHelper = null
     }

@@ -1,12 +1,10 @@
 package com.jarvis.app.activity
 
 import android.animation.ValueAnimator
-import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.se.omapi.Session
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -14,15 +12,16 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.android.volley.VolleyError
 import com.google.firebase.iid.FirebaseInstanceId
 import com.jarvis.app.R
-import com.jarvis.app.adapter.HorizontalListAdapter
 import com.jarvis.app.dataholder.StaticData
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
@@ -33,7 +32,6 @@ import com.jarvis.app.extension.obj
 import com.jarvis.app.fragment.*
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
-import com.jarvis.app.model.Company
 import com.jarvis.app.model.UserViewModel
 import com.jarvis.app.sessions.UserSession
 import com.jarvis.app.utils.DialogUtil
@@ -45,9 +43,9 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
     private lateinit var toggle:ActionBarDrawerToggle
     var fm:FragmentManager? = null
-    var lastIndex = 0
+    var lastIndex = ""
     var viewModel:UserViewModel? = null
-    var mainTitle           = "Portfolio Overview"
+    var mainTitle           = "Decision Recap"
     var selectedCompany     = ""
     var selectedWeek        = ""
     var selectedCategory1   = ""
@@ -62,7 +60,8 @@ class MainActivity : AppCompatActivity() {
     var sortPerformanceAtt  = 0
     var mSession:UserSession? = null
 
-    private var arrCompanyList:ArrayList<Company>? = ArrayList()
+    private var arrCompanyList: ArrayList<String> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -90,8 +89,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        //title = mainTitle
+        viewModel!!.title = mainTitle
         title = mainTitle
-        addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
+        addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
+
         getCompanyList()
 
         Thread {
@@ -131,7 +133,46 @@ class MainActivity : AppCompatActivity() {
         ft?.commit()
     }
 
-    fun getPage(page:Int){
+    fun getPage(page:String){
+       // Log.i("MAin Activity", "stack count: $page")
+        drawer_layout.closeDrawer(GravityCompat.START)
+
+        if (lastIndex == page){
+            if (lastIndex == "00"){
+                toolbar.title = mainTitle
+            }
+            return
+        }
+
+        lastIndex = page
+        for (i in 0 until fm?.backStackEntryCount!!){
+            if (i != 0){
+                fm?.popBackStack()
+            }
+        }
+
+        when (page) {
+            "1" -> {
+                addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
+                viewModel!!.title = "Portfolio Overview"
+                isHideCompany(false)
+            }
+
+            "30" -> {
+                addFragmentNoAnim(CurrencyResearchFragment(), CurrencyResearchFragment.TAG)
+                isHideCompany(true)
+            }
+
+            else ->{
+                addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
+                isHideCompany(true)
+            }
+
+        }
+    }
+
+
+    /*fun getPage(page:Int){
         Log.i("MAin Activity", "stack count: ${fm?.backStackEntryCount!!}")
         drawer_layout.closeDrawer(GravityCompat.START)
 
@@ -188,7 +229,7 @@ class MainActivity : AppCompatActivity() {
                 addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
             }
         }
-    }
+    }*/
 
     fun removeAllBackStack() {
         fm!!.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
@@ -237,8 +278,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun isShowCompany(isHide:Boolean){
-        flCompany?.visibility = if (isHide) View.GONE else View.VISIBLE
+    fun isHideCompany(isHide:Boolean){
+       // flCompany?.visibility = if (isHide) View.GONE else View.VISIBLE
+        flSpinnerCompany?.visibility = if (isHide) View.GONE else View.VISIBLE
     }
 
     private fun getCompanyList(){
@@ -251,25 +293,42 @@ class MainActivity : AppCompatActivity() {
                         if (arr.length() > 0){
                             for (i in 0 until arr.length()){
                                 Log.i(HomeFragment.TAG, "==> ${arr.getString(i)}")
-                                var company = Company(arr.getString(i), false)
-                                if (i == 0){
-                                    company = Company(arr.getString(i), true)
-                                }
-                                arrCompanyList?.add(company)
+                                arrCompanyList.add(arr.getString(i))
                             }
 
-                            rvHorizontal?.layoutManager = GridLayoutManager(this@MainActivity, 1, GridLayoutManager.HORIZONTAL, false)
-                            rvHorizontal?.adapter = HorizontalListAdapter(this@MainActivity, arrCompanyList)
+                            if (arrCompanyList.isNotEmpty()){
+                                selectedCompany = arrCompanyList[0]
+                                spinnerCompany?.adapter = ArrayAdapter(this@MainActivity, R.layout.support_simple_spinner_dropdown_item, arrCompanyList)
+                                spinnerCompany?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                                    }
+
+                                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                        (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                        selectedCompany = arrCompanyList[position]
+                                        refreshAllDataWithCompany()
+                                    }
+                                }
+                            }
+                           // rvHorizontal?.layoutManager = GridLayoutManager(this@MainActivity, 1, GridLayoutManager.HORIZONTAL, false)
+                           // rvHorizontal?.adapter = HorizontalListAdapter(this@MainActivity, arrCompanyList)
                         }
                     }catch (e: JSONException){
                         e.printStackTrace()
                     }
                 }
             }
-
             override fun didURLFailed(error: VolleyError?) {
             }
         })
+    }
+
+    private fun refreshAllDataWithCompany(){
+        HomeFragment.instance?.refreshAll()
+        PerformanceDetailFragment.instance?.refreshAll()
+        TimeSeriesFragment.instance?.refreshAll()
+        DurationMatchFragment.instance?.refreshAll()
+        CashPositionFragment.instance?.refreshAll()
     }
 
     override fun onBackPressed() {
@@ -280,7 +339,7 @@ class MainActivity : AppCompatActivity() {
             if (fm?.backStackEntryCount!! == 1){
                 finish()
             }else if (fm?.backStackEntryCount!! == 2){
-                if (lastIndex > 0 && lastIndex != 7){
+                if (lastIndex > "00"){
                     finish()
                 }else{
                     super.onBackPressed()

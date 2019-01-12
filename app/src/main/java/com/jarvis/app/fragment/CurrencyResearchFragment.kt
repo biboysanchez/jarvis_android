@@ -2,7 +2,6 @@ package com.jarvis.app.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,11 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.jarvis.app.R
-import com.jarvis.app.adapter.BalanceSheetAssetAdapter
-import com.jarvis.app.adapter.BalanceSheetLiabilitiesAdapter
-import com.jarvis.app.adapter.IncomeStatementAdapter
 import com.jarvis.app.custom.MyMarkerView
 import kotlinx.android.synthetic.main.fragment_blank.*
 import kotlinx.android.synthetic.main.fragment_research.*
 
-class ResearchFragment : BaseFragment() {
+class CurrencyResearchFragment : BaseFragment() {
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
     }
@@ -28,27 +24,14 @@ class ResearchFragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_research, container, false)
+        return inflater.inflate(R.layout.fragment_currency_research, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mActivity?.isHideCompany(true)
         tvBlankTitle?.text = mActivity?.viewModel!!.title
-
-        drawAll()
-    }
-
-    private fun drawAll(){
         setLineChart()
-        setBalanceSheetAsset()
-        setBalanceSheetLiabilities()
-        setIncomeStatementSensitivity()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mActivity?.isHideCompany(false)
     }
 
     private fun setLineChart(){
@@ -94,20 +77,5 @@ class ResearchFragment : BaseFragment() {
         val data =  LineData(dataSet)
         lineChartCurrency?.data = data
         lineChartCurrency?.invalidate()
-    }
-
-    private fun setBalanceSheetAsset(){
-        rvBalanceSheetAsset?.layoutManager = LinearLayoutManager(context)
-        rvBalanceSheetAsset?.adapter = BalanceSheetAssetAdapter(context)
-    }
-
-    private fun setBalanceSheetLiabilities(){
-        rvBalanceLiabilities?.layoutManager = LinearLayoutManager(context)
-        rvBalanceLiabilities?.adapter = BalanceSheetLiabilitiesAdapter(context)
-    }
-
-    private fun setIncomeStatementSensitivity(){
-        rvIncomeStatement?.layoutManager = LinearLayoutManager(context)
-        rvIncomeStatement?.adapter = IncomeStatementAdapter(context)
     }
 }

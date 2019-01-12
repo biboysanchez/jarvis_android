@@ -40,12 +40,16 @@ import kotlin.collections.ArrayList
 import com.jarvis.app.utils.CustomBottomSheet
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
+    override fun setTitle(): String {
+        return mActivity?.viewModel!!.title
+    }
+
     private var arrPortfolioList:ArrayList<String>? = ArrayList()
 
     private var arrPieTop:ArrayList<PieModel>? = ArrayList()
     private var arrPieBottom:ArrayList<PieModel>? = ArrayList()
-    private var mActivity:MainActivity? = null
+   // private var mActivity:MainActivity? = null
 
     private var tablePerformance:ArrayList<Table1>? = ArrayList()
     private var tableSecurities:ArrayList<Table2>? = ArrayList()
@@ -58,10 +62,6 @@ class HomeFragment : Fragment() {
 
     private var underWeightList:ArrayList<Table4>? = ArrayList()
     private var overWeightList:ArrayList<Table4>?  = ArrayList()
-
-    //private var selectedWeek        = ""
-    //private var selectedSpinner1    = ""
-   // private var selectedSpinner2    = ""
 
     private var summaryArrayAdapter:ArrayAdapter<String>? = null
     private var securityAdapter:ArrayAdapter<String>? = null

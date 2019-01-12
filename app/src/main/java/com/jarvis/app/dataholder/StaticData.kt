@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.Menu
 import com.github.mikephil.charting.data.PieData
 import com.jarvis.app.R
+import com.jarvis.app.R.drawable.ic_research
 import com.jarvis.app.model.IncomeStatement
 import com.jarvis.app.model.Pie
 import com.jarvis.app.model.SideMenu
@@ -46,15 +47,22 @@ object StaticData {
     }
 
     fun sideList():List<SideMenu>{
-        val side0 = SideMenu("Portfolio Overview", R.drawable.ic_overview, ArrayList(), false)
-        val side1 = SideMenu("Asset Liability", R.drawable.ic_asset, Arrays.asList("Cash Position", "Duration Match"), false)
-        val side2 = SideMenu("Research", R.drawable.ic_research, ArrayList(), false)
-        val side3 = SideMenu("Performance Measurement", R.drawable.ic_performance, Arrays.asList("Time Series", "Detail View"), false)
-        val side4 = SideMenu("Portfolio Construction", R.drawable.ic_portfolio, ArrayList(), false)
-        val side5 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic, ArrayList(), false)
-        val side6 = SideMenu("Stress Tess", R.drawable.ic_stress, ArrayList(), false)
-        val side7 = SideMenu("Settings", R.drawable.ic_fingerprint_settings, ArrayList(), false)
-        return Arrays.asList(side0, side1, side2, side3, side4, side5, side6, side7)
+        val side0 = SideMenu("IC Decision Support", R.drawable.ic_overview, Arrays.asList("Decision Recap", "Market Update", "Watchlist"), false)
+        val side1 = SideMenu("Portfolio Overview", R.drawable.ic_research, ArrayList(), false)
+        val side2 = SideMenu("Cash Overview", R.drawable.ic_performance, Arrays.asList("Cash Position", "Inflow - Outflow Analysis"), false)
+        val side3 = SideMenu("IC Decision Support", R.drawable.ic_research, Arrays.asList("Currency Research", "Summary Exposure", "Corporate Bond Score"), false)
+        val side4 = SideMenu("Performance Measurement", R.drawable.ic_asset, ArrayList(), false)
+        val side5 = SideMenu("Securities Selection", R.drawable.ic_stress, ArrayList(), false)
+        val side6 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic, ArrayList(), false)
+
+//        val side1 = SideMenu("Asset Liability", R.drawable.ic_asset, Arrays.asList("Cash Position", "Duration Match"), false)
+//        val side2 = SideMenu("Research", R.drawable.ic_research, ArrayList(), false)
+//        val side3 = SideMenu("Performance Measurement", R.drawable.ic_performance, Arrays.asList("Time Series", "Detail View"), false)
+//        val side4 = SideMenu("Portfolio Construction", R.drawable.ic_portfolio, ArrayList(), false)
+//        val side5 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic, ArrayList(), false)
+//        val side6 = SideMenu("Stress Tess", R.drawable.ic_stress, ArrayList(), false)
+//        val side7 = SideMenu("Settings", R.drawable.ic_fingerprint_settings, ArrayList(), false)
+        return Arrays.asList(side0, side1, side2, side3, side4, side5, side6)
     }
 
     fun incomeStatements():ArrayList<IncomeStatement>{

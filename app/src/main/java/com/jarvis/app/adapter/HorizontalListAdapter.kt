@@ -42,7 +42,6 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
             val company = data?.get(i)
             itemView.tvBtnText?.text = company?.name
             if (company?.isSelected!!){
-
                 if (mActivity.selectedCompany.isEmpty()){
                     mActivity.selectedCompany = company.name
                 }

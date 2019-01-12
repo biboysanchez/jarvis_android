@@ -21,6 +21,25 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         <FrameLayout
+                android:visibility="gone"
+                android:id="@+id/flSpinnerCompany"
+                android:theme="@style/AppTheme"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/card_view_dark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <Spinner
+                    android:id="@+id/spinnerCompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"/>
+        </FrameLayout>
+
+        <FrameLayout
+                android:visibility="gone"
                 android:id="@+id/flCompany"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"

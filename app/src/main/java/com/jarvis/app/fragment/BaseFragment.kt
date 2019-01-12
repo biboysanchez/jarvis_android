@@ -27,6 +27,6 @@ abstract class BaseFragment : Fragment() {
 
     fun isShowBack(isShow:Boolean){
         mActivity?.showBackButton(isShow)
-        mActivity?.isShowCompany(isShow)
+      //  mActivity?.isHideCompany(isShow)
     }
 }
