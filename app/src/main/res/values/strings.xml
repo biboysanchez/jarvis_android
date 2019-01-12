@@ -20,4 +20,6 @@
     <string name="watchlist">Watchlist</string>
     <string name="summary_parameters">Summary Parameters</string>
     <string name="news_analysis"><![CDATA[News & Analysis]]></string>
+    <string name="reset_simulation">Reset Simulation</string>
+    <string name="calculate">Calculate</string>
 </resources>

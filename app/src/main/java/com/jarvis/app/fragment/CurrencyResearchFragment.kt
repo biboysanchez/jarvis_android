@@ -12,7 +12,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.jarvis.app.R
 import com.jarvis.app.custom.MyMarkerView
 import kotlinx.android.synthetic.main.fragment_blank.*
-import kotlinx.android.synthetic.main.fragment_research.*
+import kotlinx.android.synthetic.main.fragment_currency_research.*
 
 class CurrencyResearchFragment : BaseFragment() {
     override fun setTitle(): String {
@@ -31,7 +31,26 @@ class CurrencyResearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mActivity?.isHideCompany(true)
         tvBlankTitle?.text = mActivity?.viewModel!!.title
+        setEventListener()
         setLineChart()
+    }
+
+    private fun setEventListener(){
+        tvCalculate?.setOnClickListener {
+            etTimePeriod?.setText("12")
+            etUsdRates?.setText("1.25")
+            etIdrRates?.setText("6.50")
+            etSpotRate?.setText("14.50")
+            etFroward?.setText("17.50")
+        }
+
+        tvResetSimulation?.setOnClickListener {
+            etTimePeriod?.setText("")
+            etUsdRates?.setText("")
+            etIdrRates?.setText("")
+            etSpotRate?.setText("")
+            etFroward?.setText("")
+        }
     }
 
     private fun setLineChart(){
