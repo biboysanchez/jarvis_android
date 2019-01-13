@@ -20,7 +20,7 @@ class CurrencyResearchFragment : BaseFragment() {
     }
 
     companion object {
-        val TAG = "ResearchFragment"
+        val TAG = "SummaryExposureFragment"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,7 +29,6 @@ class CurrencyResearchFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mActivity?.isHideCompany(true)
         tvBlankTitle?.text = mActivity?.viewModel!!.title
         setEventListener()
         setLineChart()

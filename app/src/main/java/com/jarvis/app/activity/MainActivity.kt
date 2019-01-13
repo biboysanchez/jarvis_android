@@ -163,6 +163,11 @@ class MainActivity : AppCompatActivity() {
                 isHideCompany(true)
             }
 
+            "31" -> {
+                addFragmentNoAnim(SummaryExposureFragment(), SummaryExposureFragment.TAG)
+                isHideCompany(true)
+            }
+
             else ->{
                 addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
                 isHideCompany(true)
@@ -197,7 +202,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             2 -> {
-                addFragmentNoAnim(ResearchFragment(), ResearchFragment.TAG)
+                addFragmentNoAnim(SummaryExposureFragment(), SummaryExposureFragment.TAG)
                 viewModel!!.title = "Currency Sensitivity"
             }
 

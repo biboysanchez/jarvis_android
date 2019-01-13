@@ -50,7 +50,7 @@ object StaticData {
         val side0 = SideMenu("IC Decision Support", R.drawable.ic_overview, Arrays.asList("Decision Recap", "Market Update", "Watchlist"), false)
         val side1 = SideMenu("Portfolio Overview", R.drawable.ic_research, ArrayList(), false)
         val side2 = SideMenu("Cash Overview", R.drawable.ic_performance, Arrays.asList("Cash Position", "Inflow - Outflow Analysis"), false)
-        val side3 = SideMenu("IC Decision Support", R.drawable.ic_research, Arrays.asList("Currency Research", "Summary Exposure", "Corporate Bond Score"), false)
+        val side3 = SideMenu("Research", R.drawable.ic_research, Arrays.asList("Currency Research", "Summary Exposure", "Corporate Bond Score"), false)
         val side4 = SideMenu("Performance Measurement", R.drawable.ic_asset, ArrayList(), false)
         val side5 = SideMenu("Securities Selection", R.drawable.ic_stress, ArrayList(), false)
         val side6 = SideMenu("Strategic Asset Allocation", R.drawable.ic_strategic, ArrayList(), false)
