@@ -16,7 +16,6 @@ class AuthenticationActivity : AppCompatActivity() {
     private var mSession:UserSession? = null
     private var fingerPrintHelper: FingerPrintHelper? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pin)
@@ -26,15 +25,20 @@ class AuthenticationActivity : AppCompatActivity() {
         checkFingerPrint()
 
         tvGoToLogin?.setOnClickListener {
-            val intent = Intent(this@AuthenticationActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            getLogin()
             fingerPrintHelper = null
         }
     }
 
+    private fun getLogin(){
+        val intent = Intent(this@AuthenticationActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun checkFingerPrint(){
         if (!fingerPrintHelper!!.isSupported()){
+            getLogin()
             return
         }
 

@@ -54,8 +54,8 @@ class FingerPrintHelper  {
     @TargetApi(Build.VERSION_CODES.M)
     fun isSupported():Boolean{
         if (!fingerprintManager!!.isHardwareDetected) {
-            alertDialog?.setTitle("Your device doesn't support fingerprint authentication")
-            alertDialog?.show()
+           // alertDialog?.setTitle("Your device doesn't support fingerprint authentication")
+           // alertDialog?.show()
             return false
         }
         return true

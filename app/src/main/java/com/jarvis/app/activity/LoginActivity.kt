@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import com.android.volley.VolleyError
 import com.jarvis.app.R
+import com.jarvis.app.fingerprint.FingerPrintHelper
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.sessions.UserSession
@@ -76,8 +77,11 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (UserSession(this).isActive){
-            val intent = Intent(this@LoginActivity, AuthenticationActivity::class.java)
-            startActivity(intent)
+            val fingerPrintHelper = FingerPrintHelper(this)
+            if (fingerPrintHelper.isSupported()){
+                val intent = Intent(this@LoginActivity, AuthenticationActivity::class.java)
+                startActivity(intent)
+            }
             finish()
         }else{
             super.onBackPressed()

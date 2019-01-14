@@ -51,6 +51,7 @@ class ListDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setRecyclerView()
+        mActivity?.isHideCompany(true)
         isShowBack(true)
 
         imgSortAll?.setOnClickListener {
@@ -184,5 +185,6 @@ class ListDetailsFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         isShowBack(false)
+        mActivity?.isHideCompany(false)
     }
 }

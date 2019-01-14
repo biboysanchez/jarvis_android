@@ -23,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         hideStatusBar()
 
+
         if (UserSession(this@SplashActivity).isActive){
             val intent = Intent(this@SplashActivity, AuthenticationActivity::class.java)
             startActivity(intent)
