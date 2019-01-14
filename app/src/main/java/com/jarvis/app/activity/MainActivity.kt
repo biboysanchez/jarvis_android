@@ -100,12 +100,12 @@ class MainActivity : AppCompatActivity() {
             setNavigationList()
         }.start()
 
-        if (!mSession!!.isActive){
-            if (!mSession!!.isShowFingerprintDialog()){
-                return
-            }
-            Handler().postDelayed({DialogUtil.showFingerPrintOption(this)},3000)
-        }
+//        if (!mSession!!.isActive){
+//            if (!mSession!!.isShowFingerprintDialog()){
+//                return
+//            }
+//            Handler().postDelayed({DialogUtil.showFingerPrintOption(this)},3000)
+//        }
     }
 
     private fun setNavigationList(){

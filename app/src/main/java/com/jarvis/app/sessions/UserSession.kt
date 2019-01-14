@@ -80,6 +80,7 @@ class UserSession(context: Context) {
     fun authorize(userObj: JSONObject){
         try {
             editor.putString(USER_OBJECT, userObj.toString()).apply()
+            setIsLogged()
         }catch (e: JSONException){
             e.printStackTrace()
         }
