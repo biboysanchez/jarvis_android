@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/home_bg"
         android:clickable="true"
@@ -158,6 +159,35 @@
                       app:layout_constraintEnd_toEndOf="parent"
                       android:id="@+id/viewBalance"/>
 
+                <AutoCompleteTextView
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:hint="Search"
+                        android:background="@drawable/card_view"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/autoCorrectSearchBalance"
+                        app:layout_constraintStart_toStartOf="@+id/tvHeaderBalance"
+                        app:layout_constraintTop_toBottomOf="@+id/viewBalance"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imgMenuDecision"/>
+
+                <ImageView
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@null"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_search"
+                        android:background="@drawable/rec_hallow_primary"
+                        android:layout_width="42dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/imgMenuDecision"
+                        app:layout_constraintEnd_toEndOf="@+id/tvHeaderBalance"
+                        app:layout_constraintTop_toTopOf="@+id/autoCorrectSearchBalance"
+                        app:layout_constraintStart_toEndOf="@+id/autoCorrectSearchBalance"
+                        app:layout_constraintBottom_toBottomOf="@+id/autoCorrectSearchBalance"/>
+
+
                 <View android:layout_width="0dp"
                       android:layout_height="0.8dp"
                       android:background="@color/home_bg"
@@ -182,8 +212,9 @@
                         android:text="Asset"
                         android:layout_width="0dp"
                         app:layout_constraintStart_toStartOf="@+id/tvHeaderBalance"
-                        android:id="@+id/textView10" android:layout_marginTop="16dp"
-                        app:layout_constraintTop_toBottomOf="@+id/viewBalance"/>
+                        android:id="@+id/textView10"
+                        app:layout_constraintTop_toBottomOf="@+id/autoCorrectSearchBalance"
+                        android:layout_marginTop="16dp"/>
                 <TextView
                         style="@style/TextHeader"
                         android:text="Liabilities"
@@ -281,6 +312,30 @@
                     android:background="@drawable/card_white"
                     android:orientation="vertical"
                     android:layout_marginTop="8dp">
+                <ImageView
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@null"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_search"
+                        android:background="@drawable/rec_hallow_primary"
+                        android:layout_width="42dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/imgMenuDecision2"
+                        app:layout_constraintEnd_toEndOf="@+id/textView17"
+                        app:layout_constraintTop_toTopOf="@+id/autoCorrectIncome"
+                        app:layout_constraintStart_toEndOf="@+id/autoCorrectIncome"/>
+                <AutoCompleteTextView
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:hint="Search"
+                        android:background="@drawable/card_view"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/autoCorrectIncome"
+                        app:layout_constraintStart_toStartOf="@+id/textView17"
+                        app:layout_constraintTop_toBottomOf="@+id/view4" android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imgMenuDecision2"/>
                 <TextView
                         style="@style/TextHeader"
                         android:text="Income Statement Sensitivity"
@@ -304,14 +359,14 @@
                         android:id="@+id/rvIncomeStatement"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/view4"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="12dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="12dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="24dp"/>
+                        android:layout_marginBottom="24dp" app:layout_constraintHorizontal_bias="0.0"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/autoCorrectIncome"/>
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

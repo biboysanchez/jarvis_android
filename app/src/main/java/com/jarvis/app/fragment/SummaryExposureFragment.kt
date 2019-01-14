@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.jarvis.app.R
 import com.jarvis.app.R.id.rvBalanceSheetAsset
 import com.jarvis.app.R.id.rvSummaryExposure
@@ -27,14 +28,26 @@ class SummaryExposureFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_summary_exposure, container, false)
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvBlankTitle?.text = mActivity?.viewModel!!.title
         drawAll()
+        setAutoSearch()
 
         tvShowAllSummaryExposure?.setOnClickListener {
             mActivity?.addFragment(SummaryExposureAllFragment(),SummaryExposureAllFragment.TAG)
         }
+    }
+
+    private fun setAutoSearch(){
+        val arr = arrayOf("Bond A", "Bond B", "Bond C", "Bond D", "Bond E", "Bond F", "Sinarmas", "Bond H")
+        autoCorrectSearchBalance?.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
+            arr))
+
+        autoCorrectIncome?.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
+        arr))
     }
 
     private fun drawAll(){
