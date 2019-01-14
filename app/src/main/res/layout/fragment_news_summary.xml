@@ -4,5 +4,13 @@
               android:layout_height="match_parent"
               android:clickable="true"
               android:focusable="true"
-              android:background="@color/login_bg">
+              android:background="@color/white"
+              android:padding="16dp"
+              android:gravity="center_horizontal">
+    <ImageView
+            android:scaleType="fitStart"
+            android:src="@drawable/temp_news"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 </LinearLayout>
