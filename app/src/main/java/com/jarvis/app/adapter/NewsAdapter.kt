@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
+import com.jarvis.app.activity.MainActivity
+import com.jarvis.app.fragment.NewsSummaryFragment
 import com.jarvis.app.model.News
 import kotlinx.android.synthetic.main.row_news.view.*
 
@@ -35,9 +37,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         fun bindItem(i: Int) {
             val title = "${data!![i].title} - ${data!![i].date}"
             itemView.tvRowArticle?.text = title
+            val mActivity = mContext as MainActivity
 
             itemView.llRowNews?.setOnClickListener {
-
+                mActivity.addFragment(NewsSummaryFragment(), NewsSummaryFragment.TAG)
             }
 
             if (i % 2 == 1){
