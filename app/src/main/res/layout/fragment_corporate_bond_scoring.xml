@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="@color/home_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+        <LinearLayout
+                android:theme="@style/AppTheme"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/card_view_dark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                    android:textSize="16sp"
+                    android:textColorHint="@color/gray_300"
+                    android:textColor="@color/white"
+                    android:id="@+id/autoCompleteCorporate"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="16dp"
+                    android:hint="Search Company"
+                    android:background="@android:color/transparent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"/>
+
+            <ImageView
+                    android:layout_margin="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@null"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_search"
+                    android:background="@drawable/rec_solid_primary"
+                    android:layout_width="42dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imgSearchCompany"/>
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_white"
+            android:orientation="vertical">
+        <TextView
+                style="@style/TextHeader"
+                android:text="Key Indicators"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:id="@+id/tvHeaderPerformanceAttribute"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="16dp"/>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="0.8dp"
+              android:background="@color/home_bg"
+              android:id="@+id/view3"
+              android:layout_marginTop="8dp"/>
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/rvKeyIndicator"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_white"
+            android:orientation="vertical">
+        <TextView
+                style="@style/TextHeader"
+                android:text="News Summary"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="16dp"/>
+        <View android:layout_width="match_parent"
+              android:layout_height="0.8dp"
+              android:background="@color/home_bg"
+              android:layout_marginTop="8dp"/>
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/rvNewsSummary"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_white"
+            android:orientation="vertical">
+        <TextView
+                style="@style/TextHeader"
+                android:text="Top 10 News with Highest Score"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="16dp"/>
+        <View android:layout_width="match_parent"
+              android:layout_height="0.8dp"
+              android:background="@color/home_bg"
+              android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:weightSum="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/rec_up_raduis"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="42dp">
+
+            <TextView
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="0dp"
+                    android:text="Bond - Industry"
+                    android:textColor="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"/>
+            <View
+                    android:background="@color/white"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="center"
+                    android:text="Exposure"
+                    android:textColor="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.25"
+                    android:layout_height="wrap_content"/>
+
+            <View
+                    android:background="@color/white"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="end"
+                    android:text="Score"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="0dp"
+                    android:textColor="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.25"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/rvHighScore"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_white"
+            android:orientation="vertical">
+        <TextView
+                style="@style/TextHeader"
+                android:text="Top 10 News with Worst Score"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="16dp"/>
+        <View android:layout_width="match_parent"
+              android:layout_height="0.8dp"
+              android:background="@color/home_bg"
+              android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:weightSum="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/rec_up_raduis"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="42dp">
+
+            <TextView
+                    android:paddingStart="4dp"
+                    android:paddingEnd="0dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Bond - Industry"
+                    android:textColor="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"/>
+            <View
+                    android:background="@color/white"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="center"
+                    android:text="Exposure"
+                    android:textColor="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.25"
+                    android:layout_height="wrap_content"/>
+
+            <View
+                    android:background="@color/white"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:paddingEnd="4dp"
+                    android:paddingStart="0dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="end"
+                    android:text="Score"
+                    android:textColor="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.25"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/rvWorstScore"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"/>
+    </LinearLayout>
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

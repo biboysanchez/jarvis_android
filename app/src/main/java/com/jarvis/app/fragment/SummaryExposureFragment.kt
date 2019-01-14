@@ -28,8 +28,6 @@ class SummaryExposureFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_summary_exposure, container, false)
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvBlankTitle?.text = mActivity?.viewModel!!.title

@@ -168,6 +168,12 @@ class MainActivity : AppCompatActivity() {
                 isHideCompany(true)
             }
 
+            "32" -> {
+                viewModel?.title = "Corporate Bond Scoring"
+                addFragmentNoAnim(CorporateBondScoring(), CorporateBondScoring.TAG)
+                isHideCompany(true)
+            }
+
             else ->{
                 addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
                 isHideCompany(true)

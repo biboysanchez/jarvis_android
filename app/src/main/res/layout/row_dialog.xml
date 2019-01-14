@@ -7,7 +7,7 @@
         android:id="@+id/llRowDialog">
     <TextView
             android:id="@+id/tvDialogKey"
-            android:textColor="@color/gray_500"
+            android:textColor="@color/gray_700"
             android:text="Text"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -15,7 +15,7 @@
     <TextView
             android:id="@+id/tvDialogValue"
             android:gravity="end"
-            android:textColor="@color/gray_500"
+            android:textColor="@color/gray_700"
             android:text="0.0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

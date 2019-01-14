@@ -160,9 +160,11 @@
                       android:id="@+id/viewBalance"/>
 
                 <AutoCompleteTextView
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray_300"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:hint="Search"
+                        android:hint="Search Company"
                         android:background="@drawable/card_view"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
@@ -326,9 +328,11 @@
                         app:layout_constraintTop_toTopOf="@+id/autoCorrectIncome"
                         app:layout_constraintStart_toEndOf="@+id/autoCorrectIncome"/>
                 <AutoCompleteTextView
+                        android:textColorHint="@color/gray_300"
+                        android:textColor="@color/white"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:hint="Search"
+                        android:hint="Search Company"
                         android:background="@drawable/card_view"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
