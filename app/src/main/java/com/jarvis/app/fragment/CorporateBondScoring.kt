@@ -10,6 +10,8 @@ import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.adapter.BondScoreAdapter
 import com.jarvis.app.adapter.KeyIndicatorAdapter
+import com.jarvis.app.adapter.NewsAdapter
+import com.jarvis.app.adapter.TopicAdapter
 import com.jarvis.app.model.BondScore
 import kotlinx.android.synthetic.main.fragment_corporate_bond_scoring.*
 
@@ -35,6 +37,8 @@ class CorporateBondScoring : BaseFragment() {
     private fun setAll(){
         setSearchView()
         setKeyIndicators()
+        setSummaryTopic()
+        setSummaryNews()
         setTop10HighestScore()
         setTop10WorstScore()
     }
@@ -42,11 +46,32 @@ class CorporateBondScoring : BaseFragment() {
     private fun setSearchView(){
         val arr = arrayOf("Bond A", "Bond B", "Bond C", "Bond D", "Bond E", "Bond F", "Sinarmas", "Bond H")
         autoCompleteCorporate?.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, arr))
+
+        var isShow = false
+        imgSearchCompany?.setOnClickListener {
+            if (isShow){
+                isShow = false
+                autoCompleteCorporate?.dismissDropDown()
+            }else {
+                isShow = true
+                autoCompleteCorporate?.showDropDown()
+            }
+        }
     }
 
     private fun setKeyIndicators(){
         rvKeyIndicator?.layoutManager = LinearLayoutManager(context)
         rvKeyIndicator?.adapter = KeyIndicatorAdapter(context)
+    }
+
+    private fun setSummaryTopic(){
+        rvNewsSummaryTopic?.layoutManager = LinearLayoutManager(context)
+        rvNewsSummaryTopic?.adapter = TopicAdapter(context)
+    }
+
+    private fun setSummaryNews(){
+        rvNewsSummaryNews?.layoutManager = LinearLayoutManager(context)
+        rvNewsSummaryNews?.adapter = NewsAdapter(context)
     }
 
     private fun setTop10HighestScore(){

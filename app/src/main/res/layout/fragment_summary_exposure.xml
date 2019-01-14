@@ -160,8 +160,6 @@
                       android:id="@+id/viewBalance"/>
 
                 <AutoCompleteTextView
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/gray_300"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
                         android:hint="Search Company"
@@ -172,7 +170,7 @@
                         app:layout_constraintStart_toStartOf="@+id/tvHeaderBalance"
                         app:layout_constraintTop_toBottomOf="@+id/viewBalance"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imgMenuDecision"/>
+                        app:layout_constraintEnd_toStartOf="@+id/searchSheetExposure"/>
 
                 <ImageView
                         android:clickable="true"
@@ -183,7 +181,7 @@
                         android:background="@drawable/rec_hallow_primary"
                         android:layout_width="42dp"
                         android:layout_height="40dp"
-                        android:id="@+id/imgMenuDecision"
+                        android:id="@+id/searchSheetExposure"
                         app:layout_constraintEnd_toEndOf="@+id/tvHeaderBalance"
                         app:layout_constraintTop_toTopOf="@+id/autoCorrectSearchBalance"
                         app:layout_constraintStart_toEndOf="@+id/autoCorrectSearchBalance"
@@ -323,13 +321,12 @@
                         android:background="@drawable/rec_hallow_primary"
                         android:layout_width="42dp"
                         android:layout_height="40dp"
-                        android:id="@+id/imgMenuDecision2"
+                        android:id="@+id/searchSensitivity"
                         app:layout_constraintEnd_toEndOf="@+id/textView17"
                         app:layout_constraintTop_toTopOf="@+id/autoCorrectIncome"
                         app:layout_constraintStart_toEndOf="@+id/autoCorrectIncome"/>
+
                 <AutoCompleteTextView
-                        android:textColorHint="@color/gray_300"
-                        android:textColor="@color/white"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
                         android:hint="Search Company"
@@ -339,7 +336,7 @@
                         android:id="@+id/autoCorrectIncome"
                         app:layout_constraintStart_toStartOf="@+id/textView17"
                         app:layout_constraintTop_toBottomOf="@+id/view4" android:layout_marginTop="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imgMenuDecision2"/>
+                        app:layout_constraintEnd_toStartOf="@+id/searchSensitivity"/>
                 <TextView
                         style="@style/TextHeader"
                         android:text="Income Statement Sensitivity"

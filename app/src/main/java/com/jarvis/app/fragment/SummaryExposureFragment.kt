@@ -37,6 +37,8 @@ class SummaryExposureFragment : BaseFragment() {
         tvShowAllSummaryExposure?.setOnClickListener {
             mActivity?.addFragment(SummaryExposureAllFragment(),SummaryExposureAllFragment.TAG)
         }
+
+
     }
 
     private fun setAutoSearch(){
@@ -46,6 +48,35 @@ class SummaryExposureFragment : BaseFragment() {
 
         autoCorrectIncome?.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
         arr))
+
+        searchSheetExposure()
+        searchSensitivity()
+    }
+
+    private fun searchSheetExposure(){
+        var isShow = false
+        searchSheetExposure?.setOnClickListener {
+            if (isShow){
+                isShow = false
+                autoCorrectSearchBalance?.dismissDropDown()
+            }else {
+                isShow = true
+                autoCorrectSearchBalance?.showDropDown()
+            }
+        }
+    }
+
+    private fun searchSensitivity(){
+        var isShow = false
+        searchSensitivity?.setOnClickListener {
+            if (isShow){
+                isShow = false
+                autoCorrectIncome?.dismissDropDown()
+            }else {
+                isShow = true
+                autoCorrectIncome?.showDropDown()
+            }
+        }
     }
 
     private fun drawAll(){
