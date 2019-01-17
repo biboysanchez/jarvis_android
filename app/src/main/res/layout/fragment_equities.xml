@@ -203,6 +203,7 @@
             </LinearLayout>
 
             <FrameLayout
+                    android:id="@+id/flShowCompany"
                     android:padding="8dp"
                     android:background="#EEF4F3"
                     android:layout_marginStart="16dp"
@@ -229,7 +230,8 @@
 
             </FrameLayout>
 
-            <TextView
+            <Button
+                    android:textAllCaps="false"
                     android:textSize="16dp"
                     android:textColor="@color/white"
                     android:gravity="center"

@@ -28,10 +28,13 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="717f7d" />
-                            <entry key="outputName" value="ic_add" />
+                            <entry key="height" value="512" />
+                            <entry key="outputName" value="ic_remove" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Pardz\Downloads\search.svg" />
+                            <entry key="sourceFile" value="C:\Users\Pardz\Downloads\remove.svg" />
+                            <entry key="width" value="512" />
                           </map>
                         </option>
                       </PersistentState>

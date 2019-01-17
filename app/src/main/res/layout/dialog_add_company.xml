@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/login_bg">
+
+    <TextView
+            style="@style/TextHeader"
+            android:text="Add Company"
+            android:layout_marginStart="16dp"
+            android:id="@+id/tvDialogTitle"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/imgCloseDialog"/>
+
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_x"
+               android:padding="8dp"
+               android:clickable="true"
+               android:background="?attr/selectableItemBackground"
+               app:layout_constraintEnd_toEndOf="parent"
+               android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+               app:layout_constraintTop_toTopOf="parent"
+               android:id="@+id/imgCloseDialog"/>
+
+    <FrameLayout
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tvDialogTitle"
+            app:layout_constraintEnd_toEndOf="@+id/imgCloseDialog"
+            app:layout_constraintTop_toBottomOf="@+id/tvDialogSubTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_view"
+            android:id="@+id/frameLayout2">
+
+        <AutoCompleteTextView
+                android:paddingStart="16dp"
+                android:paddingEnd="40dp"
+                android:hint="Search Company"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:id="@+id/autoCorrectSearchBalance"/>
+
+        <ImageView
+                android:layout_marginEnd="12dp"
+                android:padding="4dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_search"/>
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvDialogList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/tvDialogTitle"
+            app:layout_constraintEnd_toEndOf="@+id/imgCloseDialog"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddCompany" android:layout_marginBottom="16dp"/>
+    <TextView
+            android:visibility="gone"
+            android:textSize="12sp"
+            android:textColor="@color/gray_500"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDialogSubTitle"
+            app:layout_constraintStart_toStartOf="@+id/tvDialogTitle"
+            app:layout_constraintEnd_toEndOf="@+id/tvDialogTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvDialogTitle"/>
+
+    <Button android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Add Company"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_primary_rad"
+            android:id="@+id/btnAddCompany"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/frameLayout2"
+            app:layout_constraintEnd_toEndOf="@+id/frameLayout2" android:layout_marginBottom="16dp"
+    />
+
+</android.support.constraint.ConstraintLayout>
