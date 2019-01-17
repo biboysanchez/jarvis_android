@@ -1,4 +1,4 @@
-package com.jarvis.app.fragment
+package com.jarvis.app.fragment.unused
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -19,6 +19,7 @@ import com.jarvis.app.adapter.home.TopTenAdapter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.extension.string
+import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.*

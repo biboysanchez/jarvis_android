@@ -1,4 +1,4 @@
-package com.jarvis.app.fragment
+package com.jarvis.app.fragment.unused
 
 import android.graphics.Color
 import android.os.Bundle
@@ -13,6 +13,7 @@ import com.jarvis.app.R
 import com.jarvis.app.adapter.NewsAndAnalysisAdapter
 import com.jarvis.app.adapter.SummaryParamAdapter
 import com.jarvis.app.adapter.WatchListAdapter
+import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.utils.CustomBottomSheet
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_portfolio_construction.*
@@ -37,7 +38,7 @@ class PortfolioConstructionFragment: BaseFragment() {
 
     companion object {
         const val TAG = "PortfolioConstructionFragment"
-        var instance:PortfolioConstructionFragment? = null
+        var instance: PortfolioConstructionFragment? = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

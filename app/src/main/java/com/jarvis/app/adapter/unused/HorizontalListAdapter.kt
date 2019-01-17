@@ -1,7 +1,6 @@
-package com.jarvis.app.adapter
+package com.jarvis.app.adapter.unused
 
 import android.content.Context
-import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,10 @@ import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.fragment.*
-import com.jarvis.app.model.CashPlacement
+import com.jarvis.app.fragment.unused.CashPositionFragment
+import com.jarvis.app.fragment.unused.DurationMatchFragment
+import com.jarvis.app.fragment.unused.PerformanceDetailFragment
+import com.jarvis.app.fragment.unused.TimeSeriesFragment
 import com.jarvis.app.model.Company
 import kotlinx.android.synthetic.main.button_scroll.view.*
 
@@ -22,7 +24,7 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
         this.data = data
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): HorizontalListAdapter.ViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.button_scroll, p0, false)
         return ViewHolder(view)
     }
@@ -31,7 +33,7 @@ class HorizontalListAdapter : RecyclerView.Adapter<HorizontalListAdapter.ViewHol
         return data!!.size
     }
 
-    override fun onBindViewHolder(p0: HorizontalListAdapter.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.bindItem(p1)
     }
 

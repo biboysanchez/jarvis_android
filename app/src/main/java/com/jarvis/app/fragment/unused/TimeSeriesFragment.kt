@@ -1,4 +1,4 @@
-package com.jarvis.app.fragment
+package com.jarvis.app.fragment.unused
 
 import android.graphics.Color
 import android.os.Bundle
@@ -33,13 +33,12 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.jarvis.app.adapter.home.PerformanceAttributeAdapter
-import com.jarvis.app.adapter.home.TopTenAdapter
 import com.jarvis.app.custom.CustomMarkerView
 import com.jarvis.app.custom.CustomValueFormatter
 import com.jarvis.app.custom.PortfolioMarkerView
+import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.model.Portfolio
-import com.jarvis.app.model.Table3
 import com.jarvis.app.model.Table5
 import com.jarvis.app.utils.ColorUtil
 import com.jarvis.app.utils.CustomBottomSheet
@@ -67,7 +66,7 @@ class TimeSeriesFragment : BaseFragment() {
 
     companion object {
         const val TAG = "TimeSeriesFragment"
-        var instance:TimeSeriesFragment? = null
+        var instance: TimeSeriesFragment? = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

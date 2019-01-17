@@ -1,4 +1,4 @@
-package com.jarvis.app.fragment
+package com.jarvis.app.fragment.unused
 
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
@@ -12,6 +12,7 @@ import com.jarvis.app.R
 import com.jarvis.app.extension.toast
 import com.jarvis.app.fingerprint.FingerPrintHelper
 import com.jarvis.app.fingerprint.FingerprintHandler
+import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.sessions.UserSession
 import kotlinx.android.synthetic.main.dialog_authenticate_fingerprint.view.*
 import kotlinx.android.synthetic.main.fragment_settings.*

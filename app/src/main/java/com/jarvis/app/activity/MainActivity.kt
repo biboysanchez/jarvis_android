@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -30,11 +29,14 @@ import com.jarvis.app.adapter.SideMenuAdapter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.fragment.*
+import com.jarvis.app.fragment.unused.CashPositionFragment
+import com.jarvis.app.fragment.unused.DurationMatchFragment
+import com.jarvis.app.fragment.unused.PerformanceDetailFragment
+import com.jarvis.app.fragment.unused.TimeSeriesFragment
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.UserViewModel
 import com.jarvis.app.sessions.UserSession
-import com.jarvis.app.utils.DialogUtil
 import com.jarvis.app.utils.JSONUtil
 import org.json.JSONException
 import org.json.JSONObject
@@ -174,6 +176,15 @@ class MainActivity : AppCompatActivity() {
                 isHideCompany(true)
             }
 
+            "50" ->{
+                //Fixed Income
+            }
+
+            "51" ->{
+                addFragmentNoAnim(EquitiesFragment(), EquitiesFragment.TAG)
+                //Equities
+            }
+
             else ->{
                 addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
                 isHideCompany(true)
@@ -181,7 +192,6 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
 
     /*fun getPage(page:Int){
         Log.i("MAin Activity", "stack count: ${fm?.backStackEntryCount!!}")

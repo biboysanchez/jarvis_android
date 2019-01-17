@@ -1,9 +1,8 @@
-package com.jarvis.app.fragment
+package com.jarvis.app.fragment.unused
 
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,12 +21,11 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.jarvis.app.R
 import com.jarvis.app.adapter.LeaseAdapter
-import com.jarvis.app.adapter.TimeSeriesAdapter
+import com.jarvis.app.adapter.unused.TimeSeriesAdapter
 import com.jarvis.app.custom.MarkerLiquidProfile
-import com.jarvis.app.custom.MyMarkerView
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
-import com.jarvis.app.extension.toast
+import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
@@ -36,7 +34,6 @@ import com.jarvis.app.model.Table6
 import com.jarvis.app.model.TableRisk
 import com.jarvis.app.utils.CustomBottomSheet
 import com.jarvis.app.utils.JSONUtil
-import com.jarvis.app.utils.Util
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_performance_detail.*
 import org.json.JSONException
@@ -63,7 +60,7 @@ class PerformanceDetailFragment: BaseFragment() {
     private var leaseArrayAdapter:ArrayAdapter<String>? = null
 
     private var leaseAdapter:LeaseAdapter? = null
-    private var performanceRiskAdapter:TimeSeriesAdapter? = null
+    private var performanceRiskAdapter: TimeSeriesAdapter? = null
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -75,7 +72,7 @@ class PerformanceDetailFragment: BaseFragment() {
 
     companion object {
         const val TAG = "PerformanceDetailFragment"
-        var instance:PerformanceDetailFragment? = null
+        var instance: PerformanceDetailFragment? = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

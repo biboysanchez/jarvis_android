@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/home_bg"
+        android:clickable="true"
+        android:focusable="true">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Equities"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvHeaderSelection"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+
+            <FrameLayout
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/frameLayoutSelection">
+                <Spinner
+                        android:id="@+id/spinnerEquities"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"/>
+            </FrameLayout>
+
+            <com.github.mikephil.charting.charts.LineChart
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:id="@+id/lineChartEquities"
+                    android:layout_marginTop="16dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextHeader"
+                        android:text="Comparation"
+                        android:layout_width="wrap_content"/>
+
+                <TextView
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:background="@drawable/rec_hallow_primary"
+                        android:layout_gravity="end"
+                        android:text="Metrics"
+                        android:layout_width="wrap_content"/>
+            </FrameLayout>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+
+
+            <LinearLayout
+                   android:layout_marginStart="16dp"
+                   android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/llRowComparation">
+
+                <LinearLayout
+                        android:id="@+id/llCol0"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/rec_up_left_raduis"
+                            android:text="Company - Industry"
+                            android:textColor="@color/white"
+                            android:layout_width="180dp"
+                            android:layout_height="48dp"/>
+
+                </LinearLayout>
+
+                <View
+                        android:background="@color/white"
+                        android:layout_width="1dp"
+                        android:layout_height="48dp"/>
+
+                <HorizontalScrollView
+                        android:scrollbars="none"
+                        android:id="@+id/rowScroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            <LinearLayout
+                                    android:id="@+id/llCol1"
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                <TextView
+                                        android:background="@color/colorPrimary"
+                                        android:paddingStart="16dp"
+                                        android:paddingEnd="16dp"
+                                        android:gravity="center_vertical"
+                                        android:text="Very Long Lorem"
+                                        android:textColor="@color/white"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="48dp"/>
+                            </LinearLayout>
+
+                            <View
+                                    android:background="@color/white"
+                                    android:layout_width="1dp"
+                                    android:layout_height="48dp"/>
+
+                            <LinearLayout
+                                    android:id="@+id/llCol2"
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                <TextView
+                                        android:background="@color/colorPrimary"
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:text="Ipsum"
+                                        android:textColor="@color/white"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="48dp"/>
+
+                            </LinearLayout>
+
+                            <View
+                                    android:background="@color/white"
+                                    android:layout_width="1dp"
+                                    android:layout_height="48dp"/>
+
+                            <LinearLayout
+                                    android:id="@+id/llCol3"
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                <TextView
+                                        android:background="@drawable/rec_up_right_raduis"
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:text="Dolor"
+                                        android:textColor="@color/white"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="48dp"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+            </LinearLayout>
+
+            <FrameLayout
+                    android:padding="8dp"
+                    android:background="#EEF4F3"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp">
+
+                <FrameLayout
+                        android:background="@drawable/rounded_primary_hidden"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:drawableStart="@drawable/ic_add"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Add Companies"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"/>
+                </FrameLayout>
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:textSize="16dp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:text="Save Watchlist"
+                    android:background="@drawable/rounded_primary_rad"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"/>
+
+            <TextView
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingStart="12dp"
+                    android:background="@drawable/rec_hallow_primary"
+                    android:text="Screener"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

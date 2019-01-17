@@ -3,6 +3,7 @@ package com.jarvis.app.fragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.jarvis.app.activity.MainActivity
+import com.jarvis.app.fragment.unused.PerformanceDetailFragment
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 abstract class BaseFragment : Fragment() {

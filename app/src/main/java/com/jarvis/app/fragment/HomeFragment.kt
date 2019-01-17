@@ -3,7 +3,6 @@ package com.jarvis.app.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,11 +16,12 @@ import android.widget.TextView
 import com.android.volley.VolleyError
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
-import com.jarvis.app.adapter.PieLegendAdapter
+import com.jarvis.app.adapter.unused.PieLegendAdapter
 import com.jarvis.app.adapter.home.*
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
+import com.jarvis.app.fragment.unused.ListDetailsFragment
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.*
@@ -419,7 +419,8 @@ class HomeFragment : BaseFragment() {
 
                             PieChart(activity, pieChartHome, arrPieTop)
                             rvPieLegend?.layoutManager = GridLayoutManager(context,  2)
-                            rvPieLegend?.adapter       = PieLegendAdapter(context, arrPieTop)
+                            rvPieLegend?.adapter       =
+                                    PieLegendAdapter(context, arrPieTop)
                         }else{
                             noData(pieChartHome, rvPieLegend)
                         }
@@ -454,7 +455,8 @@ class HomeFragment : BaseFragment() {
 
                             PieChart(activity, pie2, arrPieBottom)
                             rvPie2Legend?.layoutManager = GridLayoutManager(context,  2)
-                            rvPie2Legend?.adapter       = PieLegendAdapter(context, arrPieBottom)
+                            rvPie2Legend?.adapter       =
+                                    PieLegendAdapter(context, arrPieBottom)
                         }else{
                             noData(pie2, rvPie2Legend)
                         }

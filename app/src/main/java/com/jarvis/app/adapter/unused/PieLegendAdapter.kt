@@ -1,4 +1,4 @@
-package com.jarvis.app.adapter
+package com.jarvis.app.adapter.unused
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
-import com.jarvis.app.model.Pie
 import kotlinx.android.synthetic.main.row_pie_legend.view.*
-import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.graphics.Typeface
@@ -26,7 +24,7 @@ class PieLegendAdapter : RecyclerView.Adapter<PieLegendAdapter.ViewHolder> {
         this.data = data
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): PieLegendAdapter.ViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.row_pie_legend, p0, false)
         return ViewHolder(view)
     }
@@ -35,7 +33,7 @@ class PieLegendAdapter : RecyclerView.Adapter<PieLegendAdapter.ViewHolder> {
         return data?.size!!
     }
 
-    override fun onBindViewHolder(p0: PieLegendAdapter.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.bindItem(p1)
     }
 

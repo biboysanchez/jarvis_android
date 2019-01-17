@@ -1,4 +1,4 @@
-package com.jarvis.app.fragment
+package com.jarvis.app.fragment.unused
 
 import android.graphics.Color
 import android.os.Bundle
@@ -21,6 +21,7 @@ import com.jarvis.app.adapter.CashPlacementAdapter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.extension.string
+import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.CashPlacement
@@ -47,7 +48,7 @@ class CashPositionFragment : BaseFragment() {
 
     companion object {
         val TAG = "CashPositionFragment"
-        var instance:CashPositionFragment? = null
+        var instance: CashPositionFragment? = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -203,7 +204,10 @@ class CashPositionFragment : BaseFragment() {
 
         tvShowAllDecision?.setOnClickListener {
             mActivity?.viewModel?.fragmentTag = "Cash Movement Details"
-            mActivity?.addFragment(ListDetailsFragment(), ListDetailsFragment.TAG)
+            mActivity?.addFragment(
+                ListDetailsFragment(),
+                ListDetailsFragment.TAG
+            )
         }
     }
 

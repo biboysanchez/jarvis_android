@@ -1,14 +1,12 @@
-package com.jarvis.app.fragment
+package com.jarvis.app.fragment.unused
 
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.VolleyError
-import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.EntryXComparator
@@ -19,13 +17,12 @@ import java.util.*
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
-import com.jarvis.app.R.id.*
 import com.jarvis.app.adapter.AssetAdapter
 import com.jarvis.app.custom.*
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.double
 import com.jarvis.app.extension.obj
+import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
@@ -33,7 +30,6 @@ import com.jarvis.app.model.Cumulative
 import com.jarvis.app.model.Matching
 import com.jarvis.app.model.ValueKey
 import com.jarvis.app.utils.JSONUtil
-import kotlinx.android.synthetic.main.fragment_duration_match.view.*
 import org.json.JSONException
 import org.json.JSONObject
 import kotlin.collections.ArrayList
@@ -55,7 +51,7 @@ class DurationMatchFragment : BaseFragment() {
 
     companion object {
         val TAG = "DurationMatchFragment"
-        var instance:DurationMatchFragment? = null
+        var instance: DurationMatchFragment? = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

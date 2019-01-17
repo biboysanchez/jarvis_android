@@ -1,4 +1,4 @@
-package com.jarvis.app.adapter
+package com.jarvis.app.adapter.unused
 
 import android.content.Context
 import android.graphics.Color

@@ -1,4 +1,4 @@
-package com.jarvis.app.fragment
+package com.jarvis.app.fragment.unused
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -6,10 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.ArrayRes
 import com.jarvis.app.R
-import com.jarvis.app.adapter.CashFlowAdapter
 import com.jarvis.app.adapter.CashPlacementAdapter
+import com.jarvis.app.fragment.BaseFragment
 import com.jarvis.app.model.CashPlacement
 import kotlinx.android.synthetic.main.fragment_cash_placement.*
 
