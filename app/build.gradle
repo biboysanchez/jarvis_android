@@ -10,8 +10,8 @@ android {
         applicationId "com.jarvis.app"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 13
-        versionName "1.0.0-build13"
+        versionCode 14
+        versionName "1.0.0-build14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

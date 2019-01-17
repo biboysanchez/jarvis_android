@@ -51,7 +51,7 @@
 
     <Button android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Add Merics"
+            android:text="Add Metrics"
             android:textColor="@color/white"
             android:textAllCaps="false"
             android:background="@drawable/rounded_primary_rad"

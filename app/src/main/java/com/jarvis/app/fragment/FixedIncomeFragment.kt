@@ -10,33 +10,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.android.volley.VolleyError
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.jarvis.app.R
-import com.jarvis.app.extension.arr
-import com.jarvis.app.extension.obj
-import com.jarvis.app.https.API
-import com.jarvis.app.https.ApiRequest
-import com.jarvis.app.model.Benchmark
-import com.jarvis.app.utils.JSONUtil
-import org.json.JSONException
-import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.jarvis.app.adapter.DialogCompanyAdapter
-import com.jarvis.app.custom.CustomMarkerView
-import com.jarvis.app.helpers.ValueFormatter
+import com.jarvis.app.dataholder.chart.ScatteredChartData
 import com.jarvis.app.model.Comparation
 import kotlinx.android.synthetic.main.dialog_add_company.view.*
 import kotlinx.android.synthetic.main.dialog_add_metrics.view.*
-import kotlinx.android.synthetic.main.fragment_equities.*
+import kotlinx.android.synthetic.main.fragment_fixed_income.*
 import kotlinx.android.synthetic.main.row_company_industry.view.*
 import kotlinx.android.synthetic.main.simple_text.view.*
 import java.lang.Exception
@@ -61,6 +43,7 @@ class FixedIncomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setSpinner()
+        setScatteredGraph()
 
         arrayCompany = ArrayList()
         for (i in 0 until Comparation.getComparation().size){
@@ -214,6 +197,10 @@ class FixedIncomeFragment : BaseFragment() {
                 (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9E9E9E"))
             }
         }
+    }
+
+    private fun setScatteredGraph(){
+        ScatteredChartData().initChart(scatteredChart)
     }
 
     override fun onDestroy() {

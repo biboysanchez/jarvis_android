@@ -34,8 +34,8 @@ class LoginActivity : AppCompatActivity() {
 //        }
 
         btnLogin?.setOnClickListener {
-            editLoginUsername?.setText("admin")
-            editLoginPassword?.setText("password")
+//            editLoginUsername?.setText("admin")
+//            editLoginPassword?.setText("password")
             checkLoginFields()
         }
     }
