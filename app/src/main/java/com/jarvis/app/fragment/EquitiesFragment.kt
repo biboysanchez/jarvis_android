@@ -35,6 +35,7 @@ import com.jarvis.app.custom.CustomMarkerView
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.model.Comparation
 import kotlinx.android.synthetic.main.dialog_add_company.view.*
+import kotlinx.android.synthetic.main.dialog_add_metrics.view.*
 import kotlinx.android.synthetic.main.fragment_equities.*
 import kotlinx.android.synthetic.main.row_company_industry.view.*
 import kotlinx.android.synthetic.main.simple_text.view.*
@@ -70,7 +71,11 @@ class EquitiesFragment : BaseFragment() {
         }
 
         flShowCompany?.setOnClickListener {
-            shoAddCompanyDialog()
+            showAddCompanyDialog()
+        }
+
+        tvMetrics?.setOnClickListener {
+            showMetricCompanyDialog()
         }
     }
 
@@ -151,7 +156,7 @@ class EquitiesFragment : BaseFragment() {
         }
     }
 
-    private fun shoAddCompanyDialog(){
+    private fun showAddCompanyDialog(){
         val alert = AlertDialog.Builder(context)
         val aView = LayoutInflater.from(context).inflate(R.layout.dialog_add_company, null)
         alert.setView(aView)
@@ -171,6 +176,27 @@ class EquitiesFragment : BaseFragment() {
                     setComparation(mAdapter.data!![i])
                 }
             }
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.setCancelable(false)
+    }
+
+    private fun showMetricCompanyDialog(){
+        val alert = AlertDialog.Builder(context)
+        val aView = LayoutInflater.from(context).inflate(R.layout.dialog_add_metrics, null)
+        alert.setView(aView)
+
+        val dialog = alert.create()
+        aView.rvDialogMetricList?.layoutManager = LinearLayoutManager(context)
+        val mAdapter = DialogCompanyAdapter(context)
+        aView.rvDialogMetricList?.adapter = mAdapter
+        aView.imgCloseDialogMetrics?.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        aView.btnAddMetrics?.setOnClickListener {
             dialog.dismiss()
         }
 
