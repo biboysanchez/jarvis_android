@@ -178,6 +178,7 @@ class MainActivity : AppCompatActivity() {
 
             "50" ->{
                 //Fixed Income
+                addFragmentNoAnim(FixedIncomeFragment(), FixedIncomeFragment.TAG)
             }
 
             "51" ->{
