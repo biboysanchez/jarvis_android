@@ -11,6 +11,7 @@ import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.fragment.CompanyDetailFragment
 import com.jarvis.app.fragment.EquitiesFragment
+import com.jarvis.app.fragment.FixedIncomeFragment
 import com.jarvis.app.model.Comparation
 import kotlinx.android.synthetic.main.row_comparition.view.*
 
@@ -70,11 +71,15 @@ class ComparationAdapter : RecyclerView.Adapter<ComparationAdapter.ViewHolder> {
                 notifyItemRemoved(indexOf!!)
                 EquitiesFragment.instance?.sAdapter?.notifyItemRemoved(indexOf)
                 EquitiesFragment.instance?.sAdapter?.data?.removeAt(indexOf)
+                FixedIncomeFragment.instance?.sAdapter?.notifyItemRemoved(indexOf)
+                FixedIncomeFragment.instance?.sAdapter?.data?.removeAt(indexOf)
+
                 data?.removeAt(indexOf)
 
                 Handler().postDelayed({
                     notifyDataSetChanged()
                     EquitiesFragment.instance?.sAdapter?.notifyDataSetChanged()
+                    FixedIncomeFragment.instance?.sAdapter?.notifyDataSetChanged()
                 },700)
             }
 

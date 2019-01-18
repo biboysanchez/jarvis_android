@@ -116,7 +116,6 @@ class CompanyDetailFragment : Fragment() {
                                 e.printStackTrace()
                             }
                         }
-
                     }catch (e: JSONException){
                         e.printStackTrace()
                     }
