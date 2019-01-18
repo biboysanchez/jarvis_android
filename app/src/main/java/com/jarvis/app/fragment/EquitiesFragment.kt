@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,6 +90,8 @@ class EquitiesFragment : BaseFragment() {
             144
         )
 
+        mView0.tag = arrayCompany!!.size - 1
+
         val mView1 = LayoutInflater.from(context).inflate(R.layout.simple_text, null)
         mView1.tvSimpleText?.text = comparation.lorem
         mView1.layoutParams = ViewGroup.LayoutParams(
@@ -129,6 +132,26 @@ class EquitiesFragment : BaseFragment() {
             }
         }
 
+        llCol0.setOnClickListener {
+            Log.i(TAG, "TEXT:: ${mView0.tvRowCompany?.text}")
+            showDetail(llCol0.indexOfChild(mView0)-1)
+        }
+
+        llCol1.setOnClickListener {
+            Log.i(TAG, "TEXT:: ${mView0.tvRowCompany?.text}")
+            showDetail(llCol0.indexOfChild(mView0)-1)
+        }
+
+        llCol2.setOnClickListener {
+            Log.i(TAG, "TEXT:: ${mView0.tvRowCompany?.text}")
+            showDetail(llCol0.indexOfChild(mView0)-1)
+        }
+
+        llCol3.setOnClickListener {
+            Log.i(TAG, "TEXT:: ${mView0.tvRowCompany?.text}")
+            showDetail(llCol0.indexOfChild(mView0)-1)
+        }
+
         mView0.imgRemoveCompany?.setOnClickListener {
             try {
                 llCol1.removeView(mView1)
@@ -154,6 +177,11 @@ class EquitiesFragment : BaseFragment() {
                 e.printStackTrace()
             }
         }
+    }
+
+    private fun showDetail(index:Int){
+        Log.i(TAG, "selected1: ${arrayCompany!![index].company}")
+      //  mActivity?.addFragment(CompanyDetailFragment(), CompanyDetailFragment.TAG)
     }
 
     private fun showAddCompanyDialog(){

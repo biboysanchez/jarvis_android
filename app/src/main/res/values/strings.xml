@@ -22,4 +22,6 @@
     <string name="news_analysis"><![CDATA[News & Analysis]]></string>
     <string name="reset_simulation">Reset Simulation</string>
     <string name="calculate">Calculate</string>
+
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vestibulum lacinia laoreet. Proin eget eros dapibus, pharetra mauris quis, semper odio. Nunc at dignissim elit. Mauris lacinia ex vitae ante lacinia, nec pharetra eros sodales. Vestibulum eleifend arcu massa, sed rhoncus lorem convallis sed. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas in mi sit amet tellus fringilla consequat.</string>
 </resources>

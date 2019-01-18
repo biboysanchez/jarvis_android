@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/home_bg">
+
+    <LinearLayout
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Existing Position"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:background="@drawable/rec_up_raduis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:id="@+id/llTop"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp">
+                <TextView
+                        android:textColor="@color/white"
+                        android:text="Securities Name"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.4"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:text="Cost Price"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:text="Market Price"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvExisting"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Summary Financials"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Relative Valuation"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Liquid Valuation"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+
+
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Asset Liability Breakdown"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvHeaderAsset"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"
+                  android:id="@+id/viewAsset"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:background="@drawable/rec_up_raduis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp">
+                <TextView
+                        android:textColor="@color/white"
+                        android:text="Asset"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:text="Amount"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvAssetLiability"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"/>
+
+            <View
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/home_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"/>
+
+            <LinearLayout
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/bg_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_600"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="0dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:text="Total"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tvAssetsTotal"
+                        android:gravity="end"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_600"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:text="187.5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:background="@drawable/rec_up_raduis_orange"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:id="@+id/llLiability"
+                    android:layout_marginStart="16dp">
+                <TextView
+                        android:textColor="@color/white"
+                        android:text="Liability"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:text="Amount"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvLiability"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"/>
+            <View
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/home_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"/>
+
+            <LinearLayout
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/bg_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_600"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="0dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:text="Total"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tvLiabilitiesTotal"
+                        android:gravity="end"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_600"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:text="187.5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_600"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="0dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:text="Net Cash availability\nfor the next year"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tvSurplus"
+                        android:textSize="16sp"
+                        android:gravity="end"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_600"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:text="187.5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Management Profile"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+
+            <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_600"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Board of Commissioner"/>
+            <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lorem_ipsum"/>
+
+            <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_600"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Board of Director"/>
+            <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lorem_ipsum"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Financial Highlights"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Company Profile"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+
+            <TextView
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lorem_ipsum"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Analysis"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+
+            <TextView
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lorem_ipsum"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
