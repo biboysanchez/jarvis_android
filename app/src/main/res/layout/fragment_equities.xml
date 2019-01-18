@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/home_bg"
         android:clickable="true"
@@ -101,8 +102,8 @@
 
             <LinearLayout
                     android:layout_marginTop="16dp"
-                   android:layout_marginStart="16dp"
-                   android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -113,6 +114,7 @@
                         android:orientation="vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+
                     <TextView
                             android:paddingStart="12dp"
                             android:paddingEnd="12dp"
@@ -120,15 +122,28 @@
                             android:background="@drawable/rec_up_left_raduis"
                             android:text="Company - Industry"
                             android:textColor="@color/white"
-                            android:layout_width="180dp"
+                            android:layout_width="match_parent"
                             android:layout_height="48dp"/>
 
+                    <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rvComparationCompany"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
                 </LinearLayout>
 
-                <View
-                        android:background="@color/white"
-                        android:layout_width="1dp"
-                        android:layout_height="48dp"/>
+                <FrameLayout
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent">
+                    <LinearLayout
+                            android:background="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"/>
+                    <LinearLayout
+                            android:background="@drawable/vertical_shadow"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                </FrameLayout>
 
                 <HorizontalScrollView
                         android:scrollbars="none"
@@ -136,6 +151,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <LinearLayout
+                            android:orientation="vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
@@ -143,21 +159,15 @@
                                 android:orientation="horizontal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
-                            <LinearLayout
-                                    android:id="@+id/llCol1"
-                                    android:orientation="vertical"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-                                <TextView
-                                        android:background="@color/colorPrimary"
-                                        android:paddingStart="16dp"
-                                        android:paddingEnd="16dp"
-                                        android:gravity="center_vertical"
-                                        android:text="Very Long Lorem"
-                                        android:textColor="@color/white"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="48dp"/>
-                            </LinearLayout>
+                            <TextView
+                                    android:background="@color/colorPrimary"
+                                    android:paddingStart="16dp"
+                                    android:paddingEnd="16dp"
+                                    android:gravity="center"
+                                    android:text="Very Long Lorem"
+                                    android:textColor="@color/white"
+                                    android:layout_width="160dp"
+                                    android:layout_height="48dp"/>
 
                             <View
                                     android:background="@color/white"
@@ -175,7 +185,7 @@
                                         android:gravity="center"
                                         android:text="Ipsum"
                                         android:textColor="@color/white"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="80dp"
                                         android:layout_height="48dp"/>
 
                             </LinearLayout>
@@ -196,10 +206,15 @@
                                         android:gravity="center"
                                         android:text="Dolor"
                                         android:textColor="@color/white"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="80dp"
                                         android:layout_height="48dp"/>
                             </LinearLayout>
                         </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvComparationDetails"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
 
                     </LinearLayout>
 
@@ -215,7 +230,6 @@
                     android:layout_marginBottom="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="48dp">
-
                 <FrameLayout
                         android:background="@drawable/rounded_primary_hidden"
                         android:layout_width="match_parent"
@@ -230,8 +244,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"/>
                 </FrameLayout>
-
-
             </FrameLayout>
 
             <Button

@@ -31,6 +31,7 @@ import kotlin.collections.HashMap
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.jarvis.app.adapter.ComparationAdapter
 import com.jarvis.app.adapter.DialogCompanyAdapter
 import com.jarvis.app.custom.CustomMarkerView
 import com.jarvis.app.helpers.ValueFormatter
@@ -45,7 +46,9 @@ import java.lang.Exception
 class EquitiesFragment : BaseFragment() {
     private var arrayDanamasSaham:ArrayList<Benchmark>? = ArrayList()
     private var arraySimasSaham:ArrayList<Benchmark>? = ArrayList()
-    private var arrayCompany:ArrayList<Comparation>? = ArrayList()
+
+    private var mAdapter:ComparationAdapter? = null
+    var sAdapter:ComparationAdapter? = null
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -66,10 +69,14 @@ class EquitiesFragment : BaseFragment() {
         getData()
         setSpinner()
 
-        arrayCompany = ArrayList()
+        mAdapter = ComparationAdapter(context)
+        sAdapter = ComparationAdapter(context)
         for (i in 0 until Comparation.getComparation().size){
-            setComparation(Comparation.getComparation()[i])
+            mAdapter?.addItem(Comparation.getCompany()[i])
+            sAdapter?.addItem(Comparation.getCompany()[i])
         }
+
+        setComparation()
 
         flShowCompany?.setOnClickListener {
             showAddCompanyDialog()
@@ -80,107 +87,17 @@ class EquitiesFragment : BaseFragment() {
         }
     }
 
-    private fun setComparation(comparation: Comparation){
-        arrayCompany?.add(comparation)
-        val mView0 = LayoutInflater.from(context).inflate(R.layout.row_company_industry, null)
-        mView0.tvRowCompany?.text = comparation.company
-        mView0.tvRowIndustry?.text = comparation.industry
-        mView0.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            144
-        )
+    private fun setComparation(){
+        sAdapter?.isHeader(false)
+        mAdapter?.isHeader(true)
+        rvComparationDetails?.layoutManager = LinearLayoutManager(context)
+        rvComparationDetails?.adapter = sAdapter
 
-        mView0.tag = arrayCompany!!.size - 1
-
-        val mView1 = LayoutInflater.from(context).inflate(R.layout.simple_text, null)
-        mView1.tvSimpleText?.text = comparation.lorem
-        mView1.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            144
-        )
-
-        val mView2 = LayoutInflater.from(context).inflate(R.layout.simple_text, null)
-        mView2.tvSimpleText?.text = comparation.ipsum
-        mView2.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            144
-        )
-
-        val mView3 = LayoutInflater.from(context).inflate(R.layout.simple_text, null)
-        mView3.tvSimpleText?.text = comparation.dolor
-        mView3.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            144
-        )
-
-        llCol0.addView(mView0)
-        llCol1.addView(mView1)
-        llCol2.addView(mView2)
-        llCol3.addView(mView3)
-
-        for (i in 0 until arrayCompany!!.size){
-            if (i % 2 == 1){
-                mView0.llRowComparationMain?.setBackgroundColor(Color.parseColor("#F4F9F9"))
-                mView1.tvSimpleText?.setBackgroundColor(Color.parseColor("#F4F9F9"))
-                mView2.tvSimpleText?.setBackgroundColor(Color.parseColor("#F4F9F9"))
-                mView3.tvSimpleText?.setBackgroundColor(Color.parseColor("#F4F9F9"))
-            }else{
-                mView0.llRowComparationMain?.setBackgroundColor(Color.parseColor("#EEF4F3"))
-                mView1.tvSimpleText?.setBackgroundColor(Color.parseColor("#EEF4F3"))
-                mView2.tvSimpleText?.setBackgroundColor(Color.parseColor("#EEF4F3"))
-                mView3.tvSimpleText?.setBackgroundColor(Color.parseColor("#EEF4F3"))
-            }
-        }
-
-        llCol0.setOnClickListener {
-            Log.i(TAG, "TEXT:: ${mView0.tvRowCompany?.text}")
-            showDetail(llCol0.indexOfChild(mView0)-1)
-        }
-
-        llCol1.setOnClickListener {
-            Log.i(TAG, "TEXT:: ${mView0.tvRowCompany?.text}")
-            showDetail(llCol0.indexOfChild(mView0)-1)
-        }
-
-        llCol2.setOnClickListener {
-            Log.i(TAG, "TEXT:: ${mView0.tvRowCompany?.text}")
-            showDetail(llCol0.indexOfChild(mView0)-1)
-        }
-
-        llCol3.setOnClickListener {
-            Log.i(TAG, "TEXT:: ${mView0.tvRowCompany?.text}")
-            showDetail(llCol0.indexOfChild(mView0)-1)
-        }
-
-        mView0.imgRemoveCompany?.setOnClickListener {
-            try {
-                llCol1.removeView(mView1)
-                llCol2.removeView(mView2)
-                llCol3.removeView(mView3)
-                llCol0.removeView(mView0)
-                arrayCompany?.remove(comparation)
-
-                for (i in 0 until arrayCompany!!.size){
-                    if (i % 2 == 1){
-                        mView0.llRowComparationMain?.setBackgroundColor(Color.parseColor("#F4F9F9"))
-                        mView1.tvSimpleText?.setBackgroundColor(Color.parseColor("#F4F9F9"))
-                        mView2.tvSimpleText?.setBackgroundColor(Color.parseColor("#F4F9F9"))
-                        mView3.tvSimpleText?.setBackgroundColor(Color.parseColor("#F4F9F9"))
-                    }else{
-                        mView0.llRowComparationMain?.setBackgroundColor(Color.parseColor("#EEF4F3"))
-                        mView1.tvSimpleText?.setBackgroundColor(Color.parseColor("#EEF4F3"))
-                        mView2.tvSimpleText?.setBackgroundColor(Color.parseColor("#EEF4F3"))
-                        mView3.tvSimpleText?.setBackgroundColor(Color.parseColor("#EEF4F3"))
-                    }
-                }
-            }catch (e: Exception){
-                e.printStackTrace()
-            }
-        }
+        rvComparationCompany?.layoutManager = LinearLayoutManager(context)
+        rvComparationCompany.adapter = mAdapter
     }
 
     private fun showDetail(index:Int){
-        Log.i(TAG, "selected1: ${arrayCompany!![index].company}")
       //  mActivity?.addFragment(CompanyDetailFragment(), CompanyDetailFragment.TAG)
     }
 
@@ -192,18 +109,20 @@ class EquitiesFragment : BaseFragment() {
         val dialog = alert.create()
         aView.rvDialogList.layoutManager = LinearLayoutManager(context)
 
-        val mAdapter = DialogCompanyAdapter(context)
+        val bAdapter = DialogCompanyAdapter(context)
         aView.rvDialogList.adapter = mAdapter
         aView.imgCloseDialog?.setOnClickListener {
             dialog.dismiss()
         }
 
         aView.btnAddCompany?.setOnClickListener {
-            for (i in 0 until mAdapter.data!!.size){
-                if (mAdapter.data!![i].isChecked){
-                    setComparation(mAdapter.data!![i])
+            for (i in 0 until bAdapter.data!!.size){
+                if (bAdapter.data!![i].isChecked){
+                    this.mAdapter?.addItem(bAdapter.data!![i])
+                    this.sAdapter?.addItem(bAdapter.data!![i])
                 }
             }
+            setComparation()
             dialog.dismiss()
         }
 
