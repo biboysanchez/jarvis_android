@@ -218,7 +218,7 @@
                         android:paddingEnd="8dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
-                        android:text="187.5"
+                        android:text="0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
             </LinearLayout>

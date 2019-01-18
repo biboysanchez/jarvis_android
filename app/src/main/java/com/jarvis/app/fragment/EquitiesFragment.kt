@@ -31,11 +31,14 @@ import kotlin.collections.HashMap
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.jarvis.app.adapter.AssetAdapter
 import com.jarvis.app.adapter.ComparationAdapter
 import com.jarvis.app.adapter.DialogCompanyAdapter
 import com.jarvis.app.custom.CustomMarkerView
+import com.jarvis.app.extension.double
 import com.jarvis.app.helpers.ValueFormatter
 import com.jarvis.app.model.Comparation
+import com.jarvis.app.model.ValueKey
 import kotlinx.android.synthetic.main.dialog_add_company.view.*
 import kotlinx.android.synthetic.main.dialog_add_metrics.view.*
 import kotlinx.android.synthetic.main.fragment_equities.*
@@ -95,10 +98,6 @@ class EquitiesFragment : BaseFragment() {
 
         rvComparationCompany?.layoutManager = LinearLayoutManager(context)
         rvComparationCompany.adapter = mAdapter
-    }
-
-    private fun showDetail(index:Int){
-      //  mActivity?.addFragment(CompanyDetailFragment(), CompanyDetailFragment.TAG)
     }
 
     private fun showAddCompanyDialog(){
@@ -275,6 +274,7 @@ class EquitiesFragment : BaseFragment() {
         lineChartEquities?.animateX(1600)
         lineChartEquities?.invalidate()
     }
+
     override fun onDestroy() {
         super.onDestroy()
         instance = null

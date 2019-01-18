@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
+import com.jarvis.app.fragment.CompanyDetailFragment
 import com.jarvis.app.fragment.EquitiesFragment
 import com.jarvis.app.model.Comparation
 import kotlinx.android.synthetic.main.row_comparition.view.*
@@ -75,6 +76,11 @@ class ComparationAdapter : RecyclerView.Adapter<ComparationAdapter.ViewHolder> {
                     notifyDataSetChanged()
                     EquitiesFragment.instance?.sAdapter?.notifyDataSetChanged()
                 },700)
+            }
+
+            itemView.llRowComparation?.setOnClickListener {
+                mActivity.viewModel?.selectedCompany = comparation
+                mActivity.addFragment(CompanyDetailFragment(), CompanyDetailFragment.TAG)
             }
 
             if (i % 2 == 1){
