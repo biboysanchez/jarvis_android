@@ -110,7 +110,7 @@ class EquitiesFragment : BaseFragment() {
         aView.rvDialogList.layoutManager = LinearLayoutManager(context)
 
         val bAdapter = DialogCompanyAdapter(context)
-        aView.rvDialogList.adapter = mAdapter
+        aView.rvDialogList.adapter = bAdapter
         aView.imgCloseDialog?.setOnClickListener {
             dialog.dismiss()
         }
@@ -137,8 +137,8 @@ class EquitiesFragment : BaseFragment() {
 
         val dialog = alert.create()
         aView.rvDialogMetricList?.layoutManager = LinearLayoutManager(context)
-        val mAdapter = DialogCompanyAdapter(context)
-        aView.rvDialogMetricList?.adapter = mAdapter
+        val dAdapter = DialogCompanyAdapter(context)
+        aView.rvDialogMetricList?.adapter = dAdapter
         aView.imgCloseDialogMetrics?.setOnClickListener {
             dialog.dismiss()
         }
