@@ -30,6 +30,9 @@ class CompanyDetailFragment : Fragment() {
     private var mAdapter: SummaryFinancialAdapter? = null
     private var sAdapter: SummaryFinancialAdapter? = null
 
+    private var priceAdapter: RelativeValuationAdapter? = null
+    private var consensusAdapter: RelativeValuationAdapter? = null
+
     companion object {
         val TAG = "CompanyDetailFragment"
     }
@@ -52,11 +55,15 @@ class CompanyDetailFragment : Fragment() {
             sAdapter?.addItem(Comparation.getCompany()[i])
         }
 
+        priceAdapter = RelativeValuationAdapter(context)
+        consensusAdapter = RelativeValuationAdapter(context)
         setAssetList()
         setExistingPosition()
         setSummaryFinancial()
         setFinancialHighlights()
+        setRelativeValuation()
     }
+
 
     private fun setSummaryFinancial(){
         sAdapter?.isHeader(false)
@@ -67,6 +74,16 @@ class CompanyDetailFragment : Fragment() {
 
         rvSummaryTableDetails?.layoutManager = LinearLayoutManager(context)
         rvSummaryTableDetails.adapter = mAdapter
+    }
+
+    private fun setRelativeValuation(){
+        priceAdapter?.isHeader(false)
+        consensusAdapter?.isHeader(true)
+        rvPriceEarning?.layoutManager = LinearLayoutManager(context)
+        rvPriceEarning?.adapter = priceAdapter
+
+        rvConcensus?.layoutManager = LinearLayoutManager(context)
+        rvConcensus.adapter = consensusAdapter
     }
 
     private fun setExistingPosition(){

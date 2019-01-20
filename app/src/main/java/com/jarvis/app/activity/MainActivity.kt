@@ -80,14 +80,19 @@ class MainActivity : AppCompatActivity() {
 
         mSession = UserSession(this)
         val token : String?
-        if(mSession?.firebaseToken() != null && mSession?.firebaseToken() != ""){
-            token = mSession?.firebaseToken()
-            Log.d("firebase_token_stored",token)
-        }
-        else{
-            token = FirebaseInstanceId.getInstance().token
-            mSession?.storeFirebaseToken(token)
-            Log.d("firebase_token_new",token)
+
+        try {
+            if(mSession?.firebaseToken() != null && mSession?.firebaseToken() != ""){
+                token = mSession?.firebaseToken()
+                Log.d("firebase_token_stored",token)
+            }
+            else{
+                token = FirebaseInstanceId.getInstance().token
+                mSession?.storeFirebaseToken(token)
+                Log.d("firebase_token_new",token)
+            }
+        }catch (e: Exception){
+            e.printStackTrace()
         }
 
         viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
