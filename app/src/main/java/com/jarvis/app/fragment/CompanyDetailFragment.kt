@@ -9,13 +9,12 @@ import android.view.ViewGroup
 import com.android.volley.VolleyError
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
-import com.jarvis.app.adapter.AssetAdapter
-import com.jarvis.app.adapter.ExistingPositionAdapter
-import com.jarvis.app.adapter.FinancialHighlightAdapter
+import com.jarvis.app.adapter.*
 import com.jarvis.app.extension.double
 import com.jarvis.app.extension.obj
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
+import com.jarvis.app.model.Comparation
 import com.jarvis.app.model.ValueKey
 import com.jarvis.app.utils.JSONUtil
 import kotlinx.android.synthetic.main.fragment_company_detail.*
@@ -27,6 +26,9 @@ class CompanyDetailFragment : Fragment() {
     private var arrAssetKeys:ArrayList<ValueKey>?       = ArrayList()
     private var arrLiabilitesKeys:ArrayList<ValueKey>?  = ArrayList()
     private var mTotal = 0f
+
+    private var mAdapter: SummaryFinancialAdapter? = null
+    private var sAdapter: SummaryFinancialAdapter? = null
 
     companion object {
         val TAG = "CompanyDetailFragment"
@@ -42,9 +44,29 @@ class CompanyDetailFragment : Fragment() {
         mActivity = context as MainActivity?
         mActivity?.title = mActivity?.viewModel?.selectedCompany?.company
         mActivity?.showBackButton(true)
+
+        mAdapter = SummaryFinancialAdapter(context)
+        sAdapter = SummaryFinancialAdapter(context)
+        for (i in 0 until Comparation.getComparation().size){
+            mAdapter?.addItem(Comparation.getCompany()[i])
+            sAdapter?.addItem(Comparation.getCompany()[i])
+        }
+
         setAssetList()
         setExistingPosition()
+        setSummaryFinancial()
         setFinancialHighlights()
+    }
+
+    private fun setSummaryFinancial(){
+        sAdapter?.isHeader(false)
+        mAdapter?.isHeader(true)
+
+        rvSummaryYear?.layoutManager = LinearLayoutManager(context)
+        rvSummaryYear?.adapter = sAdapter
+
+        rvSummaryTableDetails?.layoutManager = LinearLayoutManager(context)
+        rvSummaryTableDetails.adapter = mAdapter
     }
 
     private fun setExistingPosition(){

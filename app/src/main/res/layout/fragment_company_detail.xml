@@ -110,6 +110,120 @@
                   android:layout_height="0.8dp"
                   android:background="@color/home_bg"
                   android:layout_marginTop="16dp"/>
+
+            <LinearLayout
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/llRowComparation">
+
+                <LinearLayout
+                        android:id="@+id/llCol0"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/rec_up_left_raduis"
+                            android:text="Securities Name"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"/>
+
+                    <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rvSummaryYear"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                </LinearLayout>
+
+                <FrameLayout
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent">
+                    <LinearLayout
+                            android:background="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"/>
+                    <LinearLayout
+                            android:background="@drawable/vertical_shadow"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                </FrameLayout>
+
+                <HorizontalScrollView
+                        android:scrollbars="none"
+                        android:id="@+id/rowScroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp">
+                            <TextView
+                                    android:background="@color/colorPrimary"
+                                    android:paddingStart="16dp"
+                                    android:paddingEnd="16dp"
+                                    android:gravity="center"
+                                    android:text="Quick Ratio"
+                                    android:textColor="@color/white"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.4"
+                                    android:layout_height="match_parent"/>
+
+                            <View
+                                    android:background="@color/white"
+                                    android:layout_width="1dp"
+                                    android:layout_height="48dp"/>
+
+                            <TextView
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
+                                    android:background="@color/colorPrimary"
+                                    android:gravity="center"
+                                    android:text="Interes Converage"
+                                    android:textColor="@color/white"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.3"
+                                    android:layout_height="match_parent"/>
+
+                            <View
+                                    android:background="@color/white"
+                                    android:layout_width="1dp"
+                                    android:layout_height="48dp"/>
+
+                            <TextView
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
+                                    android:background="@drawable/rec_up_right_raduis"
+                                    android:gravity="center"
+                                    android:text="AR Turover"
+                                    android:textColor="@color/white"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.3"
+                                    android:layout_height="match_parent"/>
+                        </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvSummaryTableDetails"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -372,7 +486,7 @@
 
             <TextView
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginBottom="8dp"
                     android:textStyle="bold"
                     android:textColor="@color/gray_600"
