@@ -33,24 +33,32 @@
                   android:layout_marginTop="16dp"/>
 
             <LinearLayout
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:clickable="true"
                     android:focusable="true"
                     android:contentDescription="@null"
-                    android:padding="8dp"
                     android:background="@drawable/rec_up_raduis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:id="@+id/llTop"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="12dp">
                 <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
                         android:textColor="@color/white"
                         android:text="Securities Name"
                         android:layout_width="0dp"
                         android:layout_weight="0.4"
                         android:layout_height="wrap_content"/>
+
+                <View android:layout_width="0.8dp"
+                      android:layout_height="match_parent"
+                      android:background="@color/home_bg"/>
+
                 <TextView
                         android:gravity="center"
                         android:textColor="@color/white"
@@ -58,7 +66,16 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.3"
                         android:layout_height="wrap_content"/>
+
+                <View android:layout_width="0.8dp"
+                      android:layout_height="match_parent"
+                      android:background="@color/home_bg"/>
+
                 <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="8dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:text="Market Price"
@@ -406,6 +423,66 @@
                   android:layout_height="0.8dp"
                   android:background="@color/home_bg"
                   android:layout_marginTop="16dp"/>
+
+
+            <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@null"
+                    android:background="@drawable/rec_up_raduis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp">
+                <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:textColor="@color/white"
+                        android:text="Year"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.4"
+                        android:layout_height="wrap_content"/>
+
+                <View android:layout_width="0.8dp"
+                      android:layout_height="match_parent"
+                      android:background="@color/home_bg"/>
+
+                <TextView
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:text="Net Sales"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content"/>
+
+                <View android:layout_width="0.8dp"
+                      android:layout_height="match_parent"
+                      android:background="@color/home_bg"/>
+
+                <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:text="COGS"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                    android:layout_marginBottom="16dp"
+                    android:id="@+id/rvFinancialHighlights"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout

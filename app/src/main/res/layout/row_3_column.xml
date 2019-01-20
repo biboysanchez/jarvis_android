@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:id="@+id/llRowFinancialHighlight"
+              android:padding="8dp">
+    <TextView
+            android:id="@+id/tvRowColumn1"
+            android:text="Year"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/tvRowColumn2"
+            android:gravity="center"
+            android:text="Net Sales"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/tvRowColumn3"
+            android:gravity="center"
+            android:text="COGS"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"/>
+</LinearLayout>
+
+

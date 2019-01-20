@@ -10,6 +10,8 @@ import com.android.volley.VolleyError
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.adapter.AssetAdapter
+import com.jarvis.app.adapter.ExistingPositionAdapter
+import com.jarvis.app.adapter.FinancialHighlightAdapter
 import com.jarvis.app.extension.double
 import com.jarvis.app.extension.obj
 import com.jarvis.app.https.API
@@ -41,6 +43,18 @@ class CompanyDetailFragment : Fragment() {
         mActivity?.title = mActivity?.viewModel?.selectedCompany?.company
         mActivity?.showBackButton(true)
         setAssetList()
+        setExistingPosition()
+        setFinancialHighlights()
+    }
+
+    private fun setExistingPosition(){
+        rvExisting?.layoutManager = LinearLayoutManager(context)
+        rvExisting?.adapter = ExistingPositionAdapter(context)
+    }
+
+    private fun setFinancialHighlights(){
+        rvFinancialHighlights?.layoutManager = LinearLayoutManager(context)
+        rvFinancialHighlights?.adapter = FinancialHighlightAdapter(context)
     }
 
     private fun setAssetList(){
