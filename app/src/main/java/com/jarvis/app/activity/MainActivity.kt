@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         title = mainTitle
         addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
 
-        //getCompanyList()
+        getCompanyList()
 
         Thread {
             setNavigationList()
@@ -155,11 +155,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+/*        Chapter 7 (Strategic asset allocation) -> 22 Jan
+        Chapter 1 (IC Decision support) -> 28 Jan
+        Chapter 2 (Portfolio Overview) -> 30 Jan
+        Chapter 3 (Cash Overview) -> 30 Jan
+        Chapter 5 (Performance Measurement) -> 1 Feb*/
+
         when (page) {
             "1" -> {
-                addFragmentNoAnim(PortfolioOverviewFragment(), PortfolioOverviewFragment.TAG)
+                addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
                 viewModel!!.title = "Portfolio Overview"
                 isHideCompany(false)
+            }
+
+            "20" -> {
+                addFragmentNoAnim(CashPositionFragment(), CashPositionFragment.TAG)
+                isHideCompany(true)
+            }
+
+            "21" -> {
+                addFragmentNoAnim(DurationMatchFragment(), DurationMatchFragment.TAG)
+                isHideCompany(true)
             }
 
             "30" -> {

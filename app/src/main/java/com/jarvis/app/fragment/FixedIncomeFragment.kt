@@ -45,7 +45,7 @@ class FixedIncomeFragment : BaseFragment() {
 
         mAdapter = ComparationAdapter(context)
         sAdapter = ComparationAdapter(context)
-        for (i in 0 until Comparation.getComparation().size){
+        for (i in 0 until Comparation.getCompany().size){
             mAdapter?.addItem(Comparation.getCompany()[i])
             sAdapter?.addItem(Comparation.getCompany()[i])
         }

@@ -34,8 +34,8 @@ class LoginActivity : AppCompatActivity() {
 //        }
 
         btnLogin?.setOnClickListener {
-            editLoginUsername?.setText("admin")
-            editLoginPassword?.setText("password")
+//            editLoginUsername?.setText("admin")
+//            editLoginPassword?.setText("password")
             checkLoginFields()
         }
     }
@@ -52,12 +52,7 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         inputLoginPassword?.error = null
-       // postLogin()
-
-        val mSession = UserSession(this@LoginActivity)
-        mSession.setIsLogged()
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-        finish()
+        postLogin()
     }
 
     private fun postLogin(){

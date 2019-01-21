@@ -53,8 +53,8 @@ class ComparationAdapter : RecyclerView.Adapter<ComparationAdapter.ViewHolder> {
             val mActivity = mContext as MainActivity
 
             itemView.tvRowLoren?.text = comparation.lorem
-            itemView.tvRowIpsum?.text = comparation.ipsum
-            itemView.tvRowDolor?.text = comparation.dolor
+            itemView.tvRowIpsum?.text = comparation.dolor
+            itemView.tvRowDolor?.text = comparation.ipsum
             itemView.tvRowCompany?.text = comparation.company
             itemView.tvRowIndustry?.text = comparation.industry
 

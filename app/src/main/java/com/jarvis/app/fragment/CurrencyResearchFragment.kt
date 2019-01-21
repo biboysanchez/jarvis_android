@@ -32,11 +32,12 @@ class CurrencyResearchFragment : BaseFragment() {
         tvBlankTitle?.text = mActivity?.viewModel!!.title
         setEventListener()
         setLineChart()
+
+        radioGroupTime?.check(R.id.rad12M)
     }
 
     private fun setEventListener(){
         tvCalculate?.setOnClickListener {
-            etTimePeriod?.setText("12")
             etUsdRates?.setText("1.25")
             etIdrRates?.setText("6.50")
             etSpotRate?.setText("14.50")
@@ -44,7 +45,6 @@ class CurrencyResearchFragment : BaseFragment() {
         }
 
         tvResetSimulation?.setOnClickListener {
-            etTimePeriod?.setText("")
             etUsdRates?.setText("")
             etIdrRates?.setText("")
             etSpotRate?.setText("")
@@ -54,19 +54,19 @@ class CurrencyResearchFragment : BaseFragment() {
 
     private fun setLineChart(){
         val entries:ArrayList<Entry>? = ArrayList()
-        entries?.add(Entry(0f, 11.234f))
-        entries?.add(Entry(1f, 12.234f))
-        entries?.add(Entry(2f, 15.234f))
-        entries?.add(Entry(3f, 16.234f))
-        entries?.add(Entry(4f, 19.234f))
-        entries?.add(Entry(5f, 22.234f))
+        entries?.add(Entry(0f, 15000.00f))
+        entries?.add(Entry(1f, 15050.00f))
+        entries?.add(Entry(2f, 15150.00f))
+        entries?.add(Entry(3f, 15300.00f))
+        entries?.add(Entry(4f, 15450.00f))
+        entries?.add(Entry(5f, 15500.00f))
 
         val labels:ArrayList<String> = ArrayList()
-        labels.add("M2")
-        labels.add("M4")
+        labels.add("M0")
+        labels.add("M1")
+        labels.add("M3")
         labels.add("M6")
-        labels.add("M8")
-        labels.add("M10")
+        labels.add("M9")
         labels.add("M12")
         val dataSet = LineDataSet(entries, "Label")
         dataSet.color = Color.parseColor("#21C6B7")
