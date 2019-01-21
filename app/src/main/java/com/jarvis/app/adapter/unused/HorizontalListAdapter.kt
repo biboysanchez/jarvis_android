@@ -7,11 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
-import com.jarvis.app.fragment.*
-import com.jarvis.app.fragment.unused.CashPositionFragment
-import com.jarvis.app.fragment.unused.DurationMatchFragment
-import com.jarvis.app.fragment.unused.PerformanceDetailFragment
-import com.jarvis.app.fragment.unused.TimeSeriesFragment
+import com.jarvis.app.fragment.unused.*
 import com.jarvis.app.model.Company
 import kotlinx.android.synthetic.main.button_scroll.view.*
 

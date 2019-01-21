@@ -1,4 +1,4 @@
-package com.jarvis.app.fragment
+package com.jarvis.app.fragment.unused
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -28,7 +28,7 @@ class SummaryExposureAllFragment : Fragment() {
         mActivity?.showBackButton(true)
 
         rvSummaryExposureAll?.layoutManager = LinearLayoutManager(context)
-        rvSummaryExposureAll?.adapter = SummaryExposureAdapter(context, true)
+        rvSummaryExposureAll?.adapter = SummaryExposureAdapter(context)
     }
 
     override fun onDestroyView() {

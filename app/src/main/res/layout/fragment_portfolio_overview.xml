@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:background="@color/home_bg">
+
+    <android.support.design.widget.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+        <LinearLayout
+                android:visibility="gone"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                android:id="@+id/llMainSearch"
+                android:orientation="vertical"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <FrameLayout
+                    android:theme="@style/AppTheme"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="0dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/card_view_dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <Spinner
+                        android:id="@+id/spinnerWeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"/>
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:padding="8dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="@string/investment_portfolio"
+                        android:id="@+id/textView3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_margin="16dp"/>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"/>
+
+                <FrameLayout
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <Spinner
+                            android:id="@+id/spinnerAssetClass"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="0dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"/>
+                </FrameLayout>
+
+                <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pieChartHome"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"/>
+
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvPieLegend"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_white"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="Performance Summary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp" android:id="@+id/textView8"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg" app:layout_constraintTop_toBottomOf="@+id/imgMenuSummary"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintEnd_toEndOf="parent" android:id="@+id/view" android:layout_marginTop="8dp"/>
+
+
+                <ImageView
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@null"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_sort"
+                        android:background="@drawable/rec_hallow_primary"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp" app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:id="@+id/imgMenuSummary"
+                        app:layout_constraintTop_toTopOf="@+id/textView8"
+                        app:layout_constraintStart_toEndOf="@+id/frameLayout"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView8"/>
+                <android.support.v7.widget.RecyclerView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rvPerformance" app:layout_constraintEnd_toEndOf="@+id/textView8"
+                        app:layout_constraintStart_toStartOf="@+id/textView8"
+                        app:layout_constraintTop_toBottomOf="@+id/view" android:layout_marginTop="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"/>
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_white"
+                    android:orientation="vertical">
+
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="Top 10 Position"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/tvHeaderPosition"
+                        android:layout_width="0dp" app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"/>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"
+                      app:layout_constraintTop_toBottomOf="@+id/imgMenuPosition"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintEnd_toEndOf="parent" android:id="@+id/view10"
+                      android:layout_marginTop="8dp"/>
+
+                <ImageView
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@null"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_sort"
+                        android:background="@drawable/rec_hallow_primary"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:id="@+id/imgMenuPosition"
+                        app:layout_constraintTop_toTopOf="@+id/tvHeaderPosition"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvHeaderPosition"/>
+
+                <android.support.v7.widget.RecyclerView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@+id/imgMenuPosition"
+                        app:layout_constraintTop_toBottomOf="@+id/view10"
+                        android:id="@+id/rvPosition" app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="16dp" app:layout_constraintStart_toStartOf="@+id/tvHeaderPosition"
+                        android:layout_marginTop="8dp"/>
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

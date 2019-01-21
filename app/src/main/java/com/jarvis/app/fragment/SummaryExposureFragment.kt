@@ -8,9 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.jarvis.app.R
-import com.jarvis.app.R.id.rvBalanceSheetAsset
-import com.jarvis.app.R.id.rvSummaryExposure
-import com.jarvis.app.activity.MainActivity
 import com.jarvis.app.adapter.*
 import kotlinx.android.synthetic.main.fragment_blank.*
 import kotlinx.android.synthetic.main.fragment_summary_exposure.*
@@ -33,11 +30,6 @@ class SummaryExposureFragment : BaseFragment() {
         tvBlankTitle?.text = mActivity?.viewModel!!.title
         drawAll()
         setAutoSearch()
-
-        tvShowAllSummaryExposure?.setOnClickListener {
-            mActivity?.addFragment(SummaryExposureAllFragment(),SummaryExposureAllFragment.TAG)
-        }
-
 
     }
 
@@ -87,8 +79,16 @@ class SummaryExposureFragment : BaseFragment() {
     }
 
     private fun setSummaryExposure(){
-        rvSummaryExposure?.layoutManager = LinearLayoutManager(context)
-        rvSummaryExposure?.adapter = SummaryExposureAdapter(context, false)
+        val mAdapter:SummaryExposureAdapter? = SummaryExposureAdapter(context)
+        val sAdapter:SummaryExposureAdapter? = SummaryExposureAdapter(context)
+
+        rvSummaryCompanies?.layoutManager    = LinearLayoutManager(context)
+        mAdapter?.isHeader(true)
+        rvSummaryCompanies?.adapter          = sAdapter
+
+        rvSummaryRevenues?.layoutManager = LinearLayoutManager(context)
+        mAdapter?.isHeader(true)
+        rvSummaryRevenues?.adapter      = mAdapter
     }
 
     private fun setBalanceSheetAsset(){

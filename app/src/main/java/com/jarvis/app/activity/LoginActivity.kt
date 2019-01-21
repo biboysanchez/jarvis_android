@@ -52,7 +52,12 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         inputLoginPassword?.error = null
-        postLogin()
+       // postLogin()
+
+        val mSession = UserSession(this@LoginActivity)
+        mSession.setIsLogged()
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
     }
 
     private fun postLogin(){

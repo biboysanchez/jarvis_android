@@ -29,10 +29,7 @@ import com.jarvis.app.adapter.SideMenuAdapter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.fragment.*
-import com.jarvis.app.fragment.unused.CashPositionFragment
-import com.jarvis.app.fragment.unused.DurationMatchFragment
-import com.jarvis.app.fragment.unused.PerformanceDetailFragment
-import com.jarvis.app.fragment.unused.TimeSeriesFragment
+import com.jarvis.app.fragment.unused.*
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.UserViewModel
@@ -101,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         title = mainTitle
         addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
 
-        getCompanyList()
+        //getCompanyList()
 
         Thread {
             setNavigationList()
@@ -160,7 +157,7 @@ class MainActivity : AppCompatActivity() {
 
         when (page) {
             "1" -> {
-                addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
+                addFragmentNoAnim(PortfolioOverviewFragment(), PortfolioOverviewFragment.TAG)
                 viewModel!!.title = "Portfolio Overview"
                 isHideCompany(false)
             }
