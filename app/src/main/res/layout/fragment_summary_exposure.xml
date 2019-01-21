@@ -194,34 +194,6 @@
                       app:layout_constraintEnd_toEndOf="parent"
                       android:id="@+id/viewBalance"/>
 
-                <AutoCompleteTextView
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:hint="Search Company"
-                        android:background="@drawable/card_view"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/autoCorrectSearchBalance"
-                        app:layout_constraintStart_toStartOf="@+id/tvHeaderBalance"
-                        app:layout_constraintTop_toBottomOf="@+id/viewBalance"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/searchSheetExposure"/>
-
-                <ImageView
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:contentDescription="@null"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_search"
-                        android:background="@drawable/rec_hallow_primary"
-                        android:layout_width="42dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/searchSheetExposure"
-                        app:layout_constraintEnd_toEndOf="@+id/tvHeaderBalance"
-                        app:layout_constraintTop_toTopOf="@+id/autoCorrectSearchBalance"
-                        app:layout_constraintStart_toEndOf="@+id/autoCorrectSearchBalance"
-                        app:layout_constraintBottom_toBottomOf="@+id/autoCorrectSearchBalance"/>
-
 
                 <View android:layout_width="0dp"
                       android:layout_height="0.8dp"
@@ -237,45 +209,29 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/rvBalanceSheetAsset"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="12dp" app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="12dp"/>
+                        android:layout_marginEnd="12dp" app:layout_constraintTop_toBottomOf="@+id/viewBalance"
+                        android:layout_marginTop="8dp"/>
 
-                <TextView
-                        style="@style/TextHeader"
-                        android:text="Asset"
-                        android:layout_width="0dp"
-                        app:layout_constraintStart_toStartOf="@+id/tvHeaderBalance"
-                        android:id="@+id/textView10"
-                        app:layout_constraintTop_toBottomOf="@+id/autoCorrectSearchBalance"
-                        android:layout_marginTop="16dp"/>
-                <TextView
-                        style="@style/TextHeader"
-                        android:text="Liabilities"
-                        android:layout_width="0dp"
-                        android:id="@+id/textView13"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="@+id/viewBalance2"
-                        android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/viewBalance2"/>
                 <View
                         android:background="@color/colorPrimaryDark"
                         android:layout_width="18dp"
                         android:layout_height="10dp"
                         android:id="@+id/view7"
-                        app:layout_constraintStart_toStartOf="@+id/textView10"
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/rvBalanceSheetAsset"
-                />
+                        app:layout_constraintStart_toStartOf="@+id/rvBalanceSheetAsset"/>
                 <View
                         android:background="@color/orange"
                         android:layout_width="18dp"
                         android:layout_height="10dp"
                         android:id="@+id/view6"
-                        app:layout_constraintStart_toStartOf="@+id/textView10"
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/rvBalanceLiabilities"
-                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="24dp"/>
+                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="24dp"
+                        app:layout_constraintStart_toStartOf="@+id/rvBalanceLiabilities"
+                />
                 <View
                         android:background="@color/colorPrimary"
                         android:layout_width="18dp"
@@ -337,7 +293,7 @@
                         app:layout_constraintStart_toStartOf="@+id/rvBalanceSheetAsset"
                         app:layout_constraintEnd_toEndOf="@+id/rvBalanceSheetAsset"
                         android:id="@+id/rvBalanceLiabilities"
-                        app:layout_constraintTop_toBottomOf="@+id/textView13"/>
+                        app:layout_constraintTop_toBottomOf="@+id/viewBalance2" android:layout_marginTop="8dp"/>
 
             </android.support.constraint.ConstraintLayout>
             <android.support.constraint.ConstraintLayout
@@ -347,31 +303,7 @@
                     android:background="@drawable/card_white"
                     android:orientation="vertical"
                     android:layout_marginTop="8dp">
-                <ImageView
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:contentDescription="@null"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_search"
-                        android:background="@drawable/rec_hallow_primary"
-                        android:layout_width="42dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/searchSensitivity"
-                        app:layout_constraintEnd_toEndOf="@+id/textView17"
-                        app:layout_constraintTop_toTopOf="@+id/autoCorrectIncome"
-                        app:layout_constraintStart_toEndOf="@+id/autoCorrectIncome"/>
 
-                <AutoCompleteTextView
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:hint="Search Company"
-                        android:background="@drawable/card_view"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/autoCorrectIncome"
-                        app:layout_constraintStart_toStartOf="@+id/textView17"
-                        app:layout_constraintTop_toBottomOf="@+id/view4" android:layout_marginTop="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/searchSensitivity"/>
                 <TextView
                         style="@style/TextHeader"
                         android:text="Income Statement Sensitivity"
@@ -401,8 +333,7 @@
                         android:layout_marginEnd="12dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginBottom="24dp" app:layout_constraintHorizontal_bias="0.0"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintTop_toBottomOf="@+id/autoCorrectIncome"/>
+                        app:layout_constraintTop_toBottomOf="@+id/view4" android:layout_marginTop="8dp"/>
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

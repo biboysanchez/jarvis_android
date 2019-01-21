@@ -29,46 +29,6 @@ class SummaryExposureFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         tvBlankTitle?.text = mActivity?.viewModel!!.title
         drawAll()
-        setAutoSearch()
-
-    }
-
-    private fun setAutoSearch(){
-        val arr = arrayOf("Bond A", "Bond B", "Bond C", "Bond D", "Bond E", "Bond F", "Sinarmas", "Bond H")
-        autoCorrectSearchBalance?.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
-            arr))
-
-        autoCorrectIncome?.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item,
-        arr))
-
-        searchSheetExposure()
-        searchSensitivity()
-    }
-
-    private fun searchSheetExposure(){
-        var isShow = false
-        searchSheetExposure?.setOnClickListener {
-            if (isShow){
-                isShow = false
-                autoCorrectSearchBalance?.dismissDropDown()
-            }else {
-                isShow = true
-                autoCorrectSearchBalance?.showDropDown()
-            }
-        }
-    }
-
-    private fun searchSensitivity(){
-        var isShow = false
-        searchSensitivity?.setOnClickListener {
-            if (isShow){
-                isShow = false
-                autoCorrectIncome?.dismissDropDown()
-            }else {
-                isShow = true
-                autoCorrectIncome?.showDropDown()
-            }
-        }
     }
 
     private fun drawAll(){

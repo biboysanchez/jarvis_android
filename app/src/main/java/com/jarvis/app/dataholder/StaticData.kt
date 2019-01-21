@@ -69,34 +69,28 @@ object StaticData {
         val list = ArrayList<IncomeStatement>()
         val json1 = JSONObject()
         json1.put("portfolio", "Revenue")
-        json1.put("cost", 104.8)
+        json1.put("cost", 100)
         list.add(IncomeStatement(json1))
 
         val json2 = JSONObject()
         json2.put("portfolio", "COGS")
-        json2.put("cost", -64.7)
+        json2.put("cost", -50)
         list.add(IncomeStatement(json2))
 
         val json3 = JSONObject()
-        json3.put("portfolio", "Non Operating Income (Expense)")
-        json3.put("cost", -9.0)
+        json3.put("portfolio", "Operating Expense")
+        json3.put("cost", -25)
         list.add(IncomeStatement(json3))
 
         val json4 = JSONObject()
-        json4.put("portfolio", "Operating Income (Expense)")
-        json4.put("cost", -15.0)
-        list.add(IncomeStatement(json3))
+        json4.put("portfolio", "Non Operating Expense")
+        json4.put("cost", -10)
+        list.add(IncomeStatement(json4))
 
         val json5 = JSONObject()
-        json5.put("portfolio", "Tax Obligation")
-        json5.put("cost", -11.5)
+        json5.put("portfolio", "Net Profit")
+        json5.put("cost", 15)
         list.add(IncomeStatement(json5))
-
-        val json6 = JSONObject()
-        json6.put("portfolio", "Revenue")
-        json6.put("cost", 13.8)
-        list.add(IncomeStatement(json6))
-
         return list
     }
 }

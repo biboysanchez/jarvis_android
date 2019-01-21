@@ -33,14 +33,14 @@ class BalanceSheetLiabilitiesAdapter : RecyclerView.Adapter<BalanceSheetLiabilit
             if (i == 0){
                 val prime = 409
                 val max = 1000
-                itemView.tvProgressTitle?.text = "Current"
+                itemView.tvProgressTitle?.text = "Current Liabilities"
                 itemView.progressAsset?.max = max
                 itemView.progressAsset?.progress = prime
                 itemView.progressAsset?.secondaryProgress = prime + 204
             }else{
                 val prime = 448
                 val max = 1000
-                itemView.tvProgressTitle?.text = "Long Term"
+                itemView.tvProgressTitle?.text = "Long Term Liabilities"
                 itemView.progressAsset?.max = max
                 itemView.progressAsset?.progress = prime
                 itemView.progressAsset?.secondaryProgress = prime + 536

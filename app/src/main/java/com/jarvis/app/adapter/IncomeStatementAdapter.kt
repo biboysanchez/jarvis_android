@@ -38,17 +38,18 @@ class IncomeStatementAdapter : RecyclerView.Adapter<IncomeStatementAdapter.ViewH
 
             if (data.cost <= 0){
                 val cost = (data.cost * -1 * 100).toInt()
+
                 itemView.progressBarNegative?.max = 15000
                 itemView.progressBarPositive?.progress = 0
                 itemView.progressBarNegative?.progress = cost
-                itemView.tvProgressNegativeValue?.text = data.cost.toString()
+                itemView.tvProgressNegativeValue?.text = data.cost.toInt().toString()
                 itemView.tvProgressNegativeValue?.visibility = View.VISIBLE
                 itemView.tvProgressPositiveValue?.visibility = View.GONE
             }else{
                 itemView.progressBarPositive?.max = 150
                 itemView.progressBarPositive?.progress = data.cost.toInt()
                 itemView.progressBarNegative?.progress = 0
-                itemView.tvProgressPositiveValue?.text = data.cost.toString()
+                itemView.tvProgressPositiveValue?.text = data.cost.toInt().toString()
                 itemView.tvProgressPositiveValue?.visibility = View.VISIBLE
                 itemView.tvProgressNegativeValue?.visibility = View.GONE
             }
