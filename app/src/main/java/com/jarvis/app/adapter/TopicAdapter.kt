@@ -14,9 +14,10 @@ import java.util.*
 class TopicAdapter : RecyclerView.Adapter<TopicAdapter.ViewHolder> {
     private var mContext: Context? = null
     private var data: List<ValueKey>? = Arrays.asList(
-        ValueKey("Corruption", "64"),
-        ValueKey("Fraud", "60"),
-        ValueKey("Legal Issue", "64")
+        ValueKey("Acquisition", "60"),
+        ValueKey("Divestitures", "58"),
+        ValueKey("Merger", "49"),
+        ValueKey("Spin off", "65")
     )
 
     constructor(mContext: Context?) : super() {

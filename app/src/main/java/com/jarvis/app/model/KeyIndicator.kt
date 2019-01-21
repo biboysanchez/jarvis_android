@@ -12,7 +12,7 @@ class KeyIndicator() {
             val arr = ArrayList<KeyIndicator>()
             val kI0 = KeyIndicator().apply {
                 title = "Earning & Profitability"
-                value = "61"
+                value = "64"
                 arrKeyValue = Arrays.asList(
                     ValueKey("Earnings", "23"),
                     ValueKey("Financial results", "-10"),
@@ -23,7 +23,7 @@ class KeyIndicator() {
 
             val kI1 = KeyIndicator().apply {
                 title = "Merger & Acquisition"
-                value = "59"
+                value = "60"
                 arrKeyValue = Arrays.asList(
                     ValueKey("Acquisition", "23"),
                     ValueKey("Merger", "-10"),
@@ -34,7 +34,7 @@ class KeyIndicator() {
 
             val kI2 = KeyIndicator().apply {
                 title = "Financial Policy"
-                value = "57"
+                value = "64"
                 arrKeyValue = Arrays.asList(
                     ValueKey("Equity", "23"),
                     ValueKey("Debt", "-10"),
@@ -43,8 +43,8 @@ class KeyIndicator() {
             }
 
             val kI3 = KeyIndicator().apply {
-                title = "Management & Government"
-                value = "63"
+                title = "Management & Governance"
+                value = "61"
                 arrKeyValue = Arrays.asList(
                     ValueKey("Governance charge", "23"),
                     ValueKey("Strategy", "-10"),
@@ -54,7 +54,7 @@ class KeyIndicator() {
 
             val kI4 = KeyIndicator().apply {
                 title = "Reputation"
-                value = "-8"
+                value = "60"
                 arrKeyValue = Arrays.asList(
                     ValueKey("Fraud", "23"),
                     ValueKey("Corruption", "-10"),
@@ -64,7 +64,7 @@ class KeyIndicator() {
 
             val kI5 = KeyIndicator().apply {
                 title = "Rating & Analyst Recommendations"
-                value = "61"
+                value = "75"
                 arrKeyValue = Arrays.asList(
                     ValueKey("Analyst recommendations", "23"),
                     ValueKey("Credit rating", "-10"),

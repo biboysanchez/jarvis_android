@@ -44,7 +44,8 @@ class CorporateBondScoring : BaseFragment() {
     }
 
     private fun setSearchView(){
-        val arr = arrayOf("Bond A", "Bond B", "Bond C", "Bond D", "Bond E", "Bond F", "Sinarmas", "Bond H")
+        val arr = arrayOf("Adhi Karya (Persero) Tbk PT")
+        autoCompleteCorporate?.setText("Adhi Karya (Persero) Tbk PT")
         autoCompleteCorporate?.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, arr))
 
         var isShow = false

@@ -8,13 +8,7 @@ class News {
     companion object {
         fun getNews():ArrayList<News>{
             val arr = ArrayList<News>()
-            arr.add(News().apply { title = "Rating notification Pefindo"})
-            arr.add(News().apply { title = "Analyst Report"})
-            arr.add(News().apply { title = "Article FT"})
-            arr.add(News().apply { title = "Article Jakarta Post"})
-            arr.add(News().apply { title = "Article Jakarta Globe"})
-            arr.add(News().apply { title = "Article Ja"})
-            arr.add(News().apply { title = "Rating Notification Pefindo"})
+            arr.add(News().apply { title = "Kementrian Badan Usaha Milik Negara (BUMN) berharap pembentukan dua holding selesai di akhir tahun 2018."})
             return arr
         }
     }
