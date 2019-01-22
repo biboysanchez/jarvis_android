@@ -10,8 +10,8 @@ android {
         applicationId "com.jarvis.app"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 16
-        versionName "1.0.0-build16"
+        versionCode 17
+        versionName "1.0.0-build17"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -48,5 +48,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.romandanylyk:pageindicatorview:0.0.7'
 }
 apply plugin: 'com.google.gms.google-services'

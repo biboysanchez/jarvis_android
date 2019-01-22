@@ -168,6 +168,11 @@ class MainActivity : AppCompatActivity() {
                 isHideCompany(false)
             }
 
+            "6" ->{
+                addFragmentNoAnim(StrategicAssetAllocationFragment(), StrategicAssetAllocationFragment.TAG)
+                isHideCompany(true)
+            }
+
             "20" -> {
                 addFragmentNoAnim(CashPositionFragment(), CashPositionFragment.TAG)
                 isHideCompany(true)

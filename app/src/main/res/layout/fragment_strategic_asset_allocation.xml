@@ -2,7 +2,9 @@
 <android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
         android:background="@drawable/card_view">
 
     <LinearLayout
@@ -30,16 +32,41 @@
                   android:background="@color/gray_300"
                   android:layout_marginTop="16dp"/>
 
-            <FrameLayout
+            <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
                     android:background="@color/home_bg"
                     android:layout_width="match_parent"
-                    android:layout_height="210dp">
+                    android:layout_height="260dp">
                 <android.support.v4.view.ViewPager
+                        android:id="@+id/viewPagerRisk"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-            </FrameLayout>
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                <LinearLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    <com.rd.PageIndicatorView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            xmlns:attrs="http://schemas.android.com/tools"
+                            android:id="@+id/pageIndicatorView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:piv_animationType="scale"
+                            app:piv_interactiveAnimation="true"
+                            app:piv_selectedColor="@color/colorPrimary"
+                            app:piv_unselectedColor="@color/gray_400"
+                            app:piv_viewPager="@id/viewPagerRisk"
+                            attrs:piv_padding="12dp"
+                            attrs:piv_radius="8dp" />
+                </LinearLayout>
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="16dp"
                     android:id="@+id/rvRiskReturnProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -62,29 +89,51 @@
         <LinearLayout
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/card_white"
                 android:orientation="vertical">
 
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Portfolio Allocation"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/gray_300"
+                  android:layout_marginTop="16dp"/>
+
+
             <LinearLayout
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     android:orientation="horizontal"
                     android:clickable="true"
                     android:focusable="true"
                     android:contentDescription="@null"
-                    android:padding="8dp"
                     android:background="@drawable/rec_up_raduis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:id="@+id/llTop"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp">
                 <TextView
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:gravity="center"
                         android:textColor="@color/white"
                         android:text="Asset"
                         android:layout_width="0dp"
                         android:layout_weight="0.4"
                         android:layout_height="wrap_content"/>
+
+                <View
+                        android:background="@color/white"
+                        android:layout_width="0.8dp"
+                        android:layout_height="match_parent"/>
+
                 <TextView
                         android:gravity="center"
                         android:textColor="@color/white"
@@ -92,6 +141,12 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.3"
                         android:layout_height="wrap_content"/>
+
+                <View
+                        android:background="@color/white"
+                        android:layout_width="0.8dp"
+                        android:layout_height="match_parent"/>
+
                 <TextView
                         android:gravity="center"
                         android:textColor="@color/white"
@@ -101,11 +156,13 @@
                         android:layout_height="wrap_content"/>
             </LinearLayout>
             <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvCashPlacement"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:id="@+id/rvPortfolioAllocation"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

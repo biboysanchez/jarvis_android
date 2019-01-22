@@ -4,6 +4,7 @@
               android:layout_height="wrap_content"
               android:orientation="horizontal"
               android:id="@+id/llRowFinancialHighlight"
+              android:gravity="center_vertical"
               android:padding="8dp">
     <TextView
             android:id="@+id/tvRowColumn1"

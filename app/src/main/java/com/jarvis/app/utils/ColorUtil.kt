@@ -115,6 +115,14 @@ object ColorUtil {
         )
     }
 
+    fun strategicAssetColors(): List<Int>{
+        return arrayListOf(
+            Color.parseColor("#21c4b6"),
+            Color.parseColor("#b2ddd7"),
+            Color.parseColor("#e6771a"),
+            Color.parseColor("#f1b52c"))
+    }
+
     fun arrColorTeal(): List<Int>{
         val color0 = Color.parseColor("#18E4D1")
         val color1 = Color.parseColor("#21C6B7")
