@@ -31,6 +31,7 @@ class StrategicAssetAllocationFragment : BaseFragment() {
 
     companion object {
         val TAG = "StrategicAssetAllocationFragment"
+        var instance:StrategicAssetAllocationFragment? = null
     }
 
     override fun setTitle(): String {
@@ -38,6 +39,7 @@ class StrategicAssetAllocationFragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        instance = this
         return inflater.inflate(R.layout.fragment_strategic_asset_allocation, container, false)
     }
 
@@ -47,6 +49,10 @@ class StrategicAssetAllocationFragment : BaseFragment() {
         viewpagerTitles = ArrayList()
         viewpagerTitles.add("Expected Return")
         viewpagerTitles.add("Expected Risk")
+
+        tvCreateSimulation?.setOnClickListener {
+            mActivity?.addFragment(RiskReturnSimulationFragment(), RiskReturnSimulationFragment.TAG)
+        }
 
         setPortfolioAllocation()
         setViewPager()
@@ -63,12 +69,26 @@ class StrategicAssetAllocationFragment : BaseFragment() {
         rvRiskReturnProfile?.adapter = SimpleColorLabelAdapter(context!!)
     }
 
+    fun createNewSimulation(riskReturn: RiskReturn){
+        val arr = ArrayList<RiskReturn>()
+        arr.add(RiskReturn().getExpectedReturn()[0])
+        arr.add(riskReturn)
+        viewPagerAdapter?.addItem(arr)
+        syncViewPager()
+        viewPagerRisk?.currentItem = viewPagerArray.size-1
+    }
+
     private fun setViewPager(){
         viewPagerAdapter = InnerViewPagerAdapter(context!!)
         viewPagerAdapter?.addItem(RiskReturn().getExpectedReturn())
         viewPagerAdapter?.addItem(RiskReturn().getExpectedRisk())
+        syncViewPager()
+    }
+
+    private fun syncViewPager(){
+        viewPagerRisk.offscreenPageLimit = viewPagerArray.size
         pageIndicatorView?.count = viewPagerArray.size
-        viewPagerRisk.adapter = viewPagerAdapter
+        viewPagerRisk?.adapter = viewPagerAdapter
     }
 
     inner class InnerViewPagerAdapter(private val mContext: Context) : PagerAdapter() {
@@ -159,5 +179,10 @@ class StrategicAssetAllocationFragment : BaseFragment() {
             itemVIew.paging_bar_chart?.setFitBars(true)
             itemVIew.paging_bar_chart?.invalidate()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        instance = null
     }
 }
