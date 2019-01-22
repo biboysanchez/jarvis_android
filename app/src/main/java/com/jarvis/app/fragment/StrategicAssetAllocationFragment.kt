@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.StackedValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.jarvis.app.adapter.SimpleColorLabelAdapter
+import com.jarvis.app.custom.LabelFormatter
 import com.jarvis.app.model.RiskReturn
 import com.jarvis.app.utils.ColorUtil
 import kotlinx.android.synthetic.main.paging_view.view.*
@@ -107,28 +108,33 @@ class StrategicAssetAllocationFragment : BaseFragment() {
             itemVIew.paging_bar_chart?.description?.isEnabled = false
             itemVIew.paging_bar_chart?.setMaxVisibleValueCount(1)
             itemVIew.paging_bar_chart?.setPinchZoom(false)
-
             itemVIew.paging_bar_chart?.setDrawGridBackground(false)
             itemVIew.paging_bar_chart?.setDrawBarShadow(false)
-
             itemVIew.paging_bar_chart?.setDrawValueAboveBar(false)
+            itemVIew.paging_bar_chart?.axisRight?.isEnabled = false
             itemVIew.paging_bar_chart?.isHighlightFullBarEnabled = false
+            itemVIew.paging_bar_chart?.legend?.isEnabled = false
+            itemVIew.paging_bar_chart?.xAxis?.setDrawGridLines(false)
+            itemVIew.paging_bar_chart?.axisLeft?.setDrawLabels(true)
 
             // change the position of the y-labels
             val leftAxis = itemVIew.paging_bar_chart?.axisLeft
-           // leftAxis?.valueFormatter = MyValueFormatter("K")
+            //leftAxis?.valueFormatter = MyValueFormatter("K")
             leftAxis?.axisMinimum = 0f // this replaces setStartAtZero(true)
-            itemVIew.paging_bar_chart?.axisRight?.isEnabled = false
+
 
             val xLabels = itemVIew.paging_bar_chart?.xAxis
             xLabels?.position = XAxis.XAxisPosition.TOP
-
-            itemVIew.paging_bar_chart?.legend?.isEnabled = false
             val values = ArrayList<BarEntry>()
             for (a in 0 until viewPagerArray[position].size){
                 val r = viewPagerArray[position][a]
                 values.add(BarEntry(a.toFloat(), floatArrayOf(r.corporateBonds, r.governmentBonds, r.equity, r.cash)))
             }
+
+            val xAxis = itemVIew.paging_bar_chart?.xAxis
+            xAxis?.position = XAxis.XAxisPosition.BOTTOM
+            xAxis?.valueFormatter = LabelFormatter(titleList)
+            xAxis?.setLabelCount(titleList.size, false)
 
             val set1: BarDataSet
             if (itemVIew.paging_bar_chart?.data != null && itemVIew.paging_bar_chart?.data!!.dataSetCount > 0) {
@@ -149,6 +155,7 @@ class StrategicAssetAllocationFragment : BaseFragment() {
                 itemVIew.paging_bar_chart?.data = data
             }
 
+            itemVIew.paging_bar_chart?.animateY(1300)
             itemVIew.paging_bar_chart?.setFitBars(true)
             itemVIew.paging_bar_chart?.invalidate()
         }
