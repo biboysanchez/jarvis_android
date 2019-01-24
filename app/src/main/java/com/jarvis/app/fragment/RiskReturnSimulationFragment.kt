@@ -11,16 +11,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.EditText
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
-import com.jarvis.app.extension.simpleDialog
 import com.jarvis.app.model.RiskReturn
 import kotlinx.android.synthetic.main.fragment_risk_return.*
-import kotlinx.android.synthetic.main.row_simulation.view.*
 
 class RiskReturnSimulationFragment : Fragment() {
-    private val titles = arrayListOf("Cash", "Equities", "Government Bonds", "Corporate Bonds")
     private var mActivity:MainActivity? = null
     val riskReturn = RiskReturn()
 
@@ -38,100 +35,46 @@ class RiskReturnSimulationFragment : Fragment() {
         mActivity = context as MainActivity?
         mActivity?.showBackButton(true)
         mActivity?.title = "Risk-Return Simulation"
+        fields()
 
         btnApplySimulation?.setOnClickListener {
+            riskReturn.cash             = if(etCashInput?.text.toString().isNotEmpty()) {etCashInput?.text.toString().toFloat()} else 0f
+            riskReturn.equity           = if(etEquitiesInput?.text.toString().isNotEmpty()) {etEquitiesInput?.text.toString().toFloat()} else 0f
+            riskReturn.governmentBonds  = if(etGovernmentInput?.text.toString().isNotEmpty()) {etGovernmentInput?.text.toString().toFloat()} else 0f
+            riskReturn.corporateBonds   = if(etCorporateInput?.text.toString().isNotEmpty()) {etCorporateInput?.text.toString().toFloat()} else 0f
             StrategicAssetAllocationFragment.instance?.createNewSimulation(riskReturn)
             mActivity?.fm?.popBackStack()
         }
-
-        setSimulation()
     }
 
-    private fun setSimulation(){
-        rvSimulation?.layoutManager = LinearLayoutManager(context)
-        rvSimulation?.adapter = SimulationAdapter(context)
+    private fun fields(){
+        inputSimulation(imgCashBtnLeft, imgCashBtnRight, etCashInput)
+        inputSimulation(imgEquitiesBtnLeft, imgEquitiesBtnRight, etEquitiesInput)
+        inputSimulation(imgGovernmentBtnLeft, imgGovernmentBtnRight, etGovernmentInput)
+        inputSimulation(imgCorporateBtnLeft, imgCorporateBtnRight, etCorporateInput)
     }
 
-    inner class SimulationAdapter : RecyclerView.Adapter<SimulationAdapter.ViewHolder> {
-        private var mContext: Context? = null
-
-        constructor(mContext: Context?) : super() {
-            this.mContext = mContext
-        }
-
-        override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SimulationAdapter.ViewHolder {
-            val view = LayoutInflater.from(mContext).inflate(R.layout.row_simulation, p0, false)
-            return ViewHolder(view)
-        }
-
-        override fun getItemCount(): Int {
-            return titles.size
-        }
-
-        override fun onBindViewHolder(p0: SimulationAdapter.ViewHolder, p1: Int) {
-            p0.bindItem(p1)
-        }
-
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            fun bindItem(i: Int) {
-                itemView.tvRowSimulationTitle?.text = titles[i]
-
-                itemView.flBtnLeft?.setOnClickListener {
-                    context?.simpleDialog("", "Please use manual input. Button function in progress")
-                }
-
-                itemView.flBtnRight?.setOnClickListener {
-                    context?.simpleDialog("", "Please use manual input. Button function in progress")
-                }
-
-
-                itemView.etSimulationInput?.addTextChangedListener(object : TextWatcher{
-                    override fun afterTextChanged(s: Editable?) {
-
-                    }
-
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                    }
-
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        when (i){
-                            0 -> {
-                                riskReturn.cash = if (s.toString().isNotEmpty()){
-                                    s.toString().toFloat()
-                                }else {
-                                    0f
-                                }
-                            }
-
-                            1 -> {
-                                riskReturn.equity = if (s.toString().isNotEmpty()){
-                                    s.toString().toFloat()
-                                }else {
-                                    0f
-                                }
-                            }
-
-                            2 -> {
-                                riskReturn.governmentBonds = if (s.toString().isNotEmpty()){
-                                    s.toString().toFloat()
-                                }else {
-                                    0f
-                                }
-
-                            }
-
-                            3 -> {
-                                riskReturn.corporateBonds = if (s.toString().isNotEmpty()){
-                                    s.toString().toFloat()
-                                }else {
-                                    0f
-                                }
-                            }
-                        }
-                    }
-
-                })
+    private fun inputSimulation(viewL: View?, viewR: View?, input:EditText?){
+        var int = 0
+        viewR?.setOnClickListener {
+            if (input?.text!!.isNotEmpty()){
+                int = input.text.toString().toInt()
             }
+
+            int += 1
+            input.setText(int.toString())
+        }
+
+        viewL?.setOnClickListener {
+            if (input?.text!!.isNotEmpty()){
+                int = input.text.toString().toInt()
+            }
+
+            int -= 1
+            if (int <= 0){
+                int = 0
+            }
+            input.setText(int.toString())
         }
     }
 

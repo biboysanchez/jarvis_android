@@ -1,30 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/login_bg"
-              android:clickable="true"
-              android:focusable="true"
-              android:orientation="vertical">
-
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvSimulation"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/login_bg"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cash"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"/>
+    <LinearLayout
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <FrameLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/rec_hallow_primary_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+            <ImageView
+                    android:padding="4dp"
+                    android:src="@drawable/ic_arrow_left"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/imgCashBtnLeft"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+        </FrameLayout>
 
-    <FrameLayout
+        <EditText
+                android:inputType="numberDecimal"
+                android:gravity="center"
+                android:hint="0%"
+                android:background="#e0ece8"
+                android:id="@+id/etCashInput"
+                android:layout_height="40dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+
+        <FrameLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/rec_hallow_primary_right"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+            <ImageView
+                    android:padding="4dp"
+                    android:src="@drawable/ic_right"
+                    android:id="@+id/imgCashBtnRight"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Equities"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"/>
+    <LinearLayout
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <FrameLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/rec_hallow_primary_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+            <ImageView
+                    android:padding="4dp"
+                    android:src="@drawable/ic_arrow_left"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/imgEquitiesBtnLeft"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+        </FrameLayout>
+
+        <EditText
+                android:inputType="numberDecimal"
+                android:gravity="center"
+                android:hint="0%"
+                android:background="#e0ece8"
+                android:id="@+id/etEquitiesInput"
+                android:layout_height="40dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+
+        <FrameLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/rec_hallow_primary_right"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+            <ImageView
+                    android:padding="4dp"
+                    android:src="@drawable/ic_right"
+                    android:id="@+id/imgEquitiesBtnRight"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Government Bonds"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"/>
+    <LinearLayout
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <FrameLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/rec_hallow_primary_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+            <ImageView
+                    android:padding="4dp"
+                    android:src="@drawable/ic_arrow_left"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/imgGovernmentBtnLeft"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+        </FrameLayout>
+
+        <EditText
+                android:inputType="numberDecimal"
+                android:gravity="center"
+                android:hint="0%"
+                android:background="#e0ece8"
+                android:id="@+id/etGovernmentInput"
+                android:layout_height="40dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+
+        <FrameLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/rec_hallow_primary_right"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+            <ImageView
+                    android:padding="4dp"
+                    android:src="@drawable/ic_right"
+                    android:id="@+id/imgGovernmentBtnRight"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Corporate Bonds"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"/>
+    <LinearLayout
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <FrameLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/rec_hallow_primary_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+            <ImageView
+                    android:padding="4dp"
+                    android:src="@drawable/ic_arrow_left"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/imgCorporateBtnLeft"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+        </FrameLayout>
+
+        <EditText
+                android:inputType="numberDecimal"
+                android:gravity="center"
+                android:hint="0%"
+                android:background="#e0ece8"
+                android:id="@+id/etCorporateInput"
+                android:layout_height="40dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+
+        <FrameLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/rec_hallow_primary_right"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+            <ImageView
+                    android:padding="4dp"
+                    android:src="@drawable/ic_right"
+                    android:id="@+id/imgCorporateBtnRight"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:gravity="bottom"
             android:background="@color/white"
             android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
         <Button
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:id="@+id/btnApplySimulation"
-                android:layout_margin="16dp"
                 android:textColor="@color/white"
                 android:background="@drawable/rounded_primary_rad"
                 android:textAllCaps="false"
                 android:text="Apply Simulation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-    </FrameLayout>
+    </LinearLayout>
 </LinearLayout>
