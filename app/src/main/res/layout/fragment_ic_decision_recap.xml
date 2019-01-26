@@ -185,18 +185,18 @@
 
             <LinearLayout
                     android:gravity="center_vertical"
-                    android:padding="4dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="12dp"
+                    android:padding="6dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_left"/>
+                        android:src="@drawable/ic_checked"/>
                 <TextView
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Completed"/>
@@ -204,17 +204,17 @@
 
             <LinearLayout
                     android:gravity="center_vertical"
-                    android:padding="4dp"
-                    android:layout_marginStart="12dp"
+                    android:padding="6dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_left"/>
+                        android:src="@drawable/ic_more"/>
                 <TextView
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="On Going"/>
@@ -222,17 +222,17 @@
 
             <LinearLayout
                     android:gravity="center_vertical"
-                    android:padding="4dp"
-                    android:layout_marginStart="12dp"
+                    android:padding="6dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_left"/>
+                        android:src="@drawable/ic_warning"/>
                 <TextView
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="On Going with Challenge"/>
@@ -241,17 +241,18 @@
             <LinearLayout
                     android:layout_marginBottom="16dp"
                     android:gravity="center_vertical"
-                    android:padding="4dp"
-                    android:layout_marginStart="12dp"
+                    android:padding="6dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_left"/>
+                        android:src="@drawable/ic_failed"/>
+
                 <TextView
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No Progress"/>
