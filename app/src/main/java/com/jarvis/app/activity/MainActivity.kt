@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     var fm:FragmentManager? = null
     var lastIndex = ""
     var viewModel:UserViewModel? = null
-    var mainTitle           = "Decision Recap"
+    var mainTitle           = "IC Decision Recap"
     var selectedCompany     = ""
     var selectedWeek        = ""
     var selectedCategory1   = ""
@@ -96,7 +96,8 @@ class MainActivity : AppCompatActivity() {
         //title = mainTitle
         viewModel!!.title = mainTitle
         title = mainTitle
-        addFragmentNoAnim(BlankFragment(), BlankFragment.TAG)
+        addFragmentNoAnim(IcDecisionRecap(), IcDecisionRecap.TAG)
+        isHideCompany(true)
 
         getCompanyList()
 
@@ -141,12 +142,12 @@ class MainActivity : AppCompatActivity() {
        // Log.i("MAin Activity", "stack count: $page")
         drawer_layout.closeDrawer(GravityCompat.START)
 
-        if (lastIndex == page){
-            if (lastIndex == "00"){
-                toolbar.title = mainTitle
-            }
-            return
-        }
+//        if (lastIndex == page){
+//            if (lastIndex == "00"){
+//                toolbar.title = mainTitle
+//            }
+//            return
+//        }
 
         lastIndex = page
         for (i in 0 until fm?.backStackEntryCount!!){
@@ -155,13 +156,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-/*        Chapter 7 (Strategic asset allocation) -> 22 Jan
-        Chapter 1 (IC Decision support) -> 28 Jan
-        Chapter 2 (Portfolio Overview) -> 30 Jan
-        Chapter 3 (Cash Overview) -> 30 Jan
-        Chapter 5 (Performance Measurement) -> 1 Feb*/
-
         when (page) {
+            "00" -> {
+                viewModel!!.title = "IC Decision Recap"
+                addFragmentNoAnim(IcDecisionRecap(), IcDecisionRecap.TAG)
+                isHideCompany(true)
+            }
+
             "1" -> {
                 addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
                 viewModel!!.title = "Portfolio Overview"

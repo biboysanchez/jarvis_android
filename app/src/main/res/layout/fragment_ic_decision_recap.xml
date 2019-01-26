@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/home_bg"
+        android:clickable="true"
+        android:focusable="true">
+
+    <LinearLayout
+            android:padding="8dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Investment Decision"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvPerformance"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="8dp"/>
+
+            <FrameLayout
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/frameLayoutPerformance">
+                <Spinner
+                        android:id="@+id/spinnerInvestmentDecision"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"/>
+            </FrameLayout>
+
+            <LinearLayout
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/llRowComparation">
+
+                <LinearLayout
+                        android:id="@+id/llCol0"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/rec_up_left_raduis"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"/>
+
+                    <TextView
+                            android:gravity="center_vertical"
+                            android:background="@color/colorPrimaryDark"
+                            android:text="Decision Categories"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:paddingStart="24dp"
+                            android:paddingEnd="24dp"
+                            android:layout_height="30dp"/>
+
+
+                    <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rvSummaryCompanies"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
+                </LinearLayout>
+
+                <FrameLayout
+                        android:background="@drawable/vertical_shadow"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+
+                <HorizontalScrollView
+                        android:scrollbars="none"
+                        android:id="@+id/rowScroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <LinearLayout
+                                android:background="@drawable/rec_up_right_raduis"
+                                android:paddingTop="24dp"
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                            <TextView
+                                    android:background="@color/colorPrimaryDark"
+                                    android:paddingStart="32dp"
+                                    android:paddingEnd="32dp"
+                                    android:gravity="center"
+                                    android:text="Deadline"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/white"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"/>
+
+                            <View
+                                    android:background="@color/white"
+                                    android:layout_width="1dp"
+                                    android:layout_height="30dp"/>
+
+                            <LinearLayout
+                                    android:id="@+id/llCol2"
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                <TextView
+                                        android:paddingStart="32dp"
+                                        android:paddingEnd="32dp"
+                                        android:background="@color/colorPrimaryDark"
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:text="Deadline"
+                                        android:textColor="@color/white"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="30dp"/>
+
+                            </LinearLayout>
+
+                            <View
+                                    android:background="@color/white"
+                                    android:layout_width="1dp"
+                                    android:layout_height="30dp"/>
+
+                            <LinearLayout
+                                    android:id="@+id/llCol3"
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                <TextView
+                                        android:background="@color/colorPrimaryDark"
+                                        android:paddingStart="32dp"
+                                        android:paddingEnd="32dp"
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:text="Status"
+                                        android:textColor="@color/white"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="30dp"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvSummaryRevenues"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:gravity="center_vertical"
+                    android:padding="4dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_left"/>
+                <TextView
+                        android:layout_marginStart="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Completed"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:gravity="center_vertical"
+                    android:padding="4dp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_left"/>
+                <TextView
+                        android:layout_marginStart="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="On Going"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:gravity="center_vertical"
+                    android:padding="4dp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_left"/>
+                <TextView
+                        android:layout_marginStart="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="On Going with Challenge"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center_vertical"
+                    android:padding="4dp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_left"/>
+                <TextView
+                        android:layout_marginStart="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Progress"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
