@@ -1,20 +1,21 @@
 package com.jarvis.app.fragment
 
 import android.content.Context
-import android.os.Build.VERSION_CODES.P
+import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.view.PagerAdapter
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
+import com.jarvis.app.model.ArrayWatchlist
+import com.jarvis.app.model.Watchlist
 import kotlinx.android.synthetic.main.fragment_watchlist.*
-import kotlinx.android.synthetic.main.pager_watchlist.*
-import kotlinx.android.synthetic.main.pager_watchlist.view.*
+import kotlinx.android.synthetic.main.row_2_column.view.*
 
 
 class WatchlistFragment: BaseFragment() {
-    private var mPagerAdapter:WatchlistViewPagerAdapter? = null
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -31,55 +32,63 @@ class WatchlistFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        rvWatchlistPager?.layoutManager = LinearLayoutManager(context)
+        setRecycler(0)
         setRadioGroup()
-        setViewPager()
+
     }
     private fun setRadioGroup(){
         radioGroupWatchlist?.check(R.id.radioWatchlist)
         radioGroupWatchlist?.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId){
                 R.id.radioWatchlist -> {
-                    viewpagerWatchlist?.currentItem = 0
-                    viewpagerWatchlist?.adapter = WatchlistViewPagerAdapter(context!!, 0)
+                    setRecycler(0)
                 }
 
                 R.id.radioRestricted -> {
-                    viewpagerWatchlist?.currentItem = 1
-                    viewpagerWatchlist?.adapter = WatchlistViewPagerAdapter(context!!, 1)
+                    setRecycler(1)
                 }
             }
         }
     }
 
-    private fun setViewPager(){
-        viewpagerWatchlist?.adapter = WatchlistViewPagerAdapter(context!!, 0)
+    private fun setRecycler(index:Int){
+        tvWatchListHeaderTitle?.text = Watchlist.watchList()[index].title
+        rvWatchlistPager?.adapter = WatchlistRecyclerAdapter(context, Watchlist.watchList()[index].arrWatchList)
     }
 
-    inner class WatchlistViewPagerAdapter(private val mContext: Context, var index:Int) : PagerAdapter() {
-        private var titleList = arrayListOf("Watchlist", "Restricted Securities")
+    inner class  WatchlistRecyclerAdapter: RecyclerView.Adapter<WatchlistRecyclerAdapter.ViewHolder> {
+        var mContext: Context? = null
+        var data: List<ArrayWatchlist>? = ArrayList()
 
-        override fun instantiateItem(collection: ViewGroup, position: Int): Any {
-            val inflater = LayoutInflater.from(mContext)
-            val itemVIew = inflater.inflate(R.layout.pager_watchlist, collection, false) as ViewGroup
-            itemVIew.tvWatchListHeaderTitle?.text = titleList[index]
-            collection.addView(itemVIew)
-            return itemVIew
+        constructor(mContext: Context?, arrayList: List<ArrayWatchlist>) : super() {
+            this.mContext = mContext
+            this.data = arrayList
         }
 
-        override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
-            collection.removeView(view as View)
+        override fun onCreateViewHolder(p0: ViewGroup, p1: Int): WatchlistRecyclerAdapter.ViewHolder {
+            val view = LayoutInflater.from(mContext).inflate(R.layout.row_2_column, p0, false)
+            return ViewHolder(view)
         }
 
-        override fun getCount(): Int {
-            return 2
+        override fun getItemCount(): Int {
+            return data!!.size
         }
 
-        override fun isViewFromObject(view: View, `object`: Any): Boolean {
-            return view === `object`
+        override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
+            p0.bindItem(p1)
         }
 
-        override fun getPageTitle(position: Int): CharSequence? {
-            return titleList[position]
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            fun bindItem(i: Int) {
+                itemView.tvRowColumn1?.text = data!![i].stockName
+                itemView.tvRowColumn2?.text = data!![i].rationale
+                if (i % 2 == 1){
+                    itemView.llRow2Column?.setBackgroundColor(Color.parseColor("#F4F9F9"))
+                }else{
+                    itemView.llRow2Column?.setBackgroundColor(Color.parseColor("#EEF4F3"))
+                }
+            }
         }
     }
 }

@@ -41,10 +41,69 @@
                 android:layout_height="wrap_content"/>
     </RadioGroup>
 
-    <android.support.v4.view.ViewPager
-            android:id="@+id/viewpagerWatchlist"
+    <LinearLayout
+            android:layout_margin="8dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_white"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/tvWatchListHeaderTitle"
+                style="@style/TextHeader"
+                android:text="WatchList"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="16dp"/>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="0.8dp"
+              android:background="@color/gray_300"
+              android:layout_marginTop="16dp"/>
+
+        <LinearLayout
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@null"
+                android:background="@drawable/rec_up_raduis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llTop"
+                android:layout_marginTop="8dp">
+            <TextView
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="Stock Name"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.35"
+                    android:layout_height="wrap_content"/>
+
+            <View
+                    android:background="@color/white"
+                    android:layout_width="0.8dp"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="Rationale"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.65"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvWatchlistPager"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 </LinearLayout>
