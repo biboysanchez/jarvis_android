@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/home_bg"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
+
+    <RadioGroup
+            android:id="@+id/radioGroupWatchlist"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RadioButton
+                android:id="@+id/radioWatchlist"
+                android:textColor="@color/gray_800"
+                android:padding="8dp"
+                android:gravity="center"
+                android:background="@drawable/radio_selector_dark_left"
+                android:button="@null"
+                android:text="Watchlist"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"/>
+        <RadioButton
+                android:id="@+id/radioRestricted"
+                android:textColor="@color/gray_800"
+                android:padding="8dp"
+                android:gravity="center"
+                android:background="@drawable/radio_selector_dark_right"
+                android:button="@null"
+                android:text="Restricted Securities"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"/>
+    </RadioGroup>
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/viewpagerWatchlist"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+</LinearLayout>

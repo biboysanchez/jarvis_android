@@ -163,6 +163,11 @@ class MainActivity : AppCompatActivity() {
                 isHideCompany(true)
             }
 
+            "02" -> {
+                addFragmentNoAnim(WatchlistFragment(), WatchlistFragment.TAG)
+                isHideCompany(true)
+            }
+
             "1" -> {
                 addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
                 viewModel!!.title = "Portfolio Overview"
