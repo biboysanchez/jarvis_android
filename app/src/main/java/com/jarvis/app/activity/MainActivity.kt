@@ -163,6 +163,11 @@ class MainActivity : AppCompatActivity() {
                 isHideCompany(true)
             }
 
+            "01" -> {
+                addFragmentNoAnim(MarketUpdateFragment(), MarketUpdateFragment.TAG)
+                isHideCompany(true)
+            }
+
             "02" -> {
                 addFragmentNoAnim(WatchlistFragment(), WatchlistFragment.TAG)
                 isHideCompany(true)

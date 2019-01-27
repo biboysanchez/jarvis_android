@@ -38,9 +38,9 @@ import kotlin.collections.ArrayList
 
 class CashPositionFragment : BaseFragment() {
     var arrCashFlow: ArrayList<ValueKey>? = ArrayList()
-    var arrCashPlacement:ArrayList<CashPlacement>? = ArrayList()
+    var arrCashPlacement: ArrayList<CashPlacement>? = ArrayList()
     var arrWeek: ArrayList<String>? = ArrayList()
-    var arrCashMovement:ArrayList<ValueKey>? = ArrayList()
+    var arrCashMovement: ArrayList<ValueKey>? = ArrayList()
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -62,45 +62,48 @@ class CashPositionFragment : BaseFragment() {
         refreshAll()
         tvShowAllCashPlacement?.setOnClickListener {
             mActivity?.viewModel?.fragmentTag = "Cash Movement Detail"
-            mActivity?.addFragment(CashPlacementDetailFragment.newInstance(arrCashPlacement!!), CashPlacementDetailFragment.TAG)
+            mActivity?.addFragment(
+                CashPlacementDetailFragment.newInstance(arrCashPlacement!!),
+                CashPlacementDetailFragment.TAG
+            )
         }
     }
 
-    fun title(){
+    fun title() {
         mActivity?.toolbar?.title = "Cash Position"
     }
 
-    fun refreshAll(){
+    fun refreshAll() {
         getCashPosition()
         getCashPlacement()
         getCashMovementWeek()
     }
 
-    private fun getCashPosition(){
+    private fun getCashPosition() {
         val params = HashMap<String, String>()
-        params["company"]   = mActivity?.selectedCompany!!
-        ApiRequest.postNoUI(context!!, API.cashPosition, params, object : ApiRequest.URLCallback{
+        params["company"] = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.cashPosition, params, object : ApiRequest.URLCallback {
             override fun didURLResponse(response: String) {
-                if (JSONUtil.isSuccess(context!!, response)){
-                    try {
+                try {
+                    if (JSONUtil.isSuccess(context!!, response)) {
                         arrCashFlow = ArrayList()
                         val json = JSONObject(response).obj("message_data").obj("cashflow_dict")
                         val iter: Iterator<String> = json.keys()
                         while (iter.hasNext()) {
                             val key = iter.next()
                             try {
-                               val valueKey = ValueKey(key, json.string(key))
+                                val valueKey = ValueKey(key, json.string(key))
                                 arrCashFlow?.add(valueKey)
                             } catch (e: JSONException) {
                                 e.printStackTrace()
                             }
                         }
 
-                        rvSelection?.layoutManager  = LinearLayoutManager(context)
-                        rvSelection?.adapter        = CashFlowAdapter(context, arrCashFlow)
-                    }catch (e: JSONException){
-                        e.printStackTrace()
+                        rvSelection?.layoutManager = LinearLayoutManager(context)
+                        rvSelection?.adapter = CashFlowAdapter(context, arrCashFlow)
                     }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
                 }
             }
 
@@ -109,21 +112,21 @@ class CashPositionFragment : BaseFragment() {
         })
     }
 
-    private fun getCashPlacement(){
+    private fun getCashPlacement() {
         val params = HashMap<String, String>()
-        params["company"]   = mActivity?.selectedCompany!!
-        ApiRequest.postNoUI(context!!, API.cashPlacement, params, object : ApiRequest.URLCallback{
+        params["company"] = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.cashPlacement, params, object : ApiRequest.URLCallback {
             override fun didURLResponse(response: String) {
-                if (JSONUtil.isSuccess(context!!, response)){
+                if (JSONUtil.isSuccess(context!!, response)) {
                     try {
                         arrCashPlacement = ArrayList()
                         val arr = JSONObject(response).obj("message_data").arr("cashflow_list")
-                        for (i in 0 until arr.length()){
+                        for (i in 0 until arr.length()) {
                             arrCashPlacement?.add(CashPlacement(arr.getJSONObject(i)))
                         }
                         rvAssets?.layoutManager = LinearLayoutManager(context)
                         rvAssets?.adapter = CashPlacementAdapter(context, arrCashPlacement, false)
-                    }catch (e: JSONException){
+                    } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 }
@@ -134,22 +137,22 @@ class CashPositionFragment : BaseFragment() {
         })
     }
 
-    private fun getCashMovementWeek(){
+    private fun getCashMovementWeek() {
         val params = HashMap<String, String>()
-        params["company"]   = mActivity?.selectedCompany!!
-        ApiRequest.postNoUI(context!!, API.cashMovementWeek, params, object : ApiRequest.URLCallback{
+        params["company"] = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.cashMovementWeek, params, object : ApiRequest.URLCallback {
             override fun didURLResponse(response: String) {
-                if (JSONUtil.isSuccess(context!!, response)){
+                if (JSONUtil.isSuccess(context!!, response)) {
                     try {
                         arrWeek = ArrayList()
                         mActivity?.summaryList = ArrayList()
                         val arr = JSONObject(response).obj("message_data").arr("weeks_list")
-                        for (i in 0 until arr.length()){
+                        for (i in 0 until arr.length()) {
                             arrWeek?.add(arr.getString(i))
                             mActivity?.summaryList?.add(arr.getString(i))
                         }
                         setSpinner()
-                    }catch (e: JSONException){
+                    } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 }
@@ -160,9 +163,9 @@ class CashPositionFragment : BaseFragment() {
         })
     }
 
-    private fun setSpinner(){
+    private fun setSpinner() {
         spinnerCashMovement?.adapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, arrWeek!!)
-        spinnerCashMovement?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerCashMovement?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
@@ -173,17 +176,17 @@ class CashPositionFragment : BaseFragment() {
         }
     }
 
-    private fun getCashMovement(week:String){
+    private fun getCashMovement(week: String) {
         val params = HashMap<String, String>()
-        params["company"]   = mActivity?.selectedCompany!!
-        params["week"]      = week
-        ApiRequest.postNoUI(context!!, API.cashMovement, params, object : ApiRequest.URLCallback{
+        params["company"] = mActivity?.selectedCompany!!
+        params["week"] = week
+        ApiRequest.postNoUI(context!!, API.cashMovement, params, object : ApiRequest.URLCallback {
             override fun didURLResponse(response: String) {
-                if (JSONUtil.isSuccess(context!!, response)){
+                if (JSONUtil.isSuccess(context!!, response)) {
                     try {
                         arrCashMovement = ArrayList()
                         val arr = JSONObject(response).obj("message_data").arr("cashflow_list")
-                        for (i in 0 until arr.length()){
+                        for (i in 0 until arr.length()) {
                             val obj = arr.getJSONObject(i)
                             val keyValue = ValueKey(obj.string("label"), obj.string("value"))
                             arrCashMovement?.add(keyValue)
@@ -192,7 +195,7 @@ class CashPositionFragment : BaseFragment() {
 
                         barChartNegative?.invalidate()
                         setBarChartNegative(arrCashMovement!!)
-                    }catch (e: JSONException){
+                    } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 }
@@ -243,8 +246,8 @@ class CashPositionFragment : BaseFragment() {
         barChartNegative?.legend?.isEnabled = false
 
         val data = java.util.ArrayList<Data>()
-        for (i in 0 until mArrCashMovement.size){
-            data.add(Data(i.toFloat()+1f, mArrCashMovement[i].value.toFloat()))
+        for (i in 0 until mArrCashMovement.size) {
+            data.add(Data(i.toFloat() + 1f, mArrCashMovement[i].value.toFloat()))
         }
 
         setData(data)

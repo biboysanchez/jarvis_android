@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/home_bg"
+        android:clickable="true"
+        android:focusable="true">
+
+    <LinearLayout
+            android:padding="8dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="10-year bond yield movement"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tvHeaderSelection"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"
+                  android:id="@+id/view"/>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:background="#e4eeeb">
+                <android.support.v4.view.ViewPager
+                        android:id="@+id/viewPagerMarketUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"/>
+
+                <LinearLayout
+                        android:layout_marginBottom="8dp"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:padding="8dp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <com.rd.PageIndicatorView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            xmlns:attrs="http://schemas.android.com/tools"
+                            android:id="@+id/pageIndicatorView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:piv_animationType="scale"
+                            app:piv_interactiveAnimation="true"
+                            app:piv_selectedColor="@color/colorPrimary"
+                            app:piv_unselectedColor="@color/gray_400"
+                            app:piv_viewPager="@id/viewPagerMarketUpdate"
+                            attrs:piv_padding="12dp"
+                            attrs:piv_radius="8dp" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <View android:layout_width="14dp"
+                      android:layout_height="8dp"
+                      android:layout_marginTop="4dp"
+                      android:background="@color/colorPrimary"/>
+
+                <TextView
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sun 10Y Yield"
+                        android:layout_marginLeft="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <View android:layout_width="14dp"
+                      android:layout_height="8dp"
+                      android:layout_marginTop="4dp"
+                      android:background="@color/gray_500"/>
+
+                <TextView
+                        android:id="@+id/tvLegendName"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JCI Index"
+                        android:layout_marginLeft="8dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="@string/observations_portfolio_impact"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+            <android.support.v7.widget.RecyclerView
+                    android:paddingTop="8dp"
+                    android:id="@+id/rvObservation"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_white"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/TextHeader"
+                    android:text="Recommendations"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"/>
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.8dp"
+                  android:background="@color/home_bg"
+                  android:layout_marginTop="16dp"/>
+            <android.support.v7.widget.RecyclerView
+                    android:paddingTop="8dp"
+                    android:id="@+id/rvRecommendation"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
