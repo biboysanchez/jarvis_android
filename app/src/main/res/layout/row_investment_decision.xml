@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:id="@+id/llRowDecisionRecap"
+              android:gravity="center_vertical"
+              android:padding="8dp">
+    <TextView
+            android:gravity="center_vertical"
+            android:id="@+id/tvRowColumn1"
+            android:text="Investment Strategy"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="54dp"/>
+    <TextView
+            android:id="@+id/tvRowColumn2"
+            android:gravity="center_vertical"
+            android:text="Ongoing effort (No issue expected)"
+            android:layout_width="200dp"
+            android:layout_height="54dp"/>
+    <ImageView
+            android:id="@+id/imgColumn3"
+            android:gravity="center"
+            android:src="@drawable/ic_checked"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"/>
+</LinearLayout>
+
+

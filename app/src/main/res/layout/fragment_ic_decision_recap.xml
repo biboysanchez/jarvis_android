@@ -88,7 +88,7 @@
 
 
                     <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rvSummaryCompanies"
+                            android:id="@+id/rvDecisionCategories"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"/>
@@ -117,6 +117,7 @@
                                 android:layout_height="wrap_content">
 
                             <TextView
+                                    android:visibility="gone"
                                     android:background="@color/colorPrimaryDark"
                                     android:paddingStart="32dp"
                                     android:paddingEnd="32dp"
@@ -128,6 +129,7 @@
                                     android:layout_height="30dp"/>
 
                             <View
+                                    android:visibility="gone"
                                     android:background="@color/white"
                                     android:layout_width="1dp"
                                     android:layout_height="30dp"/>
@@ -145,7 +147,7 @@
                                         android:gravity="center"
                                         android:text="Deadline"
                                         android:textColor="@color/white"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="200dp"
                                         android:layout_height="30dp"/>
 
                             </LinearLayout>
@@ -162,19 +164,17 @@
                                     android:layout_height="wrap_content">
                                 <TextView
                                         android:background="@color/colorPrimaryDark"
-                                        android:paddingStart="32dp"
-                                        android:paddingEnd="32dp"
                                         android:textSize="12sp"
                                         android:gravity="center"
                                         android:text="Status"
                                         android:textColor="@color/white"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="80dp"
                                         android:layout_height="30dp"/>
                             </LinearLayout>
                         </LinearLayout>
 
                         <android.support.v7.widget.RecyclerView
-                                android:id="@+id/rvSummaryRevenues"
+                                android:id="@+id/rvDecisionDeadline"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
 

@@ -2,6 +2,7 @@ package com.jarvis.app.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,15 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.jarvis.app.R
+import com.jarvis.app.adapter.IcDecisionAdapter
+import com.jarvis.app.adapter.SummaryFinancialAdapter
 import kotlinx.android.synthetic.main.fragment_ic_decision_recap.*
 
 class IcDecisionRecap : BaseFragment() {
+
+    private var mAdapter: IcDecisionAdapter? = null
+    private var sAdapter: IcDecisionAdapter? = null
+
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
     }
@@ -27,6 +34,20 @@ class IcDecisionRecap : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setSpinner()
+        setRecyclerAdapter()
+    }
+
+    private fun setRecyclerAdapter(){
+        mAdapter = IcDecisionAdapter(context)
+        sAdapter = IcDecisionAdapter(context)
+
+        sAdapter?.isHeader(true)
+        mAdapter?.isHeader(false)
+        rvDecisionCategories?.layoutManager = LinearLayoutManager(context)
+        rvDecisionCategories?.adapter = sAdapter
+
+        rvDecisionDeadline?.layoutManager = LinearLayoutManager(context)
+        rvDecisionDeadline.adapter = mAdapter
     }
 
     private fun setSpinner(){
