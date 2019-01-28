@@ -9,23 +9,45 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.android.volley.VolleyError
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.StackedValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.jarvis.app.R
-import com.jarvis.app.custom.LabelFormatter
+import com.jarvis.app.custom.CustomMarkerView
+import com.jarvis.app.extension.arr
+import com.jarvis.app.extension.obj
+import com.jarvis.app.helpers.ValueFormatter
+import com.jarvis.app.https.API
+import com.jarvis.app.https.ApiRequest
+import com.jarvis.app.model.Benchmark
 import com.jarvis.app.model.RiskReturn
-import com.jarvis.app.utils.ColorUtil
+import com.jarvis.app.utils.JSONUtil
 import kotlinx.android.synthetic.main.fragment_update.*
-import kotlinx.android.synthetic.main.paging_view.view.*
+import kotlinx.android.synthetic.main.paging_market_update_line_chart.view.*
+import kotlinx.android.synthetic.main.row_market_update.view.*
+import org.json.JSONException
+import org.json.JSONObject
 
 class MarketUpdateFragment: BaseFragment() {
     var viewPagerAdapter: InnerViewPagerAdapter?  = null
-    var viewPagerArray: java.util.ArrayList<java.util.ArrayList<RiskReturn>> = java.util.ArrayList()
     var viewpagerTitles = java.util.ArrayList<String>()
+    var arrLineChart:ArrayList<Benchmark> = ArrayList()
+
+    val arrObservation = arrayListOf(
+        "Indonesian Rupiah is one of the most performer in the region in the last month.",
+        "THis recovery should provide significant relief for companies with high USD exposure, such as Garuda, Alam Sutera, and Telkom.",
+        "IDR recovery usually impact equity prices more than bonds, as the former tends to be more elastic."
+    )
+
+    val arrRecommendations = arrayListOf(
+        "Keep-in-view infrastructure stocks with USD liabilities position for buying opportunities (e.g. TLKM, WIKA), while also closely track ASRI USD Bonds for exit opportunity if price recovers"
+    )
 
     companion object {
         val TAG = "MarketUpdateFragment"
@@ -49,27 +71,56 @@ class MarketUpdateFragment: BaseFragment() {
         viewPagerAdapter = InnerViewPagerAdapter(context!!)
         viewPagerAdapter?.addItem(RiskReturn().getExpectedReturn())
         viewPagerAdapter?.addItem(RiskReturn().getExpectedRisk())
-        syncViewPager()
+        getLineChartData()
     }
 
     private fun syncViewPager(){
-        viewPagerMarketUpdate.offscreenPageLimit = viewPagerArray.size
-        pageIndicatorView?.count = viewPagerArray.size
+        viewPagerMarketUpdate.offscreenPageLimit = 4
+        pageIndicatorView?.count = 4
         viewPagerMarketUpdate?.adapter = viewPagerAdapter
     }
 
     private fun setRecyclerView(){
         rvObservation?.layoutManager = LinearLayoutManager(context)
         rvRecommendation?.layoutManager = LinearLayoutManager(context)
-        rvObservation.adapter = MarketUpdateRecyclerAdapter((context))
-        rvRecommendation.adapter = MarketUpdateRecyclerAdapter((context))
+        rvObservation.adapter = MarketUpdateRecyclerAdapter(context, arrObservation)
+        rvRecommendation.adapter = MarketUpdateRecyclerAdapter(context, arrRecommendations)
+    }
+
+    private fun getLineChartData(){
+        val params = HashMap<String, String>()
+        params["company"]   = mActivity?.selectedCompany!!
+        ApiRequest.postNoUI(context!!, API.returnVsBenchmark, params, object : ApiRequest.URLCallback{
+            override fun didURLResponse(response: String) {
+                if (JSONUtil.isSuccess(context!!, response)){
+                    try {
+                        arrLineChart = ArrayList()
+                        val json = JSONObject(response).obj("message_data").obj("portfolio_unique_dict")
+                        val array1 = json.arr("Danamas Saham")
+
+                        for (i in 0 until array1.length()){
+                            arrLineChart.add(Benchmark(array1.getJSONObject(i)))
+                        }
+
+                        syncViewPager()
+                    }catch (e: JSONException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            override fun didURLFailed(error: VolleyError?) {
+            }
+        })
     }
 
     inner class  MarketUpdateRecyclerAdapter: RecyclerView.Adapter<MarketUpdateRecyclerAdapter.ViewHolder> {
         var mContext: Context? = null
+        var data:List<String> = ArrayList()
 
-        constructor(mContext: Context?) : super() {
+        constructor(mContext: Context?, data:List<String>) : super() {
             this.mContext = mContext
+            this.data = data
         }
 
         override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MarketUpdateRecyclerAdapter.ViewHolder {
@@ -78,7 +129,7 @@ class MarketUpdateFragment: BaseFragment() {
         }
 
         override fun getItemCount(): Int {
-            return 4
+            return data.size
         }
 
         override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
@@ -87,24 +138,23 @@ class MarketUpdateFragment: BaseFragment() {
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             fun bindItem(i: Int) {
+                itemView.tvText?.text = data[i]
             }
         }
     }
 
     inner class InnerViewPagerAdapter(private val mContext: Context) : PagerAdapter() {
-        private var titleList = arrayListOf("Existing", "Simulation")
-
         override fun instantiateItem(collection: ViewGroup, position: Int): Any {
             val inflater = LayoutInflater.from(mContext)
-            val itemVIew = inflater.inflate(R.layout.paging_view, collection, false) as ViewGroup
-            setStackBar(itemVIew, position)
+            val itemVIew = inflater.inflate(R.layout.paging_market_update_line_chart, collection, false) as ViewGroup
+            setLineChart(itemVIew, position)
 
             collection.addView(itemVIew)
             return itemVIew
         }
 
         fun addItem(arr: ArrayList<RiskReturn>){
-            viewPagerArray.add(arr)
+           // viewPagerArray.add(arr)
             notifyDataSetChanged()
         }
 
@@ -113,7 +163,7 @@ class MarketUpdateFragment: BaseFragment() {
         }
 
         override fun getCount(): Int {
-            return viewPagerArray.size
+            return 4
         }
 
         override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -124,60 +174,75 @@ class MarketUpdateFragment: BaseFragment() {
             return viewpagerTitles[position]
         }
 
-        private fun setStackBar(itemVIew: ViewGroup, position: Int) {
-            itemVIew.paging_bar_chart?.description?.isEnabled = false
-            itemVIew.paging_bar_chart?.setMaxVisibleValueCount(1)
-            itemVIew.paging_bar_chart?.setPinchZoom(false)
-            itemVIew.paging_bar_chart?.setDrawGridBackground(false)
-            itemVIew.paging_bar_chart?.setDrawBarShadow(false)
-            itemVIew.paging_bar_chart?.setDrawValueAboveBar(false)
-            itemVIew.paging_bar_chart?.axisRight?.isEnabled = false
-            itemVIew.paging_bar_chart?.isHighlightFullBarEnabled = false
-            itemVIew.paging_bar_chart?.legend?.isEnabled = false
-            itemVIew.paging_bar_chart?.xAxis?.setDrawGridLines(false)
-            itemVIew.paging_bar_chart?.axisLeft?.setDrawLabels(true)
+        private fun setLineChart(itemVIew: ViewGroup, position: Int) {
+            itemVIew.marketLineChart?.description = null
+            itemVIew.marketLineChart?.xAxis?.setDrawGridLines(false)
+            itemVIew.marketLineChart?.axisLeft?.setDrawGridLines(false)
+            itemVIew.marketLineChart?.axisLeft?.setDrawLabels(false)
+            itemVIew.marketLineChart?.axisRight?.setDrawLabels(true)
+            itemVIew.marketLineChart?.legend?.isEnabled = false
+            itemVIew.marketLineChart?.xAxis?.position = XAxis.XAxisPosition.BOTTOM
+            itemVIew.marketLineChart?.setDrawMarkers(true)
 
-            // change the position of the y-labels
-            val leftAxis = itemVIew.paging_bar_chart?.axisLeft
-            //leftAxis?.valueFormatter = MyValueFormatter("K")
-            leftAxis?.axisMinimum = 0f // this replaces setStartAtZero(true)
+            val mv = CustomMarkerView(context, R.layout.custom_marker_view_2)
+            mv.chartView = itemVIew.marketLineChart // For bounds control
+            itemVIew.marketLineChart?.marker = mv // Set the marker to the chart
 
+            val tvTop = mv.findViewById<TextView>(R.id.tvTop)
+            val tvSub = mv.findViewById<TextView>(R.id.tvBottom)
 
-            val xLabels = itemVIew.paging_bar_chart?.xAxis
-            xLabels?.position = XAxis.XAxisPosition.TOP
-            val values = ArrayList<BarEntry>()
-            for (a in 0 until viewPagerArray[position].size){
-                val r = viewPagerArray[position][a]
-                values.add(BarEntry(a.toFloat(), floatArrayOf(r.corporateBonds, r.governmentBonds, r.equity, r.cash)))
+            itemVIew.marketLineChart?.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+                override fun onNothingSelected() {
+                }
+
+                override fun onValueSelected(e: Entry?, h: Highlight?) {
+                    val danamas = String.format("%.2f",arrLineChart[e?.x!!.toInt()].danamasSaham.toFloat() )
+                    val jci     = String.format("%.2f",arrLineChart[e.x.toInt()].jciIndex.toFloat() )
+                    tvSub.text = danamas
+                    tvTop.text = jci
+                }
+            })
+
+            val dataSets = ArrayList<ILineDataSet>()
+            val values = ArrayList<Entry>()
+            val values1 = ArrayList<Entry>()
+            var labels:ArrayList<String>? = ArrayList()
+
+            for (z in 0 until 1) {
+                labels = ArrayList()
+                for (i in 0 until arrLineChart.size) {
+                    val benchmark = arrLineChart[i]
+                    values.add(Entry(i.toFloat(), benchmark.danamasSaham.toFloat()))
+                    values1.add(Entry(i.toFloat(), benchmark.jciIndex.toFloat()))
+                    labels.add(benchmark.id)
+                }
+
+                val d = LineDataSet(values, "Sun 10Y Yield")
+                d.lineWidth = 2f
+                d.setDrawCircles(false)
+                d.setColors(Color.parseColor("#21C6B7"))
+                dataSets.add(d)
+
+                val e = LineDataSet(values1, "Jci Index")
+                e.lineWidth = 2f
+                e.setDrawCircles(false)
+                e.setColors(Color.parseColor("#BDBDBD"))
+                dataSets.add(e)
             }
 
-            val xAxis = itemVIew.paging_bar_chart?.xAxis
-            xAxis?.position = XAxis.XAxisPosition.BOTTOM
-            xAxis?.valueFormatter = LabelFormatter(titleList)
-            xAxis?.setLabelCount(titleList.size, false)
+            val xAxis = itemVIew.marketLineChart?.xAxis
+            xAxis?.valueFormatter = ValueFormatter(labels)
+            val data = LineData(dataSets)
+            itemVIew.marketLineChart?.data = data
 
-            val set1: BarDataSet
-            if (itemVIew.paging_bar_chart?.data != null && itemVIew.paging_bar_chart?.data!!.dataSetCount > 0) {
-                set1 = itemVIew.paging_bar_chart.data.getDataSetByIndex(0) as BarDataSet
-                set1.values = values
-                itemVIew.paging_bar_chart?.data!!.notifyDataChanged()
-                itemVIew.paging_bar_chart?.notifyDataSetChanged()
-            } else {
-                set1 = BarDataSet(values, "")
-                set1.setDrawIcons(false)
-                set1.colors = ColorUtil.strategicAssetColors()
-                val dataSets = ArrayList<IBarDataSet>()
-                dataSets.add(set1)
-
-                val data = BarData(dataSets)
-                data.setValueFormatter(StackedValueFormatter(false, "", 1))
-                data.setValueTextColor(Color.WHITE)
-                itemVIew.paging_bar_chart?.data = data
+            val sets = itemVIew.marketLineChart.data.dataSets
+            for (iSet in sets) {
+                val set = iSet as LineDataSet
+                set.setDrawValues(!set.isDrawValuesEnabled)
             }
 
-            itemVIew.paging_bar_chart?.animateY(1300)
-            itemVIew.paging_bar_chart?.setFitBars(true)
-            itemVIew.paging_bar_chart?.invalidate()
+            itemVIew.marketLineChart?.animateX(1600)
+            itemVIew.marketLineChart?.invalidate()
         }
     }
 }
