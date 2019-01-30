@@ -117,16 +117,13 @@ class PieChart {
 //        s.setSpan(RelativeSizeSpan(.8f), 14, s.length - 15, 0)
 //        s.setSpan(StyleSpan(Typeface.ITALIC), s.length - 14, s.length, 0)
 //        s.setSpan(ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length - 14, s.length, 0)
-
         val title = "Total Assets"
         val price = "${Util.priceFormat(totalAssets.toFloat()).replace(".00","")} B"
-
         val s = SpannableString("$title\n$price")
         s.setSpan(RelativeSizeSpan(.8f), 0, title.length, 0)
         s.setSpan(StyleSpan(Typeface.NORMAL), title.length, s.length, 0)
         s.setSpan(ForegroundColorSpan(Color.GRAY), title.length, s.length, 0)
         s.setSpan(RelativeSizeSpan(1.3f), 12, s.length, 0)
-
         return s
     }
 }

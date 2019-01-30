@@ -419,8 +419,7 @@ class HomeFragment : BaseFragment() {
 
                             PieChart(activity, pieChartHome, arrPieTop)
                             rvPieLegend?.layoutManager = GridLayoutManager(context,  2)
-                            rvPieLegend?.adapter       =
-                                    PieLegendAdapter(context, arrPieTop)
+                            rvPieLegend?.adapter       = PieLegendAdapter(context, arrPieTop)
                         }else{
                             noData(pieChartHome, rvPieLegend)
                         }

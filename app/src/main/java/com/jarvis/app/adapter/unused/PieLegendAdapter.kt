@@ -1,6 +1,7 @@
 package com.jarvis.app.adapter.unused
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.graphics.Typeface
 import android.text.style.StyleSpan
+import com.jarvis.app.R.id.tvLegendName
 import com.jarvis.app.model.PieModel
 import com.jarvis.app.utils.Util
 
@@ -40,20 +42,18 @@ class PieLegendAdapter : RecyclerView.Adapter<PieLegendAdapter.ViewHolder> {
     inner class ViewHolder(itemView:View): RecyclerView.ViewHolder(itemView){
         fun bindItem(i:Int){
             val pie = data?.get(i)
-            val label = "${pie?.item}\n[${pie?.percentage}%] ${Util.priceFormat(pie?.portofolio!!.toFloat()).replace(".00","")} B"
-
-            val ssBuilder = SpannableStringBuilder(label)
-            val boldSpan  = StyleSpan(Typeface.BOLD)
-
-            ssBuilder.setSpan(
-                boldSpan,
-                pie.item.indexOf(pie.item),
-                pie.item.indexOf(pie.item) + pie.item.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-
+            val mPercent = "${pie?.percentage}%"
+            val amount = "${Util.priceFormat(pie?.portofolio!!.toFloat()).replace(".00", "")} B"
             itemView.viewLegend?.setBackgroundColor(pie.color)
-            itemView.tvLegendName?.text = ssBuilder
+            itemView.tvLegendName?.text = pie.item
+            itemView.tvLegendPercent?.text = mPercent
+            itemView.tvLegendValue?.text = amount
+
+            if (i % 2 == 1){
+                itemView.llRowChartLegend?.setBackgroundColor(Color.parseColor("#F4F9F9"))
+            }else{
+                itemView.llRowChartLegend?.setBackgroundColor(Color.parseColor("#EEF4F3"))
+            }
         }
     }
 }

@@ -174,8 +174,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             "1" -> {
-                addFragmentNoAnim(HomeFragment(), HomeFragment.TAG)
-                viewModel!!.title = "Portfolio Overview"
+                addFragmentNoAnim(PortfolioOverviewFragment(), PortfolioOverviewFragment.TAG)
+                //viewModel!!.title = "Portfolio Overview"
                 isHideCompany(false)
             }
 

@@ -2,20 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:paddingLeft="20dp"
-              android:paddingBottom="8dp">
+              android:paddingStart="12dp"
+              android:paddingEnd="0dp"
+              android:id="@+id/llRowChartLegend"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+              android:padding="8dp">
 
     <View android:layout_width="14dp"
           android:layout_height="8dp"
-          android:layout_marginTop="4dp"
           android:id="@+id/viewLegend"
           android:background="@color/colorPrimary"/>
 
     <TextView
             android:id="@+id/tvLegendName"
             android:textSize="12sp"
+            android:layout_weight="0.4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Item"
+            android:layout_marginStart="12dp"/>
+
+    <TextView
+            android:gravity="end"
+            android:id="@+id/tvLegendPercent"
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cash\n[27%] 3,198,855 B"
-            android:layout_marginLeft="8dp"/>
+            android:text="[0.00%]"/>
+
+    <TextView
+            android:paddingEnd="16dp"
+            android:paddingStart="0dp"
+            android:id="@+id/tvLegendValue"
+            android:textSize="12sp"
+            android:layout_weight="0.2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="0.00 B"
+            android:gravity="end"/>
 </LinearLayout>
