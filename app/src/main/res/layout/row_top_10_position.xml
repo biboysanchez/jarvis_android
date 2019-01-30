@@ -8,14 +8,16 @@
               android:orientation="horizontal">
 
     <TextView
+            android:gravity="center_vertical"
             android:id="@+id/tvRowTopTenPortfolio"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"/>
+            android:layout_width="220dp"
+            android:layout_height="54dp"/>
 
     <LinearLayout
             android:id="@+id/llRowTopTen"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
+            android:gravity="center_vertical"
             android:layout_weight="1">
         <TextView
                 android:id="@+id/tvRowNatlValue"

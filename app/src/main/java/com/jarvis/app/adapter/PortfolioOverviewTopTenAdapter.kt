@@ -7,12 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
-import com.jarvis.app.model.PerformanceSummary
+import com.jarvis.app.model.TopTen
 import kotlinx.android.synthetic.main.row_top_10_position.view.*
 
 class PortfolioOverviewTopTenAdapter : RecyclerView.Adapter<PortfolioOverviewTopTenAdapter.ViewHolder> {
     private var mContext: Context? = null
-    private var data: List<PerformanceSummary>? = PerformanceSummary.getArrPerformanceSummary()
+    private var data: List<TopTen>? = TopTen.arrTopTen()
     private var isFirstColumn = false
 
     constructor(mContext: Context?, isShow:Boolean) : super() {
@@ -35,7 +35,7 @@ class PortfolioOverviewTopTenAdapter : RecyclerView.Adapter<PortfolioOverviewTop
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItem(i: Int) {
-            val summary = data!![i]
+            val topTen = data!![i]
 
             if (isFirstColumn){
                 itemView.tvRowTopTenPortfolio?.visibility = View.VISIBLE
@@ -45,13 +45,11 @@ class PortfolioOverviewTopTenAdapter : RecyclerView.Adapter<PortfolioOverviewTop
                 itemView.llRowTopTen?.visibility = View.VISIBLE
             }
 
-            val returnNav                   = "${summary.returnNav}%"
-            val returnBenchmark             = "${summary.returnBenchmark}%"
-            itemView.tvRowTopTenPortfolio?.text   = summary.portfolio
-            itemView.tvRowNatlValue?.text         = summary.aum.toString()
-            itemView.tvRowUnrealized?.text        = returnNav
-            itemView.tvRowAveCost?.text           = returnBenchmark
-            itemView.tvRowCurrentPrice?.text      = "${summary.ir}"
+            itemView.tvRowTopTenPortfolio?.text   = topTen.security
+            itemView.tvRowNatlValue?.text         = topTen.natlValue.toString()
+            itemView.tvRowUnrealized?.text        = topTen.unrealized.toString()
+            itemView.tvRowAveCost?.text           = topTen.avgCost.toString()
+            itemView.tvRowCurrentPrice?.text      = topTen.currentPrice.toString()
 
             if (i % 2 == 1){
                 itemView.llRowTopTenOverview?.setBackgroundColor(Color.parseColor("#F4F9F9"))

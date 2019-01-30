@@ -13,6 +13,7 @@ import com.jarvis.app.R
 import com.jarvis.app.adapter.IcDecisionAdapter
 import com.jarvis.app.adapter.SummaryFinancialAdapter
 import kotlinx.android.synthetic.main.fragment_ic_decision_recap.*
+import java.lang.Exception
 
 class IcDecisionRecap : BaseFragment() {
 
@@ -65,7 +66,11 @@ class IcDecisionRecap : BaseFragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#424242"))
+                try {
+                    (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#424242"))
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
             }
         }
     }

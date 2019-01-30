@@ -11,5 +11,4 @@ class Portfolio (json:JSONObject) {
     var date        = json.string("date")
     var target      = json.string("target")
     var dateLong    = 0L
-
 }

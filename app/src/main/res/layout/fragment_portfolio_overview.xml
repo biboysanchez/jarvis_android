@@ -379,7 +379,7 @@
                                 android:background="@drawable/rec_up_left_raduis"
                                 android:text="Portfolio"
                                 android:textColor="@color/white"
-                                android:layout_width="180dp"
+                                android:layout_width="220dp"
                                 android:layout_height="48dp"/>
 
                         <android.support.v7.widget.RecyclerView

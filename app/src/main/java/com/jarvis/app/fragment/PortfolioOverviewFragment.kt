@@ -20,9 +20,9 @@ import com.jarvis.app.utils.ColorUtil
 import kotlinx.android.synthetic.main.fragment_portfolio_overview.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Exception
 
 class PortfolioOverviewFragment : BaseFragment() {
-    private var arrPieChart:ArrayList<PieModel>? = ArrayList()
     private var mAdapter:PortfolioOverviewAdapter? = null
     private var sAdapter:PortfolioOverviewAdapter? = null
 
@@ -88,7 +88,11 @@ class PortfolioOverviewFragment : BaseFragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                try {
+                    (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
             }
         }
     }
