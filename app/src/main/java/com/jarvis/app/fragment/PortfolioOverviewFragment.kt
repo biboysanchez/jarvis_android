@@ -1,5 +1,6 @@
 package com.jarvis.app.fragment
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
@@ -11,16 +12,19 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.jarvis.app.R
+import com.jarvis.app.adapter.DialogCompanyAdapter
+import com.jarvis.app.adapter.DialogMetricsAdapter
 import com.jarvis.app.adapter.PortfolioOverviewAdapter
 import com.jarvis.app.adapter.PortfolioOverviewTopTenAdapter
 import com.jarvis.app.adapter.unused.PieLegendAdapter
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.model.PieModel
 import com.jarvis.app.utils.ColorUtil
+import kotlinx.android.synthetic.main.dialog_add_metrics.view.*
 import kotlinx.android.synthetic.main.fragment_portfolio_overview.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.Exception
+import java.util.*
 
 class PortfolioOverviewFragment : BaseFragment() {
     private var mAdapter:PortfolioOverviewAdapter? = null
@@ -50,6 +54,14 @@ class PortfolioOverviewFragment : BaseFragment() {
         setWeekSpinner()
         setPerformanceSummary()
         setTopTen()
+
+        tvPerformanceMetrics?.setOnClickListener {
+            showMetricDialog()
+        }
+
+        imgMenuPosition?.setOnClickListener {
+            showMetricDialog()
+        }
     }
 
     private fun setPieChart(){
@@ -202,6 +214,29 @@ class PortfolioOverviewFragment : BaseFragment() {
 
             return arr
         }
+    }
+
+    private fun showMetricDialog(){
+        val arr = Arrays.asList("AUM (Bn)","Return - Nav", "Return - Benchmark", "Information Ratio", "Yield", "VAR", "1W return (%)")
+        val alert = AlertDialog.Builder(context)
+        val aView = LayoutInflater.from(context).inflate(R.layout.dialog_add_metrics, null)
+        aView.btnAddMetrics?.text = "Apply Metrics"
+        alert.setView(aView)
+
+        val dialog = alert.create()
+        aView.rvDialogMetricList?.layoutManager = LinearLayoutManager(context)
+        val dAdapter = DialogMetricsAdapter(context, arr)
+        aView.rvDialogMetricList?.adapter = dAdapter
+        aView.imgCloseDialogMetrics?.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        aView.btnAddMetrics?.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.setCancelable(false)
     }
 
 }

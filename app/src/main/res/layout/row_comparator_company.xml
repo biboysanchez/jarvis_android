@@ -5,6 +5,8 @@
               android:id="@+id/llRowComparationCompany"
               android:padding="8dp">
     <CheckBox
+            android:paddingStart="8dp"
+            android:paddingEnd="0dp"
             android:id="@+id/cbCompany"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

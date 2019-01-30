@@ -115,12 +115,12 @@
                         android:layout_marginStart="16dp"
                         app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
                         android:id="@+id/textView8"
-                        app:layout_constraintEnd_toStartOf="@+id/imgMenuSummary" android:layout_width="0dp"
+                        app:layout_constraintEnd_toStartOf="@+id/tvPerformanceMetrics" android:layout_width="0dp"
                         android:layout_marginEnd="16dp"/>
 
                 <View android:layout_width="match_parent"
                       android:layout_height="0.8dp"
-                      android:background="@color/home_bg" app:layout_constraintTop_toBottomOf="@+id/imgMenuSummary"
+                      android:background="@color/home_bg" app:layout_constraintTop_toBottomOf="@+id/tvPerformanceMetrics"
                       app:layout_constraintStart_toStartOf="parent"
                       app:layout_constraintEnd_toEndOf="parent" android:id="@+id/view" android:layout_marginTop="8dp"/>
 
@@ -136,14 +136,14 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="16dp"
-                        android:id="@+id/imgMenuSummary"
+                        android:id="@+id/tvPerformanceMetrics"
                         app:layout_constraintTop_toTopOf="@+id/textView8"
                         app:layout_constraintStart_toEndOf="@+id/frameLayout"
                         app:layout_constraintBottom_toBottomOf="@+id/textView8"/>
 
                 <LinearLayout
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/imgMenuSummary"
+                        app:layout_constraintEnd_toEndOf="@+id/tvPerformanceMetrics"
                         app:layout_constraintStart_toStartOf="@+id/textView8"
                         app:layout_constraintTop_toBottomOf="@+id/view"
                         android:layout_marginTop="8dp"
