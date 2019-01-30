@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.jarvis.app.R
 import com.jarvis.app.adapter.PortfolioOverviewAdapter
+import com.jarvis.app.adapter.PortfolioOverviewTopTenAdapter
 import com.jarvis.app.adapter.unused.PieLegendAdapter
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.model.PieModel
@@ -24,6 +25,9 @@ class PortfolioOverviewFragment : BaseFragment() {
     private var arrPieChart:ArrayList<PieModel>? = ArrayList()
     private var mAdapter:PortfolioOverviewAdapter? = null
     private var sAdapter:PortfolioOverviewAdapter? = null
+
+    private var mTopdapter:PortfolioOverviewTopTenAdapter? = null
+    private var sTopAdapter:PortfolioOverviewTopTenAdapter? = null
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -45,6 +49,7 @@ class PortfolioOverviewFragment : BaseFragment() {
         investmentPortfolioSpinner()
         setWeekSpinner()
         setPerformanceSummary()
+        setTopTen()
     }
 
     private fun setPieChart(){
@@ -60,6 +65,15 @@ class PortfolioOverviewFragment : BaseFragment() {
         rvPortfolio2.layoutManager = LinearLayoutManager(context)
         rvPortfolio1.adapter = mAdapter
         rvPortfolio2.adapter = sAdapter
+    }
+
+    private fun setTopTen(){
+        mTopdapter = PortfolioOverviewTopTenAdapter(context, true)
+        sTopAdapter = PortfolioOverviewTopTenAdapter(context, false)
+        rvTopTenPortfolio.layoutManager = LinearLayoutManager(context)
+        rvTopTenPortfolio2.layoutManager = LinearLayoutManager(context)
+        rvTopTenPortfolio.adapter = mTopdapter
+        rvTopTenPortfolio2.adapter = sTopAdapter
     }
 
     override fun onDestroy() {

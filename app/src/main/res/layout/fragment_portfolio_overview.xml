@@ -2,7 +2,7 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
@@ -203,10 +203,10 @@
                                         android:visibility="visible"
                                         android:background="@color/colorPrimary"
                                         android:gravity="center"
-                                        android:text="AUM (Bn IDR)"
+                                        android:text="AUM\n(Bn IDR)"
                                         android:textSize="12sp"
                                         android:textColor="@color/white"
-                                        android:layout_width="140dp"
+                                        android:layout_width="90dp"
                                         android:layout_height="54dp"/>
 
                                 <View
@@ -269,8 +269,8 @@
                                         android:gravity="center"
                                         android:text="Information\nRatio"
                                         android:textColor="@color/white"
-                                        android:layout_width="140dp"
-                                        android:layout_height="30dp"/>
+                                        android:layout_width="110dp"
+                                        android:layout_height="match_parent"/>
 
                                 <View
                                         android:background="@color/white"
@@ -281,8 +281,8 @@
                                         android:gravity="center"
                                         android:text="Yield"
                                         android:textColor="@color/white"
-                                        android:layout_width="100dp"
-                                        android:layout_height="30dp"/>
+                                        android:layout_width="80dp"
+                                        android:layout_height="match_parent"/>
 
                                 <View
                                         android:background="@color/white"
@@ -293,8 +293,8 @@
                                         android:gravity="center"
                                         android:text="Var"
                                         android:textColor="@color/white"
-                                        android:layout_width="100dp"
-                                        android:layout_height="30dp"/>
+                                        android:layout_width="80dp"
+                                        android:layout_height="match_parent"/>
 
                             </LinearLayout>
 
@@ -352,14 +352,133 @@
                         app:layout_constraintTop_toTopOf="@+id/tvHeaderPosition"
                         app:layout_constraintBottom_toBottomOf="@+id/tvHeaderPosition"/>
 
-                <android.support.v7.widget.RecyclerView
-                        android:layout_width="0dp"
+
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="@+id/imgMenuPosition"
+                        android:id="@+id/llRowComparation"
                         app:layout_constraintTop_toBottomOf="@+id/view10"
-                        android:id="@+id/rvPosition" app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="16dp" app:layout_constraintStart_toStartOf="@+id/tvHeaderPosition"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <TextView
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:gravity="center"
+                                android:background="@drawable/rec_up_left_raduis"
+                                android:text="Portfolio"
+                                android:textColor="@color/white"
+                                android:layout_width="180dp"
+                                android:layout_height="48dp"/>
+
+                        <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvTopTenPortfolio"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <FrameLayout
+                            android:layout_width="4dp"
+                            android:layout_height="match_parent">
+                        <LinearLayout
+                                android:background="@color/colorPrimary"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"/>
+                        <LinearLayout
+                                android:background="@drawable/vertical_shadow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+                    </FrameLayout>
+
+                    <HorizontalScrollView
+                            android:scrollbars="none"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                <TextView
+                                        android:textSize="12sp"
+                                        android:background="@color/colorPrimary"
+                                        android:paddingStart="16dp"
+                                        android:paddingEnd="16dp"
+                                        android:gravity="center"
+                                        android:text="National Value\n(bil IDR)"
+                                        android:textColor="@color/white"
+                                        android:layout_width="120dp"
+                                        android:layout_height="48dp"/>
+
+                                <View
+                                        android:background="@color/white"
+                                        android:layout_width="0.8dp"
+                                        android:layout_height="match_parent"/>
+
+                                <TextView
+                                        android:background="@color/colorPrimary"
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:text="Unrealized\n(bil IDR)"
+                                        android:textColor="@color/white"
+                                        android:layout_width="100dp"
+                                        android:layout_height="match_parent"/>
+
+                                <View
+                                        android:background="@color/white"
+                                        android:layout_width="0.8dp"
+                                        android:layout_height="match_parent"/>
+
+                                <TextView
+                                        android:background="@color/colorPrimary"
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:text="Avg cost"
+                                        android:textColor="@color/white"
+                                        android:layout_width="90dp"
+                                        android:layout_height="match_parent"/>
+
+                                <View
+                                        android:background="@color/white"
+                                        android:layout_width="0.8dp"
+                                        android:layout_height="match_parent"/>
+
+                                <TextView
+                                        android:background="@drawable/rec_up_right_raduis"
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:text="Current Price"
+                                        android:textColor="@color/white"
+                                        android:layout_width="90dp"
+                                        android:layout_height="match_parent"/>
+
+                            </LinearLayout>
+
+                            <android.support.v7.widget.RecyclerView
+                                    android:id="@+id/rvTopTenPortfolio2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+                </LinearLayout>
+
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
