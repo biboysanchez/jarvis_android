@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             "20" -> {
-                addFragmentNoAnim(CashPositionFragment(), CashPositionFragment.TAG)
+                addFragmentNoAnim(CashFragment(), CashFragment.TAG)
                 isHideCompany(true)
             }
 

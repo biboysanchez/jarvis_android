@@ -58,8 +58,17 @@ class CashPlacementAdapter : RecyclerView.Adapter<CashPlacementAdapter.ViewHolde
             val mYield = String.format("%.2f", percent)
 
             itemView.tvRowAsset?.text = placement.bank
-            itemView.tvRowAmount?.text = String.format("%.2f", placement.amount.toFloat())
-            itemView.tvRowYield?.text = "$mYield%"
+            if (placement.amount > 0.0){
+                itemView.tvRowAmount?.text = String.format("%.2f", placement.amount.toFloat())
+            }else {
+                itemView.tvRowAmount?.text = ""
+            }
+
+            if (percent > 0){
+                itemView.tvRowYield?.text = "$mYield%"
+            }else {
+                itemView.tvRowYield?.text = ""
+            }
 
             if (i % 2 == 1){
                 itemView.llRowCashPlacement?.setBackgroundColor(Color.parseColor("#F4F9F9"))

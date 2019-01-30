@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/card_white"
         android:orientation="vertical"
@@ -16,7 +16,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="16dp"
             android:id="@+id/tvHeaderDecision"
-            android:layout_width="0dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"/>
 
     <View android:layout_width="match_parent"
@@ -36,7 +37,8 @@
             app:layout_constraintTop_toBottomOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"
-            android:id="@+id/frameLayoutDecision" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/frameLayoutDecision"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp">
         <Spinner
                 android:id="@+id/spinnerCashMovement"
@@ -52,7 +54,8 @@
             android:layout_width="0dp"
             android:layout_height="240dp"
             app:layout_constraintTop_toBottomOf="@+id/frameLayoutDecision"
-            android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="@+id/tvShowAllDecision"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/tvShowAllDecision"
             app:layout_constraintEnd_toEndOf="@+id/tvShowAllDecision" android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/tvShowAllDecision"/>
 
