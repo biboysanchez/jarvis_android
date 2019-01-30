@@ -1,13 +1,17 @@
 package com.jarvis.app.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.jarvis.app.R
+import com.jarvis.app.adapter.PortfolioOverviewAdapter
 import com.jarvis.app.adapter.unused.PieLegendAdapter
 import com.jarvis.app.dataholder.chart.PieChart
 import com.jarvis.app.model.PieModel
@@ -18,6 +22,8 @@ import org.json.JSONObject
 
 class PortfolioOverviewFragment : BaseFragment() {
     private var arrPieChart:ArrayList<PieModel>? = ArrayList()
+    private var mAdapter:PortfolioOverviewAdapter? = null
+    private var sAdapter:PortfolioOverviewAdapter? = null
 
     override fun setTitle(): String {
         return mActivity?.viewModel!!.title
@@ -37,7 +43,8 @@ class PortfolioOverviewFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         investmentPortfolioSpinner()
-        setPieChart()
+        setWeekSpinner()
+        setPerformanceSummary()
     }
 
     private fun setPieChart(){
@@ -46,18 +53,59 @@ class PortfolioOverviewFragment : BaseFragment() {
         rvPieLegendPortfolio?.adapter       = PieLegendAdapter(context, StaticData.assetClassPie())
     }
 
+    private fun setPerformanceSummary(){
+        mAdapter = PortfolioOverviewAdapter(context, true)
+        sAdapter = PortfolioOverviewAdapter(context, false)
+        rvPortfolio1.layoutManager = LinearLayoutManager(context)
+        rvPortfolio2.layoutManager = LinearLayoutManager(context)
+        rvPortfolio1.adapter = mAdapter
+        rvPortfolio2.adapter = sAdapter
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         instance = null
     }
 
+    private fun setWeekSpinner(){
+        spinnerWeek?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item, StaticData.week())
+        spinnerWeek?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+            }
+        }
+    }
+
     private fun investmentPortfolioSpinner(){
         spinnerAssetClass?.adapter = ArrayAdapter<String>(context!!, R.layout.support_simple_spinner_dropdown_item, StaticData.dropdown())
+        spinnerAssetClass?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                pieChartPortfolioOverview?.data = null
+                setPieChart()
+            }
+        }
     }
 
     private object StaticData{
         fun dropdown():List<String>{
             return arrayListOf("Asset class", "Sector", "Company Type", "Rating", "Duration")
+        }
+
+        fun week():List<String>{
+            return arrayListOf(
+                "Week of 3 December 2018",
+                "Week of 10 December 2018",
+                "Week of 17 December 2018",
+                "Week of 24 December 2018",
+                "Week of 31 December 2018",
+                "Week of 7 December 2019",
+                "Week of 14 December 2019")
         }
 
         fun assetClassPie(): ArrayList<PieModel>{
@@ -129,10 +177,11 @@ class PortfolioOverviewFragment : BaseFragment() {
             })
 
             for (i in 0 until pieBySector.length()){
-                val model =PieModel(pieBySector.getJSONObject(i))
+                val model = PieModel(pieBySector.getJSONObject(i))
                 model.color = ColorUtil.arrColorA()[i]
                 arr.add(model)
             }
+
             return arr
         }
     }

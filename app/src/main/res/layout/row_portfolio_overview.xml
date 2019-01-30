@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="8dp"
+              android:id="@+id/llRowPortfolioOverview"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
+
+    <TextView
+            android:id="@+id/tvRowPortfolio"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"/>
+
+    <LinearLayout
+            android:id="@+id/llRowPortfolio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                    android:id="@+id/tvRowAum"
+                    android:gravity="center"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/tvRowNav"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/tvRowBenchmark"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/tvRowIr"
+                android:gravity="center"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/tvRowYield"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/tvRowVar"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>
