@@ -174,7 +174,7 @@ class EquitiesFragment : BaseFragment() {
     private fun getData(){
         val params = HashMap<String, String>()
         params["company"]   = mActivity?.selectedCompany!!
-        ApiRequest.postNoUI(context!!, API.returnVsBenchmark, params, object :ApiRequest.URLCallback{
+        ApiRequest.post(context!!, API.returnVsBenchmark, params, object :ApiRequest.URLCallback{
             override fun didURLResponse(response: String) {
                 if (JSONUtil.isSuccess(context!!, response)){
                     try {

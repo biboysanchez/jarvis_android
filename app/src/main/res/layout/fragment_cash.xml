@@ -1,149 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@color/home_bg">
-    <LinearLayout
-            android:padding="8dp"
-            android:orientation="vertical"
+        android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:theme="@style/AppTheme.AppBarOverlay">
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card_white"
+                android:visibility="visible"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
                 android:orientation="vertical"
-                android:layout_marginBottom="12dp">
-            <TextView
-                    style="@style/TextHeader"
-                    android:text="Cash Movement"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:id="@+id/tvHeaderDecision"
-                    android:layout_width="wrap_content"
-                    android:layout_marginEnd="16dp"/>
-
-            <View android:layout_width="match_parent"
-                  android:layout_height="0.8dp"
-                  android:background="@color/home_bg"
-                  android:layout_marginTop="16dp"/>
-
-            <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/barChartNegative"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <FrameLayout
+                    android:theme="@style/AppTheme"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="0dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/card_view_dark"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="8dp"/>
-            <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvCashMovement"
-                    android:layout_margin="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                <Spinner
+                        android:id="@+id/spinnerWeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"/>
+            </FrameLayout>
         </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/home_bg">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card_white"
+                android:padding="8dp"
                 android:orientation="vertical"
-                android:layout_marginBottom="12dp">
-
-            <TextView
-                    style="@style/TextHeader"
-                    android:text="@string/cash_placement_yield"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:id="@+id/textView8"
-                    android:layout_marginEnd="16dp"/>
-
-            <View android:layout_width="match_parent"
-                  android:layout_height="0.8dp"
-                  android:background="@color/home_bg"
-                  android:layout_marginTop="16dp"
-                  android:id="@+id/view"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <LinearLayout
-                    android:orientation="horizontal"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="@null"
-                    android:background="@drawable/rec_up_raduis"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="16dp"
-                    android:id="@+id/llTop"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp">
-
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_white"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
                 <TextView
-                        android:textColor="@color/white"
-                        android:layout_width="0dp"
-                        android:layout_weight="0.6"
-                        android:layout_height="wrap_content"/>
-                <View
-                        android:background="@color/white"
-                        android:layout_width="0.8dp"
-                        android:layout_height="match_parent"/>
+                        style="@style/TextHeader"
+                        android:text="Cash Movement"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/tvHeaderDecision"
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="16dp"/>
 
-                <TextView
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:textColor="@color/white"
-                        android:text="Cash Inflow\n[Bn IDR]"
-                        android:textSize="12sp"
-                        android:layout_width="0dp"
-                        android:layout_weight="0.2"
-                        android:layout_height="match_parent"/>
+                <View android:layout_width="match_parent"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"
+                      android:layout_marginTop="16dp"/>
 
-                <View
-                        android:background="@color/white"
-                        android:layout_width="0.8dp"
-                        android:layout_height="match_parent"/>
+                <com.github.mikephil.charting.charts.BarChart
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:id="@+id/barChartNegative"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="8dp"/>
 
-                <TextView
-                        android:gravity="center"
-                        android:textSize="12sp"
-                        android:layout_gravity="center"
-                        android:textColor="@color/white"
-                        android:text="Avg\nYield"
-                        android:layout_width="0dp"
-                        android:layout_weight="0.2"
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvCashMovement"
+                        android:layout_margin="16dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/rvCashPlacement"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"/>
+                    android:background="@drawable/card_white"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
 
-            <View
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@color/gray_500"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.8dp"/>
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="@string/cash_placement_yield"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/textView8"
+                        android:layout_marginEnd="16dp"/>
 
-            <TextView
-                    android:padding="8dp"
-                    android:layout_marginStart="16dp"
-                    android:text="Cash on Hand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                <View android:layout_width="match_parent"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"
+                      android:layout_marginTop="16dp"
+                      android:id="@+id/view"/>
 
-            <View
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@color/gray_500"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.8dp"/>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@null"
+                        android:background="@drawable/rec_up_raduis"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:id="@+id/llTop"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp">
 
+                    <TextView
+                            android:textColor="@color/white"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:layout_height="wrap_content"/>
+                    <View
+                            android:background="@color/white"
+                            android:layout_width="0.8dp"
+                            android:layout_height="match_parent"/>
 
+                    <TextView
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textColor="@color/white"
+                            android:text="Cash Inflow\n[Bn IDR]"
+                            android:textSize="12sp"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="match_parent"/>
+
+                    <View
+                            android:background="@color/white"
+                            android:layout_width="0.8dp"
+                            android:layout_height="match_parent"/>
+
+                    <TextView
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:layout_gravity="center"
+                            android:textColor="@color/white"
+                            android:text="Avg\nYield"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rvCashPlacement"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"/>
+
+                <View
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/gray_500"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"/>
+
+                <TextView
+                        android:padding="8dp"
+                        android:layout_marginStart="16dp"
+                        android:text="Cash on Hand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <View
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/gray_500"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"/>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

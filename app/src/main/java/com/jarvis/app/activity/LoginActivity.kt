@@ -34,8 +34,8 @@ class LoginActivity : AppCompatActivity() {
 //        }
 
         btnLogin?.setOnClickListener {
-            editLoginUsername?.setText("admin")
-            editLoginPassword?.setText("password")
+//            editLoginUsername?.setText("admin")
+//            editLoginPassword?.setText("password")
             checkLoginFields()
         }
     }
@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
             inputLoginPassword?.error = "Password is required"
             return
         }
+
         inputLoginPassword?.error = null
         postLogin()
     }
