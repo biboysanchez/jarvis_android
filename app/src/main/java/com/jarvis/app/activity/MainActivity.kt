@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             "21" -> {
-                addFragmentNoAnim(DurationMatchFragment(), DurationMatchFragment.TAG)
+                addFragmentNoAnim(InflowOutflowAnalysisFragment(), InflowOutflowAnalysisFragment.TAG)
                 isHideCompany(true)
             }
 

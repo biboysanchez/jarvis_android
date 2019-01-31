@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/home_bg"
+              android:clickable="true"
+              android:focusable="true">
+    <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_white"
+                    android:orientation="vertical">
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="Cash Deviation Analysis"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/tvHeaderSelection"
+                        android:layout_width="wrap_content"/>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"
+                      android:layout_marginTop="16dp"
+                      android:id="@+id/view"/>
+
+                <com.github.mikephil.charting.charts.BarChart
+                        android:layout_marginBottom="24dp"
+                        android:id="@+id/barChartLiquidity"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"/>
+
+
+                <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:textColor="@color/gray_700"
+                            android:text="Current Cash Level"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:background="@drawable/card_view"
+                            android:text="752"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:textColor="@color/gray_700"
+                            android:text="Daily St. Deviation"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:background="@drawable/card_view"
+                            android:text="37"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:textColor="@color/gray_700"
+                            android:text="Avg. Daily Net Flow"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:background="@drawable/card_view"
+                            android:text="28"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <View
+                        android:layout_margin="16dp"
+                        android:background="@color/gray_400"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"/>
+
+                <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:textColor="@color/gray_700"
+                            android:text="2 Std. Deviation"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:background="@drawable/card_view"
+                            android:text="46"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:textColor="@color/gray_700"
+                            android:text="3 Std. Deviation"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:background="@drawable/card_view"
+                            android:text="83"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:textColor="@color/gray_700"
+                            android:text="5 Std. Deviation"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:background="@drawable/card_view"
+                            android:text="157"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_white"
+                    android:orientation="vertical">
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="Cash vs Portfolio Drawdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp" app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/textView"/>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"
+                      android:id="@+id/view11"
+                      app:layout_constraintTop_toBottomOf="@+id/textView" android:layout_marginTop="16dp"
+                      app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
+
+                <com.github.mikephil.charting.charts.BarChart
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        app:layout_constraintTop_toBottomOf="@+id/view11"
+                        app:layout_constraintStart_toStartOf="@+id/textView" app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp" android:id="@+id/barChart"/>
+
+                <TextView
+                        android:textColor="@color/gray_700"
+                        android:text="Net Inflow Days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/barChart" android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/barChart" android:id="@+id/textView13"/>
+                <TextView
+                        android:id="@+id/tvNetInflowDay"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/card_view"
+                        android:text="202"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/textView13"
+                        app:layout_constraintTop_toBottomOf="@+id/textView13" android:layout_marginTop="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/tvNetInflowTotal" android:layout_marginEnd="24dp"/>
+
+
+                <TextView
+                        android:textColor="@color/gray_700"
+                        android:text="Total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
+                        app:layout_constraintStart_toStartOf="@+id/tvNetInflowTotal"/>
+                <TextView
+                        android:id="@+id/tvNetInflowTotal"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/card_view"
+                        android:text="7452"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+                        app:layout_constraintTop_toTopOf="@+id/tvNetInflowDay"
+                        app:layout_constraintStart_toEndOf="@+id/tvNetInflowDay"/>
+
+                <TextView
+                        android:textColor="@color/gray_700"
+                        android:text="Net Outflow Days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvNetInflowDay"
+                        app:layout_constraintStart_toStartOf="@+id/tvNetInflowDay" android:id="@+id/textView24"/>
+                <TextView
+                        android:id="@+id/tvNetOutflowDay"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/card_view"
+                        android:text="40"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/textView24" android:layout_marginTop="4dp"
+                        app:layout_constraintTop_toBottomOf="@+id/textView24"
+                        app:layout_constraintEnd_toStartOf="@+id/tvNetOutflowTotal" android:layout_marginEnd="24dp"/>
+
+                <TextView
+                        android:textColor="@color/gray_700"
+                        android:text="Total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/tvNetOutflowTotal"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/textView24"/>
+                <TextView
+                        android:id="@+id/tvNetOutflowTotal"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/card_view"
+                        android:text="-590"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@+id/tvNetInflowTotal"
+                        app:layout_constraintTop_toTopOf="@+id/tvNetOutflowDay"
+                        app:layout_constraintStart_toEndOf="@+id/tvNetOutflowDay"/>
+
+
+                <TextView
+                        android:gravity="center"
+                        android:text="Cash Required to Sustain Outflow Days"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvNetOutflowDay"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                        android:id="@+id/textView25"/>
+
+
+                <TextView
+                        android:textColor="@color/gray_700"
+                        android:text="5 Days"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/textView25" android:layout_marginTop="32dp"
+                        app:layout_constraintTop_toBottomOf="@+id/textView25" android:id="@+id/textView26"
+                        app:layout_constraintEnd_toStartOf="@+id/tv5Day" android:layout_marginEnd="24dp"/>
+
+                <TextView
+                        android:id="@+id/tv5Day"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/card_view"
+                        android:text="-250"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@+id/textView25"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/textView26"
+                        app:layout_constraintStart_toEndOf="@+id/textView26"/>
+
+                <TextView
+                        android:textColor="@color/gray_700"
+                        android:text="10 Days"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/tv10Day"
+                        app:layout_constraintStart_toStartOf="@+id/textView26"
+                        app:layout_constraintEnd_toStartOf="@+id/tv10Day" android:layout_marginEnd="24dp"
+                        android:id="@+id/textView27"/>
+
+                <TextView
+                        android:id="@+id/tv10Day"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/card_view"
+                        android:text="-369"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@+id/tv5Day" android:layout_marginTop="12dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tv5Day"
+                        app:layout_constraintStart_toEndOf="@+id/textView27"/>
+
+                <TextView
+                        android:textColor="@color/gray_700"
+                        android:text="15 Days"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/tv15Day"
+                        app:layout_constraintStart_toStartOf="@+id/textView27"
+                        app:layout_constraintEnd_toStartOf="@+id/tv15Day" android:layout_marginEnd="24dp"
+                        android:id="@+id/textView28"/>
+
+                <TextView
+                        android:id="@+id/tv15Day"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/card_view"
+                        android:text="-453"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@+id/tv10Day" android:layout_marginTop="12dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tv10Day"
+                        app:layout_constraintStart_toEndOf="@+id/textView28"/>
+
+                <TextView
+                        android:textColor="@color/gray_700"
+                        android:text="20 Days"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/tv20Day"
+                        app:layout_constraintEnd_toStartOf="@+id/tv20Day" android:layout_marginEnd="24dp"
+                        android:id="@+id/textView29"
+                        app:layout_constraintStart_toStartOf="@+id/textView28"/>
+
+                <TextView
+                        android:id="@+id/tv20Day"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@drawable/card_view"
+                        android:text="-512"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@+id/tv15Day" android:layout_marginTop="12dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tv15Day"
+                        app:layout_constraintStart_toEndOf="@+id/textView29"
+                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="24dp"/>
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_white"
+                    android:orientation="vertical">
+                <TextView
+                        style="@style/TextHeader"
+                        android:text="Historical Asset Accumulation"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="wrap_content"/>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="0.8dp"
+                      android:background="@color/home_bg"
+                      android:layout_marginTop="16dp"/>
+
+                <com.github.mikephil.charting.charts.BarChart
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"/>
+
+                <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <View
+                            android:background="@color/gray_400"
+                            android:textColor="@color/gray_400"
+                            android:layout_width="18dp"
+                            android:layout_height="12dp"/>
+                    <TextView
+                            android:textColor="@color/gray_800"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="Subscription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_marginEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="0dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <View
+                            android:background="@color/orange2"
+                            android:textColor="@color/gray_400"
+                            android:layout_width="18dp"
+                            android:layout_height="12dp"/>
+                    <TextView
+                            android:textColor="@color/gray_800"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="Redemption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="4dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="12dp"
+                        android:padding="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <View
+                            android:background="@color/colorPrimary"
+                            android:textColor="@color/gray_400"
+                            android:layout_width="18dp"
+                            android:layout_height="12dp"/>
+                    <TextView
+                            android:textColor="@color/gray_800"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="Cumulative"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
