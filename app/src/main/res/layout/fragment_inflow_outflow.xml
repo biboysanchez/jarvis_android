@@ -420,8 +420,9 @@
                       android:background="@color/home_bg"
                       android:layout_marginTop="16dp"/>
 
-                <com.github.mikephil.charting.charts.BarChart
-                        android:layout_marginBottom="24dp"
+                <com.github.mikephil.charting.charts.CombinedChart
+                        android:id="@+id/combinedChart"
+                        android:layout_marginBottom="8dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_width="match_parent"
