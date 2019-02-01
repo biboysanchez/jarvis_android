@@ -29,7 +29,7 @@ import com.jarvis.app.adapter.SideMenuAdapter
 import com.jarvis.app.extension.arr
 import com.jarvis.app.extension.obj
 import com.jarvis.app.fragment.*
-import com.jarvis.app.fragment.unused.*
+import com.jarvis.app.fragment.unused_old.*
 import com.jarvis.app.https.API
 import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.UserViewModel
@@ -139,7 +139,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getPage(page:String){
-       // Log.i("MAin Activity", "stack count: $page")
         drawer_layout.closeDrawer(GravityCompat.START)
 
 //        if (lastIndex == page){
@@ -177,6 +176,11 @@ class MainActivity : AppCompatActivity() {
                 addFragmentNoAnim(PortfolioOverviewFragment(), PortfolioOverviewFragment.TAG)
                 //viewModel!!.title = "Portfolio Overview"
                 isHideCompany(false)
+            }
+
+            "4" -> {
+                addFragmentNoAnim(PerformanceMeasurementFragment(), PerformanceMeasurementFragment.TAG)
+                isHideCompany(true)
             }
 
             "6" ->{
@@ -227,6 +231,9 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
+    //Please do not delete for now
+    //This is for old jarvis setup. just for backup and if I need previous data
 
     /*fun getPage(page:Int){
         Log.i("MAin Activity", "stack count: ${fm?.backStackEntryCount!!}")
@@ -361,7 +368,7 @@ class MainActivity : AppCompatActivity() {
 
                                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                                         selectedCompany = arrCompanyList[position]
-                                        refreshAllDataWithCompany()
+                                        //refreshAllDataWithCompany()
 
                                         try {
                                             (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))

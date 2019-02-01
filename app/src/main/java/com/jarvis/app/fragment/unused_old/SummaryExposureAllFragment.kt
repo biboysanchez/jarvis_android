@@ -1,4 +1,4 @@
-package com.jarvis.app.fragment.unused
+package com.jarvis.app.fragment.unused_old
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

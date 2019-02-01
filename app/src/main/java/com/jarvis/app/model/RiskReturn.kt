@@ -6,10 +6,21 @@ class RiskReturn () {
     var equity          = 0f
     var cash            = 0f
 
-    fun allReturn(): ArrayList<ArrayList<RiskReturn>>{
-        val arr = ArrayList<ArrayList<RiskReturn>>()
-        arr.add(getExpectedReturn())
-        arr.add(getExpectedRisk())
+    fun get2017(): ArrayList<RiskReturn>{
+        val arr = ArrayList<RiskReturn>()
+        arr.add(RiskReturn().apply {
+            governmentBonds = 28f
+            corporateBonds  = 20f
+            equity          = 33f
+            cash            = 20f
+        })
+
+        arr.add(RiskReturn().apply {
+            governmentBonds = 22f
+            corporateBonds  = 24f
+            equity          = 32f
+            cash            = 24f
+        })
         return arr
     }
 

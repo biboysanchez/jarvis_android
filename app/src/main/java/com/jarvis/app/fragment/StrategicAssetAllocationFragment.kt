@@ -142,7 +142,6 @@ class StrategicAssetAllocationFragment : BaseFragment() {
             //leftAxis?.valueFormatter = MyValueFormatter("K")
             leftAxis?.axisMinimum = 0f // this replaces setStartAtZero(true)
 
-
             val xLabels = itemVIew.paging_bar_chart?.xAxis
             xLabels?.position = XAxis.XAxisPosition.TOP
             val values = ArrayList<BarEntry>()

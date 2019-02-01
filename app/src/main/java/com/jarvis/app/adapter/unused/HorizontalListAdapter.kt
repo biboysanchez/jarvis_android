@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.activity.MainActivity
-import com.jarvis.app.fragment.unused.*
+import com.jarvis.app.fragment.unused_old.*
 import com.jarvis.app.model.Company
 import kotlinx.android.synthetic.main.button_scroll.view.*
 
