@@ -2,6 +2,7 @@ package com.jarvis.app.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.jarvis.app.R
+import com.jarvis.app.adapter.PerformanceAndRiskAdapter
 import com.jarvis.app.custom.CustomMarkerView
 import com.jarvis.app.custom.LabelFormatter
 import com.jarvis.app.extension.arr
@@ -36,7 +38,10 @@ import java.util.*
 class PerformanceMeasurementFragment : BaseFragment(){
     private var arrayDanamasSaham:ArrayList<Benchmark>? = ArrayList()
     private var arraySimasSaham:ArrayList<Benchmark>? = ArrayList()
-    var arrayStackBar:ArrayList<RiskReturn> = ArrayList()
+    private var arrayStackBar:ArrayList<RiskReturn> = ArrayList()
+
+    private var sAdapter:PerformanceAndRiskAdapter? = null
+    private var mAdapter:PerformanceAndRiskAdapter? = null
 
     companion object {
         val TAG = "PerformanceMeasurementFragment"
@@ -54,6 +59,7 @@ class PerformanceMeasurementFragment : BaseFragment(){
         super.onViewCreated(view, savedInstanceState)
         setPortfolioSpinner()
         getReturnBenchmarkData()
+        setPerformanceAndRiskMeasurementTable()
     }
 
     private fun setPortfolioSpinner(){
@@ -253,5 +259,14 @@ class PerformanceMeasurementFragment : BaseFragment(){
 
         lineChartReturnBenchMark?.animateX(1600)
         lineChartReturnBenchMark?.invalidate()
+    }
+
+    private fun setPerformanceAndRiskMeasurementTable(){
+        sAdapter = PerformanceAndRiskAdapter(context, true)
+        mAdapter = PerformanceAndRiskAdapter(context, false)
+        rvPortfolio1.layoutManager = LinearLayoutManager(context)
+        rvPortfolio2.layoutManager = LinearLayoutManager(context)
+        rvPortfolio1.adapter = sAdapter
+        rvPortfolio2.adapter = mAdapter
     }
 }

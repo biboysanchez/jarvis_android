@@ -58,6 +58,10 @@ class CashFragment : BaseFragment() {
         Handler().postDelayed({
             getCashMovementWeek()
         },100)
+
+        barChartNegative?.setOnClickListener {
+            mActivity?.addFragment(CashMovementFragment(), CashMovementFragment.TAG)
+        }
     }
 
     fun title() {

@@ -232,35 +232,174 @@
 
             </android.support.constraint.ConstraintLayout>
 
+
             <android.support.constraint.ConstraintLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/card_white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
                 <TextView
                         style="@style/TextHeader"
-                        android:text="Performance Attribute"
+                        android:text="@string/performance_risk_measurement"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="16dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="16dp"
-                        android:id="@+id/tvHeaderPerformanceAttribute"
-                        android:layout_width="0dp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+                        android:id="@+id/textView8"
+                        app:layout_constraintEnd_toStartOf="@+id/tvPerformanceMetrics" android:layout_width="0dp"
                         android:layout_marginEnd="16dp"/>
 
                 <View android:layout_width="match_parent"
                       android:layout_height="0.8dp"
                       android:background="@color/home_bg"
+                      app:layout_constraintTop_toBottomOf="@+id/tvPerformanceMetrics"
                       app:layout_constraintStart_toStartOf="parent"
                       app:layout_constraintEnd_toEndOf="parent"
-                      android:id="@+id/view3"
-                      app:layout_constraintHorizontal_bias="0.0"
-                      android:layout_marginTop="8dp"
-                      app:layout_constraintTop_toBottomOf="@+id/tvHeaderPerformanceAttribute"/>
+                      android:id="@+id/view22"
+                      android:layout_marginTop="8dp"/>
+
+
+                <TextView
+                        android:text="Metrics"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="@null"
+                        android:padding="8dp"
+                        android:background="@drawable/rec_hallow_primary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:id="@+id/tvPerformanceMetrics"
+                        app:layout_constraintTop_toTopOf="@+id/textView8"
+                        app:layout_constraintStart_toEndOf="@+id/frameLayout"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView8"/>
+
+                <LinearLayout
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/tvPerformanceMetrics"
+                        app:layout_constraintStart_toStartOf="@+id/textView8"
+                        app:layout_constraintTop_toBottomOf="@+id/view22"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <LinearLayout
+                            android:id="@+id/llCol0"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <TextView
+                                android:text="Portfolio"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:gravity="center"
+                                android:background="@drawable/rec_up_left_raduis"
+                                android:textColor="@color/white"
+                                android:layout_width="120dp"
+                                android:layout_height="54dp"/>
+
+
+                        <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvPortfolio1"
+                                android:layout_width="120dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"/>
+                    </LinearLayout>
+
+                    <FrameLayout
+                            android:background="@drawable/vertical_shadow"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"/>
+
+                    <HorizontalScrollView
+                            android:scrollbars="none"
+                            android:id="@+id/rowScroll"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                    android:background="@drawable/rec_up_right_raduis"
+                                    android:orientation="horizontal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+
+                                <TextView
+                                        android:visibility="visible"
+                                        android:background="@color/colorPrimary"
+                                        android:gravity="center"
+                                        android:text="AUM\n(Bn IDR)"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/white"
+                                        android:layout_width="90dp"
+                                        android:layout_height="54dp"/>
+
+                                <View
+                                        android:visibility="visible"
+                                        android:background="@color/white"
+                                        android:layout_width="0.8dp"
+                                        android:layout_height="54dp"/>
+
+                                <TextView
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:text="Benchmark"
+                                        android:textColor="@color/white"
+                                        android:layout_width="80dp"
+                                        android:layout_height="match_parent"/>
+
+                                <View
+                                        android:background="@color/white"
+                                        android:layout_width="0.8dp"
+                                        android:layout_height="54dp"/>
+
+                                <TextView
+                                        android:textSize="12sp"
+                                        android:gravity="center"
+                                        android:text="Ytd\nAr"
+                                        android:textColor="@color/white"
+                                        android:layout_width="60dp"
+                                        android:layout_height="match_parent"/>
+
+                                <View
+                                        android:background="@color/white"
+                                        android:layout_width="0.8dp"
+                                        android:layout_height="54dp"/>
+
+                                <TextView
+                                        android:gravity="center"
+                                        android:text="Target\nAr"
+                                        android:textColor="@color/white"
+                                        android:layout_width="60dp"
+                                        android:layout_height="match_parent"/>
+
+                            </LinearLayout>
+
+                            <android.support.v7.widget.RecyclerView
+                                    android:id="@+id/rvPortfolio2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+                </LinearLayout>
+
             </android.support.constraint.ConstraintLayout>
+
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
