@@ -2,6 +2,7 @@ package com.jarvis.app.activity
 
 import android.animation.ValueAnimator
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -35,11 +36,12 @@ import com.jarvis.app.https.ApiRequest
 import com.jarvis.app.model.UserViewModel
 import com.jarvis.app.sessions.UserSession
 import com.jarvis.app.utils.JSONUtil
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.json.JSONException
 import org.json.JSONObject
 import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AnimBaseActivity() {
     private lateinit var toggle:ActionBarDrawerToggle
     var fm:FragmentManager? = null
     var lastIndex = ""
@@ -116,6 +118,10 @@ class MainActivity : AppCompatActivity() {
     private fun setNavigationList(){
         nav_view?.listNavView?.layoutManager = LinearLayoutManager(this)
         nav_view?.listNavView?.adapter = SideMenuAdapter(this, StaticData.sideList())
+        nav_view?.navMainHeader?.setOnClickListener {
+            overridePendingTransitionEnter()
+            startActivity(Intent(this, UserProfileActivity::class.java))
+        }
     }
 
     fun addFragment(fragment:Fragment, tag:String){

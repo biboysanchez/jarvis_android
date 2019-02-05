@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        tools:context=".activity.UserProfileActivity">
+    <LinearLayout
+            android:paddingBottom="16dp"
+            android:background="@color/home_bg"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <FrameLayout
+                android:background="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_marginTop="124dp"
+                          android:background="@color/home_bg"
+                          android:layout_width="match_parent"
+                          android:layout_height="120dp"/>
+
+            <android.support.v7.widget.CardView
+                    app:cardCornerRadius="4dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="56dp"
+                    android:background="#F4F9F9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="42dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:textStyle="bold"
+                            android:text="Latest Status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <android.support.v7.widget.RecyclerView
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:scrollbars="vertical"
+                            android:layout_marginEnd="16dp"
+                            android:id="@+id/rvUserLatestStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                    app:cardElevation="4dp"
+                    app:cardCornerRadius="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:id="@+id/fab"
+                        android:padding="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    <ImageView
+                            android:src="@drawable/round_dark"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"/>
+
+                    <LinearLayout
+                            android:paddingStart="16dp"
+                            android:paddingEnd="24dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Welcome"/>
+                        <TextView
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ghirish Pokardas"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </FrameLayout>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                android:text="Summary"/>
+
+
+        <LinearLayout
+                android:padding="8dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llRowComparation">
+
+            <LinearLayout
+                    android:id="@+id/llCol0"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:gravity="center_vertical"
+                        android:background="@drawable/rec_up_left_raduis"
+                        android:text="Companies"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:layout_height="48dp"/>
+
+                <android.support.v7.widget.RecyclerView
+                        android:background="@color/white"
+                        android:id="@+id/rvSummaryCompanies"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+
+            <FrameLayout
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent">
+                <LinearLayout
+                        android:background="@color/colorPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"/>
+                <LinearLayout
+                        android:background="@drawable/vertical_shadow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </FrameLayout>
+
+            <HorizontalScrollView
+                    android:scrollbars="none"
+                    android:id="@+id/rowScroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <LinearLayout
+                            android:background="@drawable/rec_up_right_raduis"
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        <TextView
+                                android:background="@color/colorPrimary"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:gravity="center"
+                                android:text="Revenue\nSensitivity"
+                                android:textColor="@color/white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"/>
+
+                        <View
+                                android:background="@color/white"
+                                android:layout_width="1dp"
+                                android:layout_height="48dp"/>
+
+                        <LinearLayout
+                                android:id="@+id/llCol2"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            <TextView
+                                    android:paddingStart="12dp"
+                                    android:paddingEnd="12dp"
+                                    android:background="@color/colorPrimary"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:text="Operating Income\nSensitivity"
+                                    android:textColor="@color/white"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="48dp"/>
+
+                        </LinearLayout>
+
+                        <View
+                                android:background="@color/white"
+                                android:layout_width="1dp"
+                                android:layout_height="48dp"/>
+
+                        <LinearLayout
+                                android:id="@+id/llCol3"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            <TextView
+                                    android:paddingStart="12dp"
+                                    android:paddingEnd="12dp"
+                                    android:background="@drawable/rec_up_right_raduis"
+                                    android:textSize="12sp"
+                                    android:gravity="center"
+                                    android:text="Net Profit\nSensitivity"
+                                    android:textColor="@color/white"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="48dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                            android:background="@color/white"
+                            android:id="@+id/rvSummaryRevenues"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <TextView
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                android:text="Recommendation"/>
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvUserRecommendation"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

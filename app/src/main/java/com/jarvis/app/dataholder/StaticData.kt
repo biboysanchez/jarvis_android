@@ -65,6 +65,14 @@ object StaticData {
         return Arrays.asList(side0, side1, side2, side3, side4, side5, side6)
     }
 
+    fun userRecommendationList():List<SideMenu>{
+        val side0 = SideMenu("Would you like to view current portfolio?", R.drawable.ic_portfolio_primary, Arrays.asList("Decision Recap", "Market Update", "Watchlist"), false)
+        val side1 = SideMenu("Would you like to check currency movement", R.drawable.ic_research_primary, ArrayList(), false)
+        val side2 = SideMenu("Would you like to view IC Decisions for the month?", R.drawable.ic_overview_primary, Arrays.asList("Cash Position", "Inflow - Outflow Analysis"), false)
+        val side3 = SideMenu("Would you like to read top company news today?", R.drawable.ic_research_primary, Arrays.asList("Currency Research", "Summary Exposure", "Corporate Bond Score"), false)
+        return Arrays.asList(side0, side1, side2, side3)
+    }
+
     fun incomeStatements():ArrayList<IncomeStatement>{
         val list = ArrayList<IncomeStatement>()
         val json1 = JSONObject()
