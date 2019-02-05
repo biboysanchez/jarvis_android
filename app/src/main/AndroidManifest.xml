@@ -46,11 +46,6 @@
         <activity
                 android:name=".activity.AuthenticationActivity"
                 android:screenOrientation="portrait"/>
-        <activity
-                android:name=".activity.UserProfileActivity"
-                android:label="@string/title_activity_user_profile_fragment"
-                android:theme="@style/AppTheme">
-        </activity>
     </application>
 
 </manifest>

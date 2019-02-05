@@ -11,45 +11,52 @@ import android.view.ViewGroup
 import com.jarvis.app.R
 import com.jarvis.app.adapter.SummaryExposureAdapter
 import com.jarvis.app.dataholder.StaticData
+import com.jarvis.app.fragment.BaseFragment
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.row_duration.view.*
 import kotlinx.android.synthetic.main.row_user_recommendation.view.*
 
-class UserProfileActivity : AnimBaseActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_profile)
+class UserProfileActivity : BaseFragment() {
+    companion object {
+        val TAG = "UserProfileActivity"
+    }
+
+    override fun setTitle(): String {
+        return mActivity?.viewModel!!.title
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.activity_user_profile, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setLatestStatus()
         setSummaryExposure()
         setRecommendation()
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        overridePendingTransitionExit()
-    }
-
+    
     private fun setLatestStatus(){
-        rvUserLatestStatus?.layoutManager = LinearLayoutManager(this)
-        rvUserLatestStatus?.adapter = LatestStatusAdapter(this)
+        rvUserLatestStatus?.layoutManager = LinearLayoutManager(context)
+        rvUserLatestStatus?.adapter = LatestStatusAdapter(context)
     }
 
     private fun setSummaryExposure(){
-        val mAdapter: SummaryExposureAdapter? = SummaryExposureAdapter(this)
-        val sAdapter:SummaryExposureAdapter? = SummaryExposureAdapter(this)
+        val mAdapter: SummaryExposureAdapter? = SummaryExposureAdapter(context)
+        val sAdapter:SummaryExposureAdapter? = SummaryExposureAdapter(context)
 
-        rvSummaryCompanies?.layoutManager    = LinearLayoutManager(this)
+        rvSummaryCompanies?.layoutManager    = LinearLayoutManager(context)
         mAdapter?.isHeader(true)
         rvSummaryCompanies?.adapter          = sAdapter
 
-        rvSummaryRevenues?.layoutManager = LinearLayoutManager(this)
+        rvSummaryRevenues?.layoutManager = LinearLayoutManager(context)
         mAdapter?.isHeader(true)
         rvSummaryRevenues?.adapter      = mAdapter
     }
 
     private fun setRecommendation(){
-        rvUserRecommendation?.layoutManager = LinearLayoutManager(this)
-        rvUserRecommendation?.adapter = RecommendationAdapter(this)
+        rvUserRecommendation?.layoutManager = LinearLayoutManager(context)
+        rvUserRecommendation?.adapter = RecommendationAdapter(context)
     }
 
     inner class LatestStatusAdapter: RecyclerView.Adapter<LatestStatusAdapter.ViewHolder> {
@@ -110,22 +117,27 @@ class UserProfileActivity : AnimBaseActivity() {
                 val item = data[i]
                 itemView.imgDrawable?.setImageResource(item.icon)
                 itemView.rowParentText?.text = item.name
+                itemView.rowSideMenu?.setOnClickListener {
+                    when (i){
+                        0 -> {
+                            mActivity?.viewModel?.title = "Portfolio Overview"
+                            mActivity?.getPage("1")
+                        }
 
-                when (i){
-                    0 -> {
+                        1 -> {
+                            mActivity?.viewModel?.title = "Currency Research"
+                            mActivity?.getPage("30")
+                        }
 
-                    }
+                        2 -> {
+                            mActivity?.viewModel?.title = "IC Decision Recap"
+                            mActivity?.getPage("00")
+                        }
 
-                    1 -> {
-
-                    }
-
-                    2 -> {
-
-                    }
-
-                    3 -> {
-
+                        3 -> {
+                            mActivity?.viewModel?.title = "Summary Exposure"
+                            mActivity?.getPage("31")
+                        }
                     }
                 }
 

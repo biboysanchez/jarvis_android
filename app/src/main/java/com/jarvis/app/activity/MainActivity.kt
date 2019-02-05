@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -41,7 +42,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import kotlin.collections.ArrayList
 
-class MainActivity : AnimBaseActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var toggle:ActionBarDrawerToggle
     var fm:FragmentManager? = null
     var lastIndex = ""
@@ -119,8 +120,9 @@ class MainActivity : AnimBaseActivity() {
         nav_view?.listNavView?.layoutManager = LinearLayoutManager(this)
         nav_view?.listNavView?.adapter = SideMenuAdapter(this, StaticData.sideList())
         nav_view?.navMainHeader?.setOnClickListener {
-            overridePendingTransitionEnter()
-            startActivity(Intent(this, UserProfileActivity::class.java))
+            Handler().postDelayed({
+                getPage("100")
+            },300)
         }
     }
 
@@ -180,7 +182,6 @@ class MainActivity : AnimBaseActivity() {
 
             "1" -> {
                 addFragmentNoAnim(PortfolioOverviewFragment(), PortfolioOverviewFragment.TAG)
-                //viewModel!!.title = "Portfolio Overview"
                 isHideCompany(false)
             }
 
@@ -228,6 +229,12 @@ class MainActivity : AnimBaseActivity() {
             "51" ->{
                 addFragmentNoAnim(EquitiesFragment(), EquitiesFragment.TAG)
                 //Equities
+            }
+
+            "100" -> {
+                viewModel?.title = ""
+                addFragment(UserProfileActivity(), UserProfileActivity.TAG)
+                isHideCompany(true)
             }
 
             else ->{
